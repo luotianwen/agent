@@ -43,5 +43,8 @@ public class ProductService extends CrudService<ProductDao, Product> {
 	public void delete(Product product) {
 		super.delete(product);
 	}
-	
+	@Transactional(readOnly = false)
+	public void saveOrUpdate() {
+
+	}
 }

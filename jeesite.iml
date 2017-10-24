@@ -123,7 +123,6 @@
     <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-transcoder:1.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.xmlgraphics:fop:0.94" level="project" />
     <orderEntry type="library" name="Maven: org.apache.xmlgraphics:xmlgraphics-commons:1.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avalon.framework:avalon-framework-api:4.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.avalon.framework:avalon-framework-impl:4.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-dom:1.7" level="project" />
@@ -240,5 +239,10 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.3" level="project" />
   </component>
 </module>

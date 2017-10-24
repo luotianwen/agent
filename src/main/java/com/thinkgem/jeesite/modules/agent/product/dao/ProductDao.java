@@ -14,5 +14,5 @@ import com.thinkgem.jeesite.modules.agent.product.entity.Product;
  */
 @MyBatisDao
 public interface ProductDao extends CrudDao<Product> {
-	
+
 }
