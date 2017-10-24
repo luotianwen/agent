@@ -43,7 +43,7 @@ public class QuartzManager {
 	/**
 	 * 添加任务
 	 * 
-	 * @param scheduleJob
+	 * @param job
 	 * @throws SchedulerException
 	 */
 	public void addJob(ScheduleJob job) throws SchedulerException {

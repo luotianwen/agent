@@ -99,8 +99,10 @@
 					</c:if>
 					<c:if test="${taskScheduleJob.jobStatus==1}">
 					<a href="${ctx}/task/taskScheduleJob/changeJobStatus?id=${taskScheduleJob.id}&cmd=stop" onclick="return confirmx('你确定要停止该计划任务么?', this.href)">停止</a>
-					<a href="${ctx}/task/schedulejob/updateCron?id=${taskScheduleJob.id}"  onclick="return confirmx('你确定要更新该计划任务么?', this.href)">更新</a>
-					</c:if>					
+
+					</c:if>
+
+					<a href="${ctx}/task/schedulejob/form?id=${taskScheduleJob.id}"  onclick="return confirmx('你确定要更新该计划任务么?', this.href)">更新</a>
 					<a href="${ctx}/task/taskScheduleJob/delete?id=${taskScheduleJob.id}" onclick="return confirmx('确认要删除该定时任务吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
