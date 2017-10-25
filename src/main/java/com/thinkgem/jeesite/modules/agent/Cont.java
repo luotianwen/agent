@@ -2,6 +2,9 @@ package com.thinkgem.jeesite.modules.agent;
 
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -48,9 +51,9 @@ public class Cont {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     str=EntityUtils.toString(entity, "UTF-8");
-                    System.out.println("--------------------------------------");
+                    /*System.out.println("--------------------------------------");
                     System.out.println("Response content: " + str);
-                    System.out.println("--------------------------------------");
+                    System.out.println("--------------------------------------");*/
                 }
             } finally {
                 response.close();
@@ -73,9 +76,20 @@ public class Cont {
         return str;
     }
         public static void main(String[]arg){
-        Map map=new HashMap();
+            Map map=new HashMap();
             map.put("sign",sign);
             map.put("brandname","阿迪达斯");
-            System.out.println(post(URL,map));
+             String str=post(URL,map);
+           /* System.out.println(str);
+           String str=" [{\"total\":45276,\"rows\":[\n" +
+                   "  {\"colour\":\"红色\",\"id\":2,\"sex\":\"女\",\"division\":\"鞋\",\"brandname\":\"阿迪达斯\",\"marketprice\":799.00,\"listingdate\":\"2014-11-01\",\"articleno\":\"M18120\",\"descr\":\"颜色分类:红色;鞋码:38\",\"quarter\":\"2014Q4\"}\n" +
+                   "]}]";*/
+            List<BackData> j=JSON.parseArray(str,BackData.class);
+            System.out.println(j.get(0).getError_code());
+            System.out.println(j.get(0).getTotal());
+            System.out.println(j.get(0).getRows().get(0).getId());
+            //BackData b=JSON.parseObject(str,BackData.class);
+           // System.out.println(b);
+
         }
 }

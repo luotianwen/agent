@@ -26,7 +26,15 @@
 	
 	<sql id="productJoins">
 	</sql>
-    
+
+	<select id="getPid" resultType="Product">
+		SELECT
+		<include refid="productColumns"/>
+		FROM a_product a
+		<include refid="productJoins"/>
+		WHERE a.pid = #{pid}
+	</select>
+
 	<select id="get" resultType="Product">
 		SELECT 
 			<include refid="productColumns"/>
