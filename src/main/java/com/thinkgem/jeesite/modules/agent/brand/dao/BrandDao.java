@@ -10,9 +10,10 @@ import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 /**
  * 品牌DAO接口
  * @author luotianwen
- * @version 2017-10-25
+ * @version 2017-10-29
  */
 @MyBatisDao
 public interface BrandDao extends CrudDao<Brand> {
-	
+
+    Brand getByName(String warehousename);
 }

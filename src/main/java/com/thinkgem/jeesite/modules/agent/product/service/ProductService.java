@@ -62,38 +62,28 @@ public class ProductService extends CrudService<ProductDao, Product> {
     @Transactional(readOnly = false)
     public int saveOrUpdate() {
 
-        List<Brand> brands = brandService.findList(new Brand());
-        if (brands == null || brands.size() == 0) {
+        Map map = new HashMap();
+        map.put("sign", Cont.SIGN);
+        String str = Cont.post(Cont.PRODUCT, map);
+        List<BackData> j = JSON.parseArray(str, BackData.class);
+        if (j == null || j.size() == 0) {
             return 0;
         }
-        Map map = new HashMap();
-        map.put("sign", Cont.sign);
-
-        for (Brand b : brands) {
-            map.put("brandname", b.getName());
-            String str = Cont.post(Cont.URL, map);
-            List<BackData> j = JSON.parseArray(str, BackData.class);
-            if (j == null || j.size() == 0) {
+        for (BackData bc : j) {
+            if (bc.getRows() == null || bc.getRows().size() == 0) {
                 continue;
             }
-            for (BackData bc : j) {
-                if (bc.getRows() == null || bc.getRows().size() == 0) {
-                    continue;
+            for (Object p1: bc.getRows()) {
+                Product p=(Product)p1;
+                Product p2 = getPid(p.getId());
+                if (p2 == null) {
+                    p.setId(null);
+                } else {
+                    p.setId(p2.getId());
                 }
-                for (Product p : bc.getRows()) {
-                    Product p2 = getPid(p.getId());
-                    if (p2 == null) {
-                        p.setId(null);
-                    } else {
-                        p.setId(p2.getId());
-                    }
-                    save(p);
-
-                }
-
+                save(p);
 
             }
-
         }
         return 1;
     }

@@ -1,18 +1,19 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.agent.order.dao;
+package com.thinkgem.jeesite.modules.agent.stock.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.agent.order.entity.Order;
+import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
 
 /**
- * 代理订单DAO接口
+ * 库存DAO接口
  * @author luotianwen
  * @version 2017-10-29
  */
 @MyBatisDao
-public interface OrderDao extends CrudDao<Order> {
-	
+public interface StockDao extends CrudDao<Stock> {
+
+    Stock getByName(String warehousename, String articleno, String size);
 }

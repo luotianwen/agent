@@ -10,12 +10,16 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 品牌Entity
  * @author luotianwen
- * @version 2017-10-25
+ * @version 2017-10-29
  */
 public class Brand extends DataEntity<Brand> {
 	
 	private static final long serialVersionUID = 1L;
-	private String name;		// 品牌名称
+	private String warehousename;		// 品牌名称
+	private String pickingnum;		// 起配件数
+	private String pickingdate;		// 配货时间
+	private String brands;		// 经营品牌
+	private String pickingrate;		// 配货率
 	
 	public Brand() {
 		super();
@@ -26,12 +30,48 @@ public class Brand extends DataEntity<Brand> {
 	}
 
 	@Length(min=0, max=255, message="品牌名称长度必须介于 0 和 255 之间")
-	public String getName() {
-		return name;
+	public String getWarehousename() {
+		return warehousename;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setWarehousename(String warehousename) {
+		this.warehousename = warehousename;
+	}
+	
+	@Length(min=0, max=20, message="起配件数长度必须介于 0 和 20 之间")
+	public String getPickingnum() {
+		return pickingnum;
+	}
+
+	public void setPickingnum(String pickingnum) {
+		this.pickingnum = pickingnum;
+	}
+	
+	@Length(min=0, max=100, message="配货时间长度必须介于 0 和 100 之间")
+	public String getPickingdate() {
+		return pickingdate;
+	}
+
+	public void setPickingdate(String pickingdate) {
+		this.pickingdate = pickingdate;
+	}
+	
+	@Length(min=0, max=100, message="经营品牌长度必须介于 0 和 100 之间")
+	public String getBrands() {
+		return brands;
+	}
+
+	public void setBrands(String brands) {
+		this.brands = brands;
+	}
+	
+	@Length(min=0, max=100, message="配货率长度必须介于 0 和 100 之间")
+	public String getPickingrate() {
+		return pickingrate;
+	}
+
+	public void setPickingrate(String pickingrate) {
+		this.pickingrate = pickingrate;
 	}
 	
 }

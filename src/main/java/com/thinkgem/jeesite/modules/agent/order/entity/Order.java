@@ -13,7 +13,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 代理订单Entity
  * @author luotianwen
- * @version 2017-10-24
+ * @version 2017-10-29
  */
 public class Order extends DataEntity<Order> {
 	

@@ -9,7 +9,7 @@ public class BackData {
     String error_code;
     String error_info;
     int total;
-    List<Product> rows=new ArrayList<>();
+    List<Object> rows=new ArrayList<>();
 
     public String getError_code() {
         return error_code;
@@ -35,11 +35,11 @@ public class BackData {
         this.total = total;
     }
 
-    public List<Product> getRows() {
+    public List<Object> getRows() {
         return rows;
     }
 
-    public void setRows(List<Product> rows) {
+    public void setRows(List<Object> rows) {
         this.rows = rows;
     }
 }

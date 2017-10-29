@@ -20,7 +20,7 @@ import com.thinkgem.jeesite.modules.agent.order.dao.OrderDetailDao;
 /**
  * 代理订单Service
  * @author luotianwen
- * @version 2017-10-24
+ * @version 2017-10-29
  */
 @Service
 @Transactional(readOnly = true)

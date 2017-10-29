@@ -21,8 +21,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class Cont {
-    public static String sign="e509e958b76ae27326680c09b118c69e";
-    public static String URL="http://open.xingyunyezi.com/api/openapi/getCommodityList.do";
+    public static String SIGN="e509e958b76ae27326680c09b118c69e";
+    //商品
+    public static String PRODUCT="http://open.xingyunyezi.com/api/openapi/getCommodityList.do";
+    //货源
+    public static String BAND="http://open.xingyunyezi.com/api/openapi/getWareHouseNameInfo.do";
+    //库存
+    public static String STOCK="http://open.xingyunyezi.com/api/openapi/getInventoryList.do";
+
     /**
      * 发送 post请求访问本地应用并根据传递参数不同返回不同结果
      */
@@ -77,9 +83,9 @@ public class Cont {
     }
         public static void main(String[]arg){
             Map map=new HashMap();
-            map.put("sign",sign);
-            map.put("brandname","阿迪达斯");
-             String str=post(URL,map);
+            map.put("sign",SIGN);
+
+             String str=post(PRODUCT,map);
            /* System.out.println(str);
            String str=" [{\"total\":45276,\"rows\":[\n" +
                    "  {\"colour\":\"红色\",\"id\":2,\"sex\":\"女\",\"division\":\"鞋\",\"brandname\":\"阿迪达斯\",\"marketprice\":799.00,\"listingdate\":\"2014-11-01\",\"articleno\":\"M18120\",\"descr\":\"颜色分类:红色;鞋码:38\",\"quarter\":\"2014Q4\"}\n" +
@@ -87,7 +93,7 @@ public class Cont {
             List<BackData> j=JSON.parseArray(str,BackData.class);
             System.out.println(j.get(0).getError_code());
             System.out.println(j.get(0).getTotal());
-            System.out.println(j.get(0).getRows().get(0).getId());
+            //System.out.println(j.get(0).getRows().get(0).getId());
             //BackData b=JSON.parseObject(str,BackData.class);
            // System.out.println(b);
 

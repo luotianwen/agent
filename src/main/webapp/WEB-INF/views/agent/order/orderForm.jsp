@@ -131,7 +131,7 @@
 						<thead>
 							<tr>
 								<th class="hide"></th>
-								<th>商品id</th>
+								<th>库存id</th>
 								<th>单价</th>
 								<th>数量</th>
 								<th>金额</th>
@@ -152,7 +152,7 @@
 								<input id="orderDetailList{{idx}}_delFlag" name="orderDetailList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
 							<td>
-								<input id="orderDetailList{{idx}}_productid" name="orderDetailList[{{idx}}].productid" type="text" value="{{row.productid}}" maxlength="32" class="input-small required"/>
+								<input id="orderDetailList{{idx}}_stockid" name="orderDetailList[{{idx}}].stockid" type="text" value="{{row.stockid}}" maxlength="32" class="input-small required"/>
 							</td>
 							<td>
 								<input id="orderDetailList{{idx}}_price" name="orderDetailList[{{idx}}].price" type="text" value="{{row.price}}" class="input-small required"/>

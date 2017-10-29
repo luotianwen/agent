@@ -10,13 +10,13 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 代理订单Entity
  * @author luotianwen
- * @version 2017-10-24
+ * @version 2017-10-29
  */
 public class OrderDetail extends DataEntity<OrderDetail> {
 	
 	private static final long serialVersionUID = 1L;
 	private Order order;		// 订单id 父类
-	private String productid;		// 商品id
+	private String stockid;		// 库存id
 	private String price;		// 单价
 	private String num;		// 数量
 	private String money;		// 金额
@@ -42,13 +42,13 @@ public class OrderDetail extends DataEntity<OrderDetail> {
 		this.order = order;
 	}
 	
-	@Length(min=1, max=32, message="商品id长度必须介于 1 和 32 之间")
-	public String getProductid() {
-		return productid;
+	@Length(min=1, max=32, message="库存id长度必须介于 1 和 32 之间")
+	public String getStockid() {
+		return stockid;
 	}
 
-	public void setProductid(String productid) {
-		this.productid = productid;
+	public void setStockid(String stockid) {
+		this.stockid = stockid;
 	}
 	
 	public String getPrice() {

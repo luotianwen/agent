@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
 /**
  * 品牌Controller
  * @author luotianwen
- * @version 2017-10-25
+ * @version 2017-10-29
  */
 @Controller
 @RequestMapping(value = "${adminPath}/brand/brand")
