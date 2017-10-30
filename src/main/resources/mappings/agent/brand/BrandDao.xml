@@ -91,9 +91,9 @@
 		) VALUES (
 			#{id},
 			#{warehousename},
-			#{createBy.id},
+			1,
 			#{createDate},
-			#{updateBy.id},
+			1,
 			#{updateDate},
 			#{remarks},
 			#{delFlag},
@@ -107,7 +107,7 @@
 	<update id="update">
 		UPDATE a_brand SET 	
 			warehousename = #{warehousename},
-			update_by = #{updateBy.id},
+			update_by = 1,
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			pickingnum = #{pickingnum},

@@ -54,28 +54,37 @@ public class BrandService extends CrudService<BrandDao, Brand> {
     public void delete(Brand brand) {
         super.delete(brand);
     }
+   private int data(int page) {
+       Map map = new HashMap();
+       map.put("sign", Cont.SIGN);
+       String str = Cont.post(Cont.BAND, map);
+       BackData j = JSON.parseObject(str, BackData.class);
 
+       if (j.getRows() == null || j.getRows().size() == 0) {
+           return 0;
+       }
+       for (Object p1 : j.getRows()) {
+           Brand p = JSON.parseObject(p1.toString(), Brand.class);
+           Brand p2 = getByName(p.getWarehousename());
+           if (p2 == null) {
+               p.setId(null);
+           } else {
+               p.setId(p2.getId());
+           }
+           save(p);
+
+       }
+       int tpage = j.getTotal() / 300 + 1;
+       if (page < tpage) {
+           data(page + 1);
+       }
+       return 1;
+
+   }
     @Transactional(readOnly = false)
     public int saveOrUpdate() {
-        Map map = new HashMap();
-        map.put("sign", Cont.SIGN);
-        String str = Cont.post(Cont.BAND, map);
-        BackData j = JSON.parseObject(str, BackData.class);
 
-        if (j.getRows() == null || j.getRows().size() == 0) {
-            return 0;
-        }
-        for (Object p1 : j.getRows()) {
-            Brand p = JSON.parseObject(p1.toString(), Brand.class);
-            Brand p2 = getByName(p.getWarehousename());
-            if (p2 == null) {
-                p.setId(null);
-            } else {
-                p.setId(p2.getId());
-            }
-            save(p);
-
-        }
+            data( 1);
 
         return 1;
 

@@ -61,7 +61,7 @@ public class StockService extends CrudService<StockDao, Stock> {
     @Autowired
     private BrandService brandService;
 
-    public int saveOrUpdate() {
+    private int data(int page) {
 
         List<Brand> brands = brandService.findList(new Brand());
         if (null == brands || 0 == brands.size()) {
@@ -70,6 +70,8 @@ public class StockService extends CrudService<StockDao, Stock> {
         for (Brand b : brands) {
             Map map = new HashMap();
             map.put("sign", Cont.SIGN);
+            map.put("page", page);
+            map.put("rows", 300);
             map.put("wareHouseName", b.getWarehousename());
             String str = Cont.post(Cont.STOCK, map);
             BackData j = JSON.parseObject(str, BackData.class);
@@ -87,10 +89,18 @@ public class StockService extends CrudService<StockDao, Stock> {
                 save(p);
 
             }
+            int tpage = j.getTotal() / 300 + 1;
+            if (page < tpage) {
+                data(page + 1);
+            }
         }
 
         return 1;
     }
 
-}
+    public int saveOrUpdate() {
+        data(1);
+        return 1;
+    }
+
 }
