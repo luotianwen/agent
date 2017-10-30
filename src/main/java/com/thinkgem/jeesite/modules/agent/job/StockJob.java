@@ -3,14 +3,16 @@ package com.thinkgem.jeesite.modules.agent.job;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
 import com.thinkgem.jeesite.modules.agent.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 定时更新仓库信息
  */
+@Component
 public class StockJob {
     @Autowired
     private StockService stockService;
-    public void exect(){
+    public void execute(){
         System.out.println("库存更新开始");
         stockService.saveOrUpdate();
         System.out.println("库存更新结束");

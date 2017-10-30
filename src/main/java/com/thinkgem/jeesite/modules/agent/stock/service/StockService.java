@@ -12,6 +12,7 @@ import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
+import com.thinkgem.jeesite.modules.agent.product.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import com.thinkgem.jeesite.modules.agent.stock.dao.StockDao;
 
 /**
  * 库存Service
+ *
  * @author luotianwen
  * @version 2017-10-29
  */
@@ -33,9 +35,11 @@ public class StockService extends CrudService<StockDao, Stock> {
     public Stock get(String id) {
         return super.get(id);
     }
-	public Stock getByName(String warehousename, String articleno, String size) {
-		return dao.getByName(warehousename,articleno,size);
-	}
+
+    public Stock getByName(String warehousename, String articleno, String size) {
+        return dao.getByName(warehousename, articleno, size);
+    }
+
     public List<Stock> findList(Stock stock) {
         return super.findList(stock);
     }
@@ -66,31 +70,27 @@ public class StockService extends CrudService<StockDao, Stock> {
         for (Brand b : brands) {
             Map map = new HashMap();
             map.put("sign", Cont.SIGN);
-            map.put("wareHouseName",b.getWarehousename());
+            map.put("wareHouseName", b.getWarehousename());
             String str = Cont.post(Cont.STOCK, map);
-            List<BackData> j = JSON.parseArray(str, BackData.class);
-            if (j == null || j.size() == 0) {
+            BackData j = JSON.parseObject(str, BackData.class);
+            if (j.getRows() == null || j.getRows().size() == 0) {
                 return 0;
             }
-            for (BackData bc : j) {
-                if (bc.getRows() == null || bc.getRows().size() == 0) {
-                    continue;
+            for (Object p1 : j.getRows()) {
+                Stock p = JSON.parseObject(p1.toString(), Stock.class);
+                Stock p2 = getByName(p.getWarehousename(), p.getArticleno(), p.getSize());
+                if (p2 == null) {
+                    p.setId(null);
+                } else {
+                    p.setId(p2.getId());
                 }
-                for (Object p1 : bc.getRows()) {
-                    Stock p = (Stock) p1;
-                    Stock p2 = getByName(p.getWarehousename(),p.getArticleno(),p.getSize());
-                    if (p2 == null) {
-                        p.setId(null);
-                    } else {
-                        p.setId(p2.getId());
-                    }
-                    save(p);
+                save(p);
 
-                }
             }
         }
+
         return 1;
-
-
     }
+
+}
 }

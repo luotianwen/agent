@@ -5,6 +5,8 @@ package com.thinkgem.jeesite.modules.agent;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
+import com.thinkgem.jeesite.modules.agent.product.entity.Product;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -86,13 +88,24 @@ public class Cont {
             map.put("sign",SIGN);
 
              String str=post(PRODUCT,map);
-           /* System.out.println(str);
-           String str=" [{\"total\":45276,\"rows\":[\n" +
+            System.out.println(str);
+            BackData j=JSON.parseObject(str, BackData.class);
+
+            if (j.getRows() == null || j.getRows().size() == 0) {
+
+            }
+else{
+
+            for (Object p1 : j.getRows()) {
+                Product p =  JSON.parseObject(p1.toString(),Product.class);
+                System.out.println(p.getArticleno());
+            }}
+           /*String str=" [{\"total\":45276,\"rows\":[\n" +
                    "  {\"colour\":\"红色\",\"id\":2,\"sex\":\"女\",\"division\":\"鞋\",\"brandname\":\"阿迪达斯\",\"marketprice\":799.00,\"listingdate\":\"2014-11-01\",\"articleno\":\"M18120\",\"descr\":\"颜色分类:红色;鞋码:38\",\"quarter\":\"2014Q4\"}\n" +
                    "]}]";*/
-            List<BackData> j=JSON.parseArray(str,BackData.class);
+           /* List<BackData> j=JSON.parseArray(str,BackData.class);
             System.out.println(j.get(0).getError_code());
-            System.out.println(j.get(0).getTotal());
+            System.out.println(j.get(0).getTotal());*/
             //System.out.println(j.get(0).getRows().get(0).getId());
             //BackData b=JSON.parseObject(str,BackData.class);
            // System.out.println(b);

@@ -65,16 +65,12 @@ public class ProductService extends CrudService<ProductDao, Product> {
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
         String str = Cont.post(Cont.PRODUCT, map);
-        List<BackData> j = JSON.parseArray(str, BackData.class);
-        if (j == null || j.size() == 0) {
+        BackData j = JSON.parseObject(str, BackData.class);
+        if (j.getRows() == null || j.getRows().size() == 0) {
             return 0;
         }
-        for (BackData bc : j) {
-            if (bc.getRows() == null || bc.getRows().size() == 0) {
-                continue;
-            }
-            for (Object p1: bc.getRows()) {
-                Product p=(Product)p1;
+            for (Object p1: j.getRows()) {
+                Product p =  JSON.parseObject(p1.toString(),Product.class);
                 Product p2 = getPid(p.getId());
                 if (p2 == null) {
                     p.setId(null);
@@ -84,7 +80,7 @@ public class ProductService extends CrudService<ProductDao, Product> {
                 save(p);
 
             }
-        }
+
         return 1;
     }
 
