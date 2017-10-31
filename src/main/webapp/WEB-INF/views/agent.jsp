@@ -22,6 +22,7 @@
 			<div class="indented">
 				<form id="loginForm" action="/agent/saveadd" method="post">
 					<input id="token" name="token" type="hidden" value="${token}"/>
+					<input id="sex" name="sex" type="hidden" value="1"/>
 					<div>&nbsp;</div>
 					<div class="input-group">
 						<div class="input-row">
@@ -29,18 +30,12 @@
 							<input type="text" name="name" id="name" placeholder="请填写名称">
 						</div>
 						<div class="input-row">
-							<label>性别</label>
-							<input id="sex1" name="sex" type="radio" value="1"/>
-							<label for="sex1">男</label>
-							<input id="sex2" name="sex" type="radio" value="2"/><label for="sex2">女</label>
-						</div>
-						<div class="input-row">
 							<label for="phone">联系电话</label>
-							<input type="phone" name="phone" id="phone" placeholder="请填写联系电话">
+							<input type="text" name="phone" id="phone" placeholder="请填写联系电话">
 						</div>
 						<div class="input-row">
 							<label for="mobile">联系手机</label>
-							<input type="phone" name="mobile" id="mobile" placeholder="请填写联系手机">
+							<input type="text" name="mobile" id="mobile" placeholder="请填写联系手机">
 						</div>
 						<div class="input-row">
 							<label for="address">联系地址</label>
@@ -80,7 +75,6 @@
 <!--- app --->
 <script type="text/javascript">var ctx = '${ctx}';</script>
 <script type="text/javascript" src="${ctxStatic}/jingle/js/app/app.js"></script>
-<!--<script src="http://192.168.2.153:8080/target/target-script-min.js#anonymous"></script>-->
 <script type="text/javascript">
 
     $('body').delegate('#login_section','pageinit',function(){

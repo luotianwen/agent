@@ -51,7 +51,7 @@ public class AgentInterfaceController  extends BaseController {
         }
 
        String  mtoken=(String)request.getSession().getAttribute("token");
-        if(null==token||"".equals(token)||!mtoken.equals(token)){
+        if(null==mtoken||null==token||"".equals(token)||!mtoken.equals(token)){
             map.put("status",1);
             map.put("message","别重复提交");
         }
