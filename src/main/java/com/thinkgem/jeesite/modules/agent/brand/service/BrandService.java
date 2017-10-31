@@ -11,13 +11,18 @@ import com.alibaba.fastjson.JSON;
 import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.product.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.dao.BrandDao;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * 品牌Service
@@ -54,37 +59,52 @@ public class BrandService extends CrudService<BrandDao, Brand> {
     public void delete(Brand brand) {
         super.delete(brand);
     }
-   private int data(int page) {
-       Map map = new HashMap();
-       map.put("sign", Cont.SIGN);
-       String str = Cont.post(Cont.BAND, map);
-       BackData j = JSON.parseObject(str, BackData.class);
 
-       if (j.getRows() == null || j.getRows().size() == 0) {
-           return 0;
-       }
-       for (Object p1 : j.getRows()) {
-           Brand p = JSON.parseObject(p1.toString(), Brand.class);
-           Brand p2 = getByName(p.getWarehousename());
-           if (p2 == null) {
-               p.setId(null);
-           } else {
-               p.setId(p2.getId());
-           }
-           save(p);
+    private void data(int page) {
+        Map map = new HashMap();
+        map.put("sign", Cont.SIGN);
+        map.put("page", page + "");
+        map.put("rows", "300");
+        String str = Cont.post(Cont.BAND, map);
+        System.out.println(str);
+        BackData j = JSON.parseObject(str, BackData.class);
 
-       }
-       int tpage = j.getTotal() / 300 + 1;
-       if (page < tpage) {
-           data(page + 1);
-       }
-       return 1;
+        if (j.getRows() != null && j.getRows().size() > 0) {
 
-   }
-    @Transactional(readOnly = false)
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+
+            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+            try {
+            for (Object p1 : j.getRows()) {
+                Brand p = JSON.parseObject(p1.toString(), Brand.class);
+                Brand p2 = getByName(p.getWarehousename());
+                if (p2 == null) {
+                    p.setId(null);
+                } else {
+                    p.setId(p2.getId());
+                }
+                save(p);
+
+            }
+                transactionManager.commit(status);
+            } catch (Exception e) {
+                transactionManager.rollback(status);
+            }
+            int tpage = j.getTotal() / 300 + 1;
+            if (page < tpage) {
+                data(page + 1);
+            }
+        }
+
+    }
+
+    @Autowired
+    private DataSourceTransactionManager transactionManager;
     public int saveOrUpdate() {
 
-            data( 1);
+        data(1);
 
         return 1;
 

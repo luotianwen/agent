@@ -13,13 +13,17 @@ import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.agent.product.entity.Product;
 import com.thinkgem.jeesite.modules.agent.product.dao.ProductDao;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * 商品管理Service
@@ -53,43 +57,51 @@ public class ProductService extends CrudService<ProductDao, Product> {
     public void save(Product product) {
         super.save(product);
     }
-
+    @Autowired
+    private DataSourceTransactionManager transactionManager;
     @Transactional(readOnly = false)
     public void delete(Product product) {
         super.delete(product);
     }
 
-    private int data(int page) {
+    private void data(int page) {
 
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
-        map.put("page", page);
-        map.put("rows", 300);
+        map.put("page", page + "");
+        map.put("rows", "300");
         String str = Cont.post(Cont.PRODUCT, map);
+        System.out.println(str);
         BackData j = JSON.parseObject(str, BackData.class);
-        if (j.getRows() == null || j.getRows().size() == 0) {
-            return 0;
-        }
+        if (j.getRows() != null && j.getRows().size() > 0) {
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 
-        for (Object p1 : j.getRows()) {
-            Product p = JSON.parseObject(p1.toString(), Product.class);
-            Product p2 = getPid(p.getId());
-            if (p2 == null) {
-                p.setId(null);
-            } else {
-                p.setId(p2.getId());
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+
+            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+            try {
+            for (Object p1 : j.getRows()) {
+                Product p = JSON.parseObject(p1.toString(), Product.class);
+                Product p2 = getPid(p.getId());
+                if (p2 == null) {
+                    p.setId(null);
+                } else {
+                    p.setId(p2.getId());
+                }
+                save(p);
             }
-            save(p);
-
+                transactionManager.commit(status);
+            } catch (Exception e) {
+                transactionManager.rollback(status);
+            }
+            int tpage = j.getTotal() / 300 + 1;
+            if (page < tpage) {
+                data(page + 1);
+            }
         }
-        int tpage = j.getTotal() / 300 + 1;
-        if (page < tpage) {
-            data(page + 1);
-        }
-        return 1;
     }
 
-    @Transactional(readOnly = false)
+
     public int saveOrUpdate() {
         data(1);
         return 1;

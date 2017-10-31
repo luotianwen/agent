@@ -14,13 +14,17 @@ import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
 import com.thinkgem.jeesite.modules.agent.product.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
 import com.thinkgem.jeesite.modules.agent.stock.dao.StockDao;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * 库存Service
@@ -60,46 +64,57 @@ public class StockService extends CrudService<StockDao, Stock> {
 
     @Autowired
     private BrandService brandService;
+    @Autowired
+    private DataSourceTransactionManager transactionManager;
 
-    private int data(int page) {
+    private void data(int page, Brand b) {
 
-        List<Brand> brands = brandService.findList(new Brand());
-        if (null == brands || 0 == brands.size()) {
-            return 0;
-        }
-        for (Brand b : brands) {
-            Map map = new HashMap();
-            map.put("sign", Cont.SIGN);
-            map.put("page", page);
-            map.put("rows", 300);
-            map.put("wareHouseName", b.getWarehousename());
-            String str = Cont.post(Cont.STOCK, map);
-            BackData j = JSON.parseObject(str, BackData.class);
-            if (j.getRows() == null || j.getRows().size() == 0) {
-                return 0;
-            }
-            for (Object p1 : j.getRows()) {
-                Stock p = JSON.parseObject(p1.toString(), Stock.class);
-                Stock p2 = getByName(p.getWarehousename(), p.getArticleno(), p.getSize());
-                if (p2 == null) {
-                    p.setId(null);
-                } else {
-                    p.setId(p2.getId());
+
+        Map map = new HashMap();
+        map.put("sign", Cont.SIGN);
+        map.put("page", page + "");
+        map.put("rows", "300");
+        map.put("wareHouseName", b.getWarehousename());
+        String str = Cont.post(Cont.STOCK, map);
+        System.out.println(str);
+        BackData j = JSON.parseObject(str, BackData.class);
+        if (j.getRows() != null && j.getRows().size() > 0) {
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+
+            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+            try {
+                for (Object p1 : j.getRows()) {
+                    Stock p = JSON.parseObject(p1.toString(), Stock.class);
+                    Stock p2 = getByName(p.getWarehousename(), p.getArticleno(), p.getSize());
+                    if (p2 == null) {
+                        p.setId(null);
+                    } else {
+                        p.setId(p2.getId());
+                    }
+                    save(p);
+
                 }
-                save(p);
-
-            }
-            int tpage = j.getTotal() / 300 + 1;
-            if (page < tpage) {
-                data(page + 1);
+                transactionManager.commit(status);
+            } catch (Exception e) {
+                transactionManager.rollback(status);
             }
         }
-
-        return 1;
+        int tpage = j.getTotal() / 300 + 1;
+        if (page < tpage) {
+            data(page + 1, b);
+        }
     }
 
+
     public int saveOrUpdate() {
-        data(1);
+        List<Brand> brands = brandService.findList(new Brand());
+        if (null != brands && 0 < brands.size()) {
+            for (Brand b : brands) {
+                data(1, b);
+            }
+        }
         return 1;
     }
 

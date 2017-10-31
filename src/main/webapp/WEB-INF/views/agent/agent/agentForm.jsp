@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>代理设置管理</title>
+	<title>代理管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -26,10 +26,10 @@
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/agent/agent/">代理设置列表</a></li>
-		<li class="active"><a href="${ctx}/agent/agent/form?id=${agent.id}">代理设置<shiro:hasPermission name="agent:agent:edit">${not empty agent.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="agent:agent:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
+	<%--<ul class="nav nav-tabs">
+		<li><a href="${ctx}/agent/agent/">代理列表</a></li>
+		<li class="active"><a href="${ctx}/agent/agent/form?id=${agent.id}">代理<shiro:hasPermission name="agent:agent:edit">${not empty agent.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="agent:agent:edit">查看</shiro:lacksPermission></a></li>
+	</ul>--%><br/>
 	<form:form id="inputForm" modelAttribute="agent" action="${ctx}/agent/agent/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
@@ -99,6 +99,18 @@
 			<label class="control-label">折扣id：</label>
 			<div class="controls">
 				<form:input path="discountid" htmlEscape="false" maxlength="32" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">支付宝：</label>
+			<div class="controls">
+				<form:input path="apay" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">联系地址：</label>
+			<div class="controls">
+				<form:input path="address" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

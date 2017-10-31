@@ -71,7 +71,7 @@
 		<property name="prefix" value="${web.view.prefix}"/>
 		<property name="suffix" value="${web.view.suffix}"/>
 	</bean>
-	
+
 	<!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
 	<mvc:default-servlet-handler />
 	
@@ -80,7 +80,7 @@
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
-	
+
 	<!-- 拦截器配置，拦截顺序：先执行后定义的，排在第一位的最后执行。-->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -153,21 +153,21 @@
 		<!-- 加入相关的执行类和方法 -->
 		<property name="jobDetail" ref="timingScheduleBrandJobJobDetail"/>
 		<!-- 设置时间规则 （为了方便测试，设置成一分钟一次。具体的规则见详情）-->
-		<property name="cronExpression" value="0 35 22 * * ? "/>
+		<property name="cronExpression" value="0 51 09 * * ? "/>
 	</bean>
 	<!-- 调度触发器，设置自己想要的时间规则 -->
 	<bean id="timingScheduleProductJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<!-- 加入相关的执行类和方法 -->
 		<property name="jobDetail" ref="timingScheduleProductJobJobDetail"/>
 		<!-- 设置时间规则 （为了方便测试，设置成一分钟一次。具体的规则见详情）-->
-		<property name="cronExpression" value="0 25 22 * * ? "/>
+		<property name="cronExpression" value="0 55 09 * * ? "/>
 	</bean>
 	<!-- 调度触发器，设置自己想要的时间规则 -->
 	<bean id="timingScheduleStockJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<!-- 加入相关的执行类和方法 -->
 		<property name="jobDetail" ref="timingScheduleStockJobJobDetail"/>
 		<!-- 设置时间规则 （为了方便测试，设置成一分钟一次。具体的规则见详情）-->
-		<property name="cronExpression" value="0 25 22 * * ? "/>
+		<property name="cronExpression" value="0 24 11 * * ? "/>
 	</bean>
 	<!-- 加入调度工厂 ,设置调度触发器即可-->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

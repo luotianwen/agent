@@ -7,11 +7,12 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
- * 代理设置Entity
+ * 代理Entity
  * @author luotianwen
- * @version 2017-10-24
+ * @version 2017-10-31
  */
 public class Agent extends DataEntity<Agent> {
 	
@@ -26,6 +27,8 @@ public class Agent extends DataEntity<Agent> {
 	private String password;		// 密码
 	private String state;		// 状态
 	private String discountid;		// 折扣id
+	private String apay;		// 支付宝
+	private String address;		// 联系地址
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
 	
@@ -36,7 +39,7 @@ public class Agent extends DataEntity<Agent> {
 	public Agent(String id){
 		super(id);
 	}
-
+    @Required
 	@Length(min=0, max=100, message="名称长度必须介于 0 和 100 之间")
 	public String getName() {
 		return name;
@@ -54,7 +57,7 @@ public class Agent extends DataEntity<Agent> {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
+	@Required
 	@Length(min=0, max=12, message="联系电话长度必须介于 0 和 12 之间")
 	public String getPhone() {
 		return phone;
@@ -63,7 +66,7 @@ public class Agent extends DataEntity<Agent> {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	@Required
 	@Length(min=0, max=200, message="邮箱长度必须介于 0 和 200 之间")
 	public String getEmail() {
 		return email;
@@ -72,7 +75,7 @@ public class Agent extends DataEntity<Agent> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	@Required
 	@Length(min=0, max=100, message="微信长度必须介于 0 和 100 之间")
 	public String getWeixin() {
 		return weixin;
@@ -81,7 +84,7 @@ public class Agent extends DataEntity<Agent> {
 	public void setWeixin(String weixin) {
 		this.weixin = weixin;
 	}
-	
+	@Required
 	@Length(min=0, max=100, message="联系手机长度必须介于 0 和 100 之间")
 	public String getMobile() {
 		return mobile;
@@ -125,6 +128,24 @@ public class Agent extends DataEntity<Agent> {
 
 	public void setDiscountid(String discountid) {
 		this.discountid = discountid;
+	}
+	@Required
+	@Length(min=0, max=100, message="支付宝长度必须介于 0 和 100 之间")
+	public String getApay() {
+		return apay;
+	}
+
+	public void setApay(String apay) {
+		this.apay = apay;
+	}
+	@Required
+	@Length(min=0, max=200, message="联系地址长度必须介于 0 和 200 之间")
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	public Date getBeginCreateDate() {

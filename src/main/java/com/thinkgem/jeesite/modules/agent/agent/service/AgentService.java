@@ -14,9 +14,9 @@ import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.dao.AgentDao;
 
 /**
- * 代理设置Service
+ * 代理Service
  * @author luotianwen
- * @version 2017-10-24
+ * @version 2017-10-31
  */
 @Service
 @Transactional(readOnly = true)

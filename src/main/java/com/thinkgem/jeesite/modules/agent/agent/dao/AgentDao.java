@@ -8,9 +8,9 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 
 /**
- * 代理设置DAO接口
+ * 代理DAO接口
  * @author luotianwen
- * @version 2017-10-24
+ * @version 2017-10-31
  */
 @MyBatisDao
 public interface AgentDao extends CrudDao<Agent> {

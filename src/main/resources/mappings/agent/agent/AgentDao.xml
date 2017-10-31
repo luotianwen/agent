@@ -19,7 +19,9 @@
 		a.login_name AS "loginName",
 		a.password AS "password",
 		a.state AS "state",
-		a.discountid AS "discountid"
+		a.discountid AS "discountid",
+		a.apay AS "apay",
+		a.address AS "address"
 	</sql>
 	
 	<sql id="agentJoins">
@@ -66,6 +68,9 @@
 			</if>
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
+			</if>
+			<if test="discountid != null and discountid != ''">
+				AND a.discountid = #{discountid}
 			</if>
 		</where>
 		<choose>
@@ -114,7 +119,9 @@
 			login_name,
 			password,
 			state,
-			discountid
+			discountid,
+			apay,
+			address
 		) VALUES (
 			#{id},
 			#{name},
@@ -132,7 +139,9 @@
 			#{loginName},
 			#{password},
 			#{state},
-			#{discountid}
+			#{discountid},
+			#{apay},
+			#{address}
 		)
 	</insert>
 	
@@ -150,7 +159,9 @@
 			login_name = #{loginName},
 			password = #{password},
 			state = #{state},
-			discountid = #{discountid}
+			discountid = #{discountid},
+			apay = #{apay},
+			address = #{address}
 		WHERE id = #{id}
 	</update>
 	

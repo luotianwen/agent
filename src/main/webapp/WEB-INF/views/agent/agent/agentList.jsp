@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>代理设置管理</title>
+	<title>代理管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,8 +18,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/agent/agent/">代理设置列表</a></li>
-		<shiro:hasPermission name="agent:agent:edit"><li><a href="${ctx}/agent/agent/form">代理设置添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/agent/agent/">代理列表</a></li>
+		<shiro:hasPermission name="agent:agent:edit"><li><a href="${ctx}/agent/agent/form">代理添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="agent" action="${ctx}/agent/agent/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -54,6 +54,9 @@
 			<li><label>状态：</label>
 				<form:radiobuttons path="state" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</li>
+			<li><label>折扣id：</label>
+				<form:input path="discountid" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -63,6 +66,7 @@
 		<thead>
 			<tr>
 				<th>名称</th>
+				<th>性别</th>
 				<th>联系电话</th>
 				<th>邮箱</th>
 				<th>微信</th>
@@ -72,6 +76,9 @@
 				<th>备注信息</th>
 				<th>登录名</th>
 				<th>状态</th>
+				<th>折扣id</th>
+				<th>支付宝</th>
+				<th>联系地址</th>
 				<shiro:hasPermission name="agent:agent:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -81,6 +88,9 @@
 				<td><a href="${ctx}/agent/agent/form?id=${agent.id}">
 					${agent.name}
 				</a></td>
+				<td>
+					${fns:getDictLabel(agent.sex, 'sex', '')}
+				</td>
 				<td>
 					${agent.phone}
 				</td>
@@ -108,9 +118,18 @@
 				<td>
 					${fns:getDictLabel(agent.state, 'yes_no', '')}
 				</td>
+				<td>
+					${agent.discountid}
+				</td>
+				<td>
+					${agent.apay}
+				</td>
+				<td>
+					${agent.address}
+				</td>
 				<shiro:hasPermission name="agent:agent:edit"><td>
     				<a href="${ctx}/agent/agent/form?id=${agent.id}">修改</a>
-					<a href="${ctx}/agent/agent/delete?id=${agent.id}" onclick="return confirmx('确认要删除该代理设置吗？', this.href)">删除</a>
+					<a href="${ctx}/agent/agent/delete?id=${agent.id}" onclick="return confirmx('确认要删除该代理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.agent.stock.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 库存DAO接口
@@ -15,5 +16,5 @@ import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
 @MyBatisDao
 public interface StockDao extends CrudDao<Stock> {
 
-    Stock getByName(String warehousename, String articleno, String size);
+    Stock getByName(@Param("warehousename") String warehousename, @Param("articleno") String articleno, @Param("size") String size);
 }
