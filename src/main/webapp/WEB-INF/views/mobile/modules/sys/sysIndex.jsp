@@ -12,10 +12,24 @@
         <ul class="list inset demo-list">
             <li data-icon="next" data-selected="selected">
                 <span class="icon user"></span>
-                <a href="#user_section?test=abc" data-target="section">
+                <a href="#user_section" data-target="section">
                     <strong>用户管理</strong>
                 </a>
             </li>
+            <li data-icon="next" data-selected="selected">
+                <span class="icon phone"></span>
+                <a href="#stock_section" data-target="section">
+                    <strong>库存查询</strong>
+                </a>
+
+            </li>
+            <li data-icon="next" data-selected="selected">
+                <span class="icon book"></span>
+                <a href="#order_section" data-target="section">
+                    <strong>订单管理</strong>
+                </a>
+            </li>
+
         </ul>
         </div>
     </article>

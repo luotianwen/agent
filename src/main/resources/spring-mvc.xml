@@ -92,11 +92,11 @@
 			<mvc:exclude-mapping path="${adminPath}/oa/oaNotify/self/count"/>
 			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
 		</mvc:interceptor>
-		<!-- 手机视图拦截器
+		<!-- 手机视图拦截器-->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.MobileInterceptor" />
-		</mvc:interceptor>-->
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<!-- 支持Shiro对Controller的方法级AOP安全控制 begin-->
@@ -167,7 +167,7 @@
 		<!-- 加入相关的执行类和方法 -->
 		<property name="jobDetail" ref="timingScheduleStockJobJobDetail"/>
 		<!-- 设置时间规则 （为了方便测试，设置成一分钟一次。具体的规则见详情）-->
-		<property name="cronExpression" value="0 24 11 * * ? "/>
+		<property name="cronExpression" value="0 4 13 * * ? "/>
 	</bean>
 	<!-- 加入调度工厂 ,设置调度触发器即可-->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
