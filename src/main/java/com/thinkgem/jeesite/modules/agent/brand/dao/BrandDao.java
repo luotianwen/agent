@@ -16,4 +16,6 @@ import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 public interface BrandDao extends CrudDao<Brand> {
 
     Brand getByName(String warehousename);
+
+    void updateState(Brand brand);
 }

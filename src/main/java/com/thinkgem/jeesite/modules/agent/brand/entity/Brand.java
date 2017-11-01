@@ -20,13 +20,31 @@ public class Brand extends DataEntity<Brand> {
 	private String pickingdate;		// 配货时间
 	private String brands;		// 经营品牌
 	private String pickingrate;		// 配货率
-	
+	private int state;		// 是否更新
+	private String udate;		// 更新时间
+
 	public Brand() {
 		super();
 	}
 
 	public Brand(String id){
 		super(id);
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public String getUdate() {
+		return udate;
+	}
+
+	public void setUdate(String udate) {
+		this.udate = udate;
 	}
 
 	@Length(min=0, max=255, message="品牌名称长度必须介于 0 和 255 之间")
