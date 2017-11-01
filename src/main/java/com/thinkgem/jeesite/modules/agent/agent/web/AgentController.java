@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.agent.agent.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
@@ -21,6 +23,12 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
+
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * 代理设置Controller
@@ -79,5 +87,4 @@ public class AgentController extends BaseController {
 		addMessage(redirectAttributes, "删除代理设置成功");
 		return "redirect:"+Global.getAdminPath()+"/agent/agent/?repage";
 	}
-
 }

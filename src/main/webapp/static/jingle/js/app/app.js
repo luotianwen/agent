@@ -42,7 +42,10 @@ var App = (function(){
             showPageLoading : true,
             remotePage : {
             	'#index_section': ctx,
-            	'#user_section': ctx + '/sys/user'
+            	'#order_section': ctx + '/order/order/list',
+                '#agent_section':'/agent/formadd',
+                '#user_section': ctx + '/sys/user',
+                '#stock_section': ctx + '/stock/stock/list'
             }
         });
        

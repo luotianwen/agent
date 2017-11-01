@@ -54,17 +54,18 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="articleno != null and articleno != ''">
-				AND a.articleno = #{articleno}
+				AND a.articleno LIKE concat('%',#{articleno},'%')
 			</if>
 			<if test="division != null and division != ''">
 				AND a.division = #{division}
 			</if>
 			<if test="brandname != null and brandname != ''">
-				AND a.brandname = #{brandname}
+				AND a.brandname LIKE concat('%',#{brandname},'%')
 			</if>
 			<if test="warehousename != null and warehousename != ''">
-				AND a.warehousename = #{warehousename}
+				AND a.warehousename  LIKE concat('%',#{warehousename},'%')
 			</if>
+
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

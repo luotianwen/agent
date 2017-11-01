@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.agent.stock.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +70,13 @@ public class StockService extends CrudService<StockDao, Stock> {
     private DataSourceTransactionManager transactionManager;
 
     private void data(int page, Brand b) {
-
-
+        try {
+            Thread.sleep(1000*10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String udate=sdf.format(new Date());
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
         map.put("page", page + "");
@@ -80,9 +87,7 @@ public class StockService extends CrudService<StockDao, Stock> {
         BackData j = JSON.parseObject(str, BackData.class);
         if (j.getRows() != null && j.getRows().size() > 0) {
             DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-
             def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
-
             TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
             try {
                 for (Object p1 : j.getRows()) {
@@ -94,8 +99,22 @@ public class StockService extends CrudService<StockDao, Stock> {
                         p.setId(p2.getId());
                     }
                     save(p);
-
                 }
+                b.setUdate(udate);
+                b.setState(1);
+                brandService.updateState(b);
+                transactionManager.commit(status);
+            } catch (Exception e) {
+                transactionManager.rollback(status);
+            }
+        }else{
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+            b.setUdate(udate);
+            b.setState(0);
+            try {
+                 brandService.updateState(b);
                 transactionManager.commit(status);
             } catch (Exception e) {
                 transactionManager.rollback(status);
@@ -109,10 +128,14 @@ public class StockService extends CrudService<StockDao, Stock> {
 
 
     public int saveOrUpdate() {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String udate=sdf.format(new Date());
         List<Brand> brands = brandService.findList(new Brand());
         if (null != brands && 0 < brands.size()) {
             for (Brand b : brands) {
-                data(1, b);
+                if(!udate.equals(b.getUdate())||1==b.getState()) {
+                    data(1, b);
+                }
             }
         }
         return 1;

@@ -46,6 +46,12 @@
 	            	<div>&nbsp;</div>
 	            	<input type="hidden" name="mobileLogin" value="true">
 	                <button id="btn" class="submit block" data-icon="key">登录</button>
+					<div>&nbsp;</div>
+					<a  id="btn2" class="button block" data-target="section">
+						<strong>申请代理</strong>
+					</a>
+
+
 	            </form>
 	        </div>
 	    </article>
@@ -64,6 +70,11 @@
 <script type="text/javascript" src="${ctxStatic}/jingle/js/app/app.js"></script>
 <!--<script src="http://192.168.2.153:8080/target/target-script-min.js#anonymous"></script>-->
 <script type="text/javascript">
+
+    $("#btn2").click(function(){
+        J.Router.goTo('#agent_section');
+    });
+
 var sessionid = '${not empty fns:getPrincipal() ? fns:getPrincipal().sessionid : ""}';
 $('body').delegate('#login_section','pageinit',function(){
 	$("#loginForm").submit(function(){

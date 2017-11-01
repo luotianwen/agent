@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class AgentInterfaceController  extends BaseController {
         String token=generateGUID();
         request.getSession().setAttribute("token",token);
         model.addAttribute("token",token);
-        return "agent";
+        return "modules/sys/agent";
     }
     @RequestMapping(value = "saveadd")
     @ResponseBody
@@ -59,16 +60,54 @@ public class AgentInterfaceController  extends BaseController {
         u.setId("1");
         agent.setCreateBy(u);
         agent.setUpdateBy(u);
-        try {
-            agentService.save(agent);
-            request.getSession().removeAttribute("token");
-        }catch (Exception e){
-            e.printStackTrace();
-            map.put("status",1);
-            map.put("message","保存"+agent.getName()+"代理失败");
-
+        if("true".equals(agent.getSex())){
+            agent.setSex("1");
         }
-
+        else{
+            agent.setSex("2");
+        }
+        Agent agent1=new Agent();
+        agent1.setPhone(agent.getPhone());
+        agent1.setMobile(agent.getMobile());
+        List s=agentService.findList(agent1);
+        if(null==s||s.size()==0){
+            try {
+                agentService.save(agent);
+                request.getSession().removeAttribute("token");
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("status",1);
+                map.put("message","保存"+agent.getName()+"代理失败");
+            }
+        }
+        else{
+            map.put("status",1);
+            map.put("message","手机号已存在");
+        }
+        return renderString(response,map);
+    }
+    @RequestMapping(value = "query")
+    @ResponseBody
+    public String query(Agent agent,  String token,Model model,HttpServletResponse response,HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        Map map=new HashMap();
+        Agent agent1=new Agent();
+        agent1.setPhone(agent.getPhone());
+        agent1.setMobile(agent.getMobile());
+        List<Agent> s=agentService.findList(agent1);
+        if(null==s||s.size()==0){
+            map.put("message","没有此用户");
+        }
+        else{
+            if("1".equals(s.get(0).getState())){
+                map.put("message", "审核通过");
+            }
+            else if("0".equals(s.get(0).getState())){
+                map.put("message", "审核不通过");
+            }
+            else  {
+                map.put("message", "未审核");
+            }
+        }
         return renderString(response,map);
     }
 }

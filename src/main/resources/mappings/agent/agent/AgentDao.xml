@@ -58,7 +58,7 @@
 				AND a.weixin = #{weixin}
 			</if>
 			<if test="mobile != null and mobile != ''">
-				AND a.mobile = #{mobile}
+				or a.mobile = #{mobile}
 			</if>
 			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
 				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
@@ -164,11 +164,13 @@
 			address = #{address}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="delete">
-		UPDATE a_agent SET 
+	<delete id="delete">
+		DELETE  a_agent WHERE id = #{id}
+	</delete>
+	<!--<update id="delete">
+		UPDATE a_agent SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
-	</update>
+	</update>-->
 	
 </mapper>

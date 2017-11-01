@@ -1,29 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%><!DOCTYPE >
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>代理申请</title>
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="stylesheet" href="${ctxStatic}/jingle/css/Jingle.css">
-	<link rel="stylesheet" href="${ctxStatic}/jingle/css/app.css">
-</head>
-<body>
-<div id="aside_container">
-</div>
-<div id="section_container">
-	<section id="agent_section1" class="active">
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+
+	<section id="agent_section" class="active">
 		<header>
 			<nav class="left">
-				<a href="#" data-icon="previous" data-target="back">返回</a>
+				<a href="#index_section?index" data-icon="previous" data-target="back">返回</a>
 			</nav>
-			<h1 class="title">代理申请</h1>
+			<h1 class="title">代理申请1</h1>
 		</header>
-		<article data-scroll="true" id="agent_article1">
+		<article data-scroll="true" id="agent_article">
 			<div class="indented">
-				<form id="agentForm1"   method="post">
+				<form id="agentForm"   method="post">
 					<input id="token" name="token" type="hidden" value="${token}"/>
 
 					<div>&nbsp;</div>
@@ -70,19 +57,6 @@
 			</div>
 		</article>
 	</section>
-</div>
-<!--<script type="text/javascript" src="${ctxStatic}/jingle/js/lib/cordova.js"></script>-->
-<!-- lib -->
-<script type="text/javascript" src="${ctxStatic}/jingle/js/lib/zepto.js"></script>
-<script type="text/javascript" src="${ctxStatic}/jingle/js/lib/iscroll.js"></script>
-<%-- <script type="text/javascript" src="${ctxStatic}/jingle/js/lib/template.min.js"></script> --%>
-<script type="text/javascript" src="${ctxStatic}/jingle/js/lib/Jingle.debug.js"></script>
-<script type="text/javascript" src="${ctxStatic}/jingle/js/lib/zepto.touch2mouse.js"></script>
-<%-- <script type="text/javascript" src="${ctxStatic}/jingle/js/lib/JChart.debug.js"></script> --%>
-<!--- app --->
-<script type="text/javascript">var ctx = '${ctx}';</script>
-<script type="text/javascript" src="${ctxStatic}/jingle/js/app/app.js"></script>
-<!--<script src="http://192.168.2.153:8080/target/target-script-min.js#anonymous"></script>-->
 <script type="text/javascript">
 
     $("#agentbtn").click(function(){
@@ -93,13 +67,13 @@
             J.showToast('请填写联系电话或者联系手机', 'info');
         }
         else{
-            $.post("${ctx}/agent/agent/query", {"phone":phone,"mobile":mobile}, function(data){
+            $.post("/agent/query", {"phone":phone,"mobile":mobile}, function(data){
                 J.showToast(data.message, 'info');
             });
         }
     });
-    $('body').delegate('#agent_section1','pageinit',function(){
-        $("#agentForm1").submit(function(){
+    $('body').delegate('#agent_section','pageinit',function(){
+        $("#agentForm").submit(function(){
             if ($('#name').val() == ''){
                 J.showToast('请填写名称', 'info');
             }else if ($('#phone').val() == ''){
@@ -122,8 +96,8 @@
                 J.showToast('请填写邮箱', 'info');
             }
             else{
-                var loginForm = $("#agentForm1");
-                $.post("${ctx}/agent/agent/saveadd", loginForm.serializeArray(), function(data){
+                var loginForm = $("#agentForm");
+                $.post("/agent/saveadd", loginForm.serializeArray(), function(data){
                     if(data.status==0){
                         J.showToast('保存成功！', 'success');
                     }
@@ -136,11 +110,9 @@
             return false;
         });
     });
-    $('body').delegate('#agent_section1','pageshow',function(){
+    $('body').delegate('#agent_section','pageshow',function(){
 
-        $('#agent_article1').addClass('active');
+        $('#agent_article').addClass('active');
 
     });
 </script>
-</body>
-</html>

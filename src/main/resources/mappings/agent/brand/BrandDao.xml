@@ -14,7 +14,9 @@
 		a.pickingnum AS "pickingnum",
 		a.pickingdate AS "pickingdate",
 		a.brands AS "brands",
-		a.pickingrate AS "pickingrate"
+		a.pickingrate AS "pickingrate",
+		a.state AS "state",
+		a.udate AS "udate"
 	</sql>
 	
 	<sql id="brandJoins">
@@ -43,7 +45,7 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="warehousename != null and warehousename != ''">
-				AND a.warehousename = #{warehousename}
+				AND a.warehousename  LIKE concat('%',#{warehousename},'%')
 			</if>
 		</where>
 		<choose>
@@ -122,5 +124,12 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+	<update id="updateState">
+		UPDATE a_brand SET
+		state = #{state}
+		,
+		udate = #{udate}
+		WHERE id = #{id}
+	</update>
+
 </mapper>

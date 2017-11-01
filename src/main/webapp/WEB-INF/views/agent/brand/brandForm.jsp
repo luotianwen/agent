@@ -27,14 +27,14 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/brand/brand/">品牌列表</a></li>
-		<li class="active"><a href="${ctx}/brand/brand/form?id=${brand.id}">品牌<shiro:hasPermission name="brand:brand:edit">${not empty brand.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="brand:brand:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/brand/brand/">货源仓库列表</a></li>
+		<li class="active"><a href="${ctx}/brand/brand/form?id=${brand.id}">货源仓库<shiro:hasPermission name="brand:brand:edit">${not empty brand.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="brand:brand:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="brand" action="${ctx}/brand/brand/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">品牌名称：</label>
+			<label class="control-label">货源仓库名称：</label>
 			<div class="controls">
 				<form:input path="warehousename" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>

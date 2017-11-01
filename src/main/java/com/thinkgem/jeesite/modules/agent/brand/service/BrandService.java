@@ -60,6 +60,11 @@ public class BrandService extends CrudService<BrandDao, Brand> {
         super.delete(brand);
     }
 
+
+    public void updateState(Brand brand) {
+         dao.updateState(brand);
+    }
+
     private void data(int page) {
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
