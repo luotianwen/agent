@@ -43,7 +43,7 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="warehousename != null and warehousename != ''">
-				AND a.warehousename = #{warehousename}
+				AND a.warehousename  LIKE concat('%',#{warehousename},'%')
 			</if>
 		</where>
 		<choose>

@@ -131,6 +131,7 @@
 				</td>
 				<shiro:hasPermission name="product:product:edit"><td>
     				<a href="${ctx}/product/product/form?id=${product.id}">修改</a>
+					<a href="${ctx}/stock/stock/list?articleno=${product.articleno}">查看库存</a>
 					<a href="${ctx}/product/product/delete?id=${product.id}" onclick="return confirmx('确认要删除该商品管理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
