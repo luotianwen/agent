@@ -43,6 +43,8 @@ var App = (function(){
             remotePage : {
             	'#index_section': ctx,
             	'#order_section': ctx + '/order/list',
+                '#ordersave_section': ctx + '/order/qf',
+                '#orderquery_section': ctx + '/order/query',
                 '#agent_section':'/agent/formadd',
                 '#user_section': ctx + '/sys/user',
                 '#stock_section': ctx + '/stock/stock/query'
