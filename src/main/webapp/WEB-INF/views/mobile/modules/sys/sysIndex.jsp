@@ -10,12 +10,12 @@
     <article class="active" data-scroll="true">
         <div style="padding: 10px 0 20px;">
         <ul class="list inset demo-list">
-            <li data-icon="next" data-selected="selected">
+           <%-- <li data-icon="next" data-selected="selected">
                 <span class="icon user"></span>
                 <a href="#user_section" data-target="section">
                     <strong>用户管理</strong>
                 </a>
-            </li>
+            </li>--%>
             <li data-icon="next" data-selected="selected">
                 <span class="icon phone"></span>
                 <a href="#stock_section" data-target="section">

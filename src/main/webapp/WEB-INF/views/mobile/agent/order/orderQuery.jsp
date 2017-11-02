@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<section id="stock_section" >
+<section id="orderquery_section" >
     <header>
         <nav class="left">
             <a href="#" data-icon="previous" data-target="back">Back</a>
@@ -26,7 +26,7 @@
         </div>
     </article>
     <script type="text/javascript">
-        $('body').delegate('#stock_section','pageinit',function(){
+        $('body').delegate('#orderquery_section','pageinit',function(){
             $("#stockForm").submit(function(){
                 if ($('#articleno').val() == ''){
                     J.showToast('请填写货号', 'info');
@@ -41,7 +41,7 @@
                 return false;
             });
         });
-        $('body').delegate('#stock_section','pageshow',function(){
+        $('body').delegate('#orderquery_section','pageshow',function(){
             $('#stock_article').addClass('active');
         });
     </script>

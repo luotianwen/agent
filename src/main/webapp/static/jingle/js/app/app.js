@@ -42,7 +42,7 @@ var App = (function(){
             showPageLoading : true,
             remotePage : {
             	'#index_section': ctx,
-            	'#order_section': ctx + '/order/order/list',
+            	'#order_section': ctx + '/order/list',
                 '#agent_section':'/agent/formadd',
                 '#user_section': ctx + '/sys/user',
                 '#stock_section': ctx + '/stock/stock/query'
