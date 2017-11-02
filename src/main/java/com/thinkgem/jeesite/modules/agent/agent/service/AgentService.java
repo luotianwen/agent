@@ -5,6 +5,13 @@ package com.thinkgem.jeesite.modules.agent.agent.service;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +28,8 @@ import com.thinkgem.jeesite.modules.agent.agent.dao.AgentDao;
 @Service
 @Transactional(readOnly = true)
 public class AgentService extends CrudService<AgentDao, Agent> {
-
+	@Autowired
+	private SystemService systemService;
 	public Agent get(String id) {
 		return super.get(id);
 	}
@@ -36,12 +44,34 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 	
 	@Transactional(readOnly = false)
 	public void save(Agent agent) {
+
+		if("1".equals(agent.getState())&& StringUtils.isEmpty(agent.getUserid())){
+			saveUser(agent);
+		}
 		super.save(agent);
 	}
-	
+	private void saveUser(Agent agent){
+		User user=new User();
+		user.setPassword(SystemService.entryptPassword(agent.getPassword()));
+		user.setLoginName(agent.getLoginName());
+		user.setCompany(new Office("1"));
+		user.setOffice(new Office("2"));
+		user.setName(agent.getName());
+		List<Role> roleList = Lists.newArrayList();
+		Role r=new Role();
+		r.setId("53a18b73a2934535b20de15a3e9e8e17");
+		roleList.add(r);
+		user.setRoleList(roleList);
+		// 保存用户信息
+		systemService.saveUser(user);
+		agent.setUserid(user.getId());
+	}
 	@Transactional(readOnly = false)
 	public void delete(Agent agent) {
 		super.delete(agent);
 	}
-	
+
+	public Agent getUserId(String id) {
+		return  dao.getUserId(id);
+	}
 }

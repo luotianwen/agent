@@ -31,7 +31,35 @@ public class Agent extends DataEntity<Agent> {
 	private String address;		// 联系地址
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
-	
+
+	private String discount;		// 折扣
+	private String discountName;		// 折扣名称
+	private String userid;
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(String discount) {
+		this.discount = discount;
+	}
+
+	public String getDiscountName() {
+		return discountName;
+	}
+
+	public void setDiscountName(String discountName) {
+		this.discountName = discountName;
+	}
+
 	public Agent() {
 		super();
 	}

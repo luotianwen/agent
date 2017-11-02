@@ -36,7 +36,7 @@
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="name" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -48,25 +48,25 @@
 		<div class="control-group">
 			<label class="control-label">联系电话：</label>
 			<div class="controls">
-				<form:input path="phone" htmlEscape="false" maxlength="12" class="input-xlarge "/>
+				<form:input path="phone" htmlEscape="false" maxlength="12" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">邮箱：</label>
 			<div class="controls">
-				<form:input path="email" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="email" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">微信：</label>
 			<div class="controls">
-				<form:input path="weixin" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="weixin" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">联系手机：</label>
 			<div class="controls">
-				<form:input path="mobile" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="mobile" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -95,24 +95,32 @@
 				<form:radiobuttons path="state" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">折扣id：</label>
-			<div class="controls">
-				<form:input path="discountid" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">支付宝：</label>
 			<div class="controls">
-				<form:input path="apay" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="apay" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">联系地址：</label>
 			<div class="controls">
-				<form:input path="address" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="address" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
 			</div>
 		</div>
+
+		<div class="control-group">
+			<label class="control-label">代理：</label>
+			<div class="controls">
+
+				<form:select path="discountid" class="input-medium">
+					<form:option value="" label="wu"/>
+					<form:options items="${s}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
+
+			</div>
+		</div>
+
 		<div class="form-actions">
 			<shiro:hasPermission name="agent:agent:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

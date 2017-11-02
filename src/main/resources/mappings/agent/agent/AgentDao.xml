@@ -21,12 +21,23 @@
 		a.state AS "state",
 		a.discountid AS "discountid",
 		a.apay AS "apay",
-		a.address AS "address"
+		a.address AS "address",
+		a.userid AS "userid",
+		d.discount AS "discount",
+		d.name AS "discountName"
 	</sql>
 	
 	<sql id="agentJoins">
+		left join a_discount d on d.id=a.discountid
 	</sql>
-    
+
+	<select id="getUserId" resultType="Agent">
+		SELECT
+		<include refid="agentColumns"/>
+		FROM a_agent a
+		<include refid="agentJoins"/>
+		WHERE a.userid = #{userid}
+	</select>
 	<select id="get" resultType="Agent">
 		SELECT 
 			<include refid="agentColumns"/>
@@ -44,9 +55,7 @@
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+					 concat('%',#{name},'%') 
 			</if>
 			<if test="phone != null and phone != ''">
 				AND a.phone = #{phone}
@@ -121,6 +130,7 @@
 			state,
 			discountid,
 			apay,
+			userid,
 			address
 		) VALUES (
 			#{id},
@@ -141,6 +151,7 @@
 			#{state},
 			#{discountid},
 			#{apay},
+			#{userid},
 			#{address}
 		)
 	</insert>

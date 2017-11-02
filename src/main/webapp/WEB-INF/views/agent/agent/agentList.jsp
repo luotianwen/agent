@@ -54,9 +54,7 @@
 			<li><label>状态：</label>
 				<form:radiobuttons path="state" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</li>
-			<li><label>折扣id：</label>
-				<form:input path="discountid" htmlEscape="false" maxlength="32" class="input-medium"/>
-			</li>
+
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -76,7 +74,8 @@
 				<th>备注信息</th>
 				<th>登录名</th>
 				<th>状态</th>
-				<th>折扣id</th>
+				<th>折扣</th>
+				<th>折扣名称</th>
 				<th>支付宝</th>
 				<th>联系地址</th>
 				<shiro:hasPermission name="agent:agent:edit"><th>操作</th></shiro:hasPermission>
@@ -119,7 +118,10 @@
 					${fns:getDictLabel(agent.state, 'yes_no', '')}
 				</td>
 				<td>
-					${agent.discountid}
+					${agent.discount}
+				</td>
+				<td>
+					${agent.discountName}
 				</td>
 				<td>
 					${agent.apay}
@@ -128,7 +130,7 @@
 					${agent.address}
 				</td>
 				<shiro:hasPermission name="agent:agent:edit"><td>
-    				<a href="${ctx}/agent/agent/form?id=${agent.id}">修改</a>
+    				<a href="${ctx}/agent/agent/form?id=${agent.id}">s</a>
 					<a href="${ctx}/agent/agent/delete?id=${agent.id}" onclick="return confirmx('确认要删除该代理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

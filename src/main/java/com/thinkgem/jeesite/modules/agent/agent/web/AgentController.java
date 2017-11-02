@@ -6,6 +6,8 @@ package com.thinkgem.jeesite.modules.agent.agent.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.modules.agent.discount.entity.Discount;
+import com.thinkgem.jeesite.modules.agent.discount.service.DiscountService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,8 @@ public class AgentController extends BaseController {
 
 	@Autowired
 	private AgentService agentService;
-	
+	@Autowired
+	private DiscountService discountService;
 	@ModelAttribute
 	public Agent get(@RequestParam(required=false) String id) {
 		Agent entity = null;
@@ -66,6 +69,8 @@ public class AgentController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Agent agent, Model model) {
 		model.addAttribute("agent", agent);
+		List<Discount> s=discountService.findList(new Discount());
+		model.addAttribute("s", s);
 		return "agent/agent/agentForm";
 	}
 
@@ -74,6 +79,12 @@ public class AgentController extends BaseController {
 	public String save(Agent agent, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, agent)){
 			return form(agent, model);
+		}
+		if("1".equals(agent.getState())){
+			if(StringUtils.isEmpty(agent.getDiscountid())){
+				addMessage(model,"代理bixutianxie");
+				return form(agent, model);
+			}
 		}
 		agentService.save(agent);
 		addMessage(redirectAttributes, "保存代理设置成功");
@@ -87,4 +98,5 @@ public class AgentController extends BaseController {
 		addMessage(redirectAttributes, "删除代理设置成功");
 		return "redirect:"+Global.getAdminPath()+"/agent/agent/?repage";
 	}
+
 }

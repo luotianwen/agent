@@ -45,7 +45,7 @@ var App = (function(){
             	'#order_section': ctx + '/order/order/list',
                 '#agent_section':'/agent/formadd',
                 '#user_section': ctx + '/sys/user',
-                '#stock_section': ctx + '/stock/stock/list'
+                '#stock_section': ctx + '/stock/stock/query'
             }
         });
        

@@ -6,6 +6,12 @@ package com.thinkgem.jeesite.modules.agent.stock.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
+import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
+import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +28,8 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
 import com.thinkgem.jeesite.modules.agent.stock.service.StockService;
 
+import java.util.List;
+
 /**
  * 库存Controller
  * @author luotianwen
@@ -30,7 +38,8 @@ import com.thinkgem.jeesite.modules.agent.stock.service.StockService;
 @Controller
 @RequestMapping(value = "${adminPath}/stock/stock")
 public class StockController extends BaseController {
-
+	@Autowired
+	private AgentService agentService;
 	@Autowired
 	private StockService stockService;
 	
@@ -79,5 +88,39 @@ public class StockController extends BaseController {
 		addMessage(redirectAttributes, "删除库存成功");
 		return "redirect:"+Global.getAdminPath()+"/stock/stock/?repage";
 	}
+	@RequiresPermissions("stock:stock:view")
+	@RequestMapping(value = {"query"})
+	public String query(Stock stock, HttpServletRequest request, HttpServletResponse response, Model model) {
 
+		return "agent/stock/stockList";
+	}
+
+	@RequiresPermissions("stock:stock:view")
+	@RequestMapping(value = {"data"})
+	public String data(Stock stock, HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(StringUtils.isEmpty(stock.getArticleno())){
+			return "agent/stock/data";
+		}
+		List<Stock> sList = Lists.newArrayList();
+		User user =UserUtils.getUser();
+		Agent agent=agentService.getUserId(user.getId());
+		if(null!=agent&&!StringUtils.isEmpty(agent.getDiscountid())) {
+			Page<Stock> page = stockService.findPage(new Page<Stock>(request, response), stock);
+			List<Stock> list=page.getList();
+			if (null != list && list.size() > 0) {
+				for (Stock s : list) {
+					double sd=Double.parseDouble(s.getDiscount());
+					double sm=Double.parseDouble(s.getMarketprice());
+					double ad=Double.parseDouble(agent.getDiscount());
+					double p=sm*(sd+ad)/10;
+					s.setDiscount((sd+ad)+"");
+					s.setPrice(p+"");
+					sList.add(s);
+				}
+			}
+			page.setList(sList);
+			model.addAttribute("page", page);
+		}
+		return "agent/stock/data";
+	}
 }
