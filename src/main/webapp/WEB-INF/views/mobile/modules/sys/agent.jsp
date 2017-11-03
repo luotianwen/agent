@@ -6,7 +6,7 @@
 			<nav class="left">
 				<a href="#index_section?index" data-icon="previous" data-target="back">返回</a>
 			</nav>
-			<h1 class="title">代理申请1</h1>
+			<h1 class="title">代理申请</h1>
 		</header>
 		<article data-scroll="true" id="agent_article">
 			<div class="indented">
@@ -74,38 +74,42 @@
     });
     $('body').delegate('#agent_section','pageinit',function(){
         $("#agentForm").submit(function(){
-            if ($('#name').val() == ''){
-                J.showToast('请填写名称', 'info');
-            }else if ($('#phone').val() == ''){
-                J.showToast('请填写联系电话', 'info');
-            }
-            else if ($('#mobile').val() == ''){
-                J.showToast('请填写联系手机', 'info');
-            }
+            if (sessionid != '') {
+                if ($('#name').val() == '') {
+                    J.showToast('请填写名称', 'info');
+                } else if ($('#phone').val() == '') {
+                    J.showToast('请填写联系电话', 'info');
+                }
+                else if ($('#mobile').val() == '') {
+                    J.showToast('请填写联系手机', 'info');
+                }
 
-            else if ($('#address').val() == ''){
-                J.showToast('请填写联系地址', 'info');
-            }
-            else if ($('#apay').val() == ''){
-                J.showToast('请填写支付宝', 'info');
-            }
-            else if ($('#weixin').val() == ''){
-                J.showToast('请填写微信', 'info');
-            }
-            else if ($('#email').val() == ''){
-                J.showToast('请填写邮箱', 'info');
-            }
-            else{
-                var loginForm = $("#agentForm");
-                $.post("/agent/saveadd", loginForm.serializeArray(), function(data){
-                    if(data.status==0){
-                        J.showToast('保存成功！', 'success');
-                    }
-                    else{
-                        J.showToast(data.message, 'error');
-                    }
+                else if ($('#address').val() == '') {
+                    J.showToast('请填写联系地址', 'info');
+                }
+                else if ($('#apay').val() == '') {
+                    J.showToast('请填写支付宝', 'info');
+                }
+                else if ($('#weixin').val() == '') {
+                    J.showToast('请填写微信', 'info');
+                }
+                else if ($('#email').val() == '') {
+                    J.showToast('请填写邮箱', 'info');
+                }
+                else {
+                    var loginForm = $("#agentForm");
+                    J.showMask();
+                    $.post("/agent/saveadd", loginForm.serializeArray(), function (data) {
+                        J.hideMask();
+                        if (data.status == 0) {
+                            J.showToast('保存成功！', 'success');
+                        }
+                        else {
+                            J.showToast(data.message, 'error');
+                        }
 
-                });
+                    });
+                }
             }
             return false;
         });

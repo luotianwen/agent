@@ -5,21 +5,21 @@
         <nav class="left">
             <a href="#" data-icon="previous" data-target="back">Back</a>
         </nav>
-        <h1 class="title">库存查询</h1>
+        <h1 class="title">订单查询</h1>
     </header>
 
 
-    <article class="active" data-scroll="true" id="stock_article">
-        <form id="stockForm"   >
+    <article class="active" data-scroll="true" id="orderquery_article">
+        <form id="orderqueryForm"   >
             <div class="input-group">
                 <div class="input-row">
-                    <label for="articleno">货号</label>
-                    <input type="text" name="articleno" id="articleno"  value="${stock.articleno}" placeholder="请填写账号">
+                    <label for="onumbers">订单号</label>
+                    <input type="text" name="onumbers" id="onumbers"  value="${order.onumber}" placeholder="请填写订单号">
                 </div>
             </div>
-            <button id="btn" class="submit block" data-icon="key">query</button>
+            <button id="btn" class="submit block" data-icon="key">查询</button>
         </form>
-        <div style="padding: 2px;" id="data">
+        <div style="padding: 2px;" id="orderdata">
 
 
 
@@ -27,22 +27,18 @@
     </article>
     <script type="text/javascript">
         $('body').delegate('#orderquery_section','pageinit',function(){
-            $("#stockForm").submit(function(){
-                if ($('#articleno').val() == ''){
-                    J.showToast('请填写货号', 'info');
-                    return false;
-                }
-                else{
-                    var stockForm = $("#stockForm");
-                    $.post("${ctx}/stock/stock/data", stockForm.serializeArray(), function(data){
-                        $('#data').html(data);
-                    });
-                }
+            $("#orderqueryForm").submit(function(){
+                J.showMask();
+                var orderForm = $("#orderqueryForm");
+                $.post("${ctx}/order/data", {onumber:$("#onumbers").val()}, function(data){
+                    J.hideMask();
+                    $('#orderdata').html(data);
+                });
                 return false;
             });
         });
         $('body').delegate('#orderquery_section','pageshow',function(){
-            $('#stock_article').addClass('active');
+            $('#orderquery_article').addClass('active');
         });
     </script>
 </section>

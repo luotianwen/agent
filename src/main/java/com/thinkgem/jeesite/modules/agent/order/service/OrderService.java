@@ -5,34 +5,25 @@ package com.thinkgem.jeesite.modules.agent.order.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.order.entity.Order;
 import com.thinkgem.jeesite.modules.agent.order.dao.OrderDao;
-import com.thinkgem.jeesite.modules.agent.order.entity.OrderDetail;
-import com.thinkgem.jeesite.modules.agent.order.dao.OrderDetailDao;
 
 /**
  * 代理订单Service
  * @author luotianwen
- * @version 2017-10-29
+ * @version 2017-11-03
  */
 @Service
 @Transactional(readOnly = true)
 public class OrderService extends CrudService<OrderDao, Order> {
 
-	@Autowired
-	private OrderDetailDao orderDetailDao;
-	
 	public Order get(String id) {
-		Order order = super.get(id);
-		order.setOrderDetailList(orderDetailDao.findList(new OrderDetail(order)));
-		return order;
+		return super.get(id);
 	}
 	
 	public List<Order> findList(Order order) {
@@ -46,29 +37,11 @@ public class OrderService extends CrudService<OrderDao, Order> {
 	@Transactional(readOnly = false)
 	public void save(Order order) {
 		super.save(order);
-		for (OrderDetail orderDetail : order.getOrderDetailList()){
-			if (orderDetail.getId() == null){
-				continue;
-			}
-			if (OrderDetail.DEL_FLAG_NORMAL.equals(orderDetail.getDelFlag())){
-				if (StringUtils.isBlank(orderDetail.getId())){
-					orderDetail.setOrder(order);
-					orderDetail.preInsert();
-					orderDetailDao.insert(orderDetail);
-				}else{
-					orderDetail.preUpdate();
-					orderDetailDao.update(orderDetail);
-				}
-			}else{
-				orderDetailDao.delete(orderDetail);
-			}
-		}
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Order order) {
 		super.delete(order);
-		orderDetailDao.delete(new OrderDetail(order));
 	}
 	
 }

@@ -8,16 +8,16 @@
         </nav>
         <h1 class="title">订单</h1>
     </header>
-    <article data-scroll="true" id="agent_article">
+    <article data-scroll="true" id="ordersave_article">
         <div class="indented">
             <form id="orderForm"   method="post">
-                <input id="otoken" name="otoken" type="hidden" value="${token}"/>
+                <input id="otoken" name="otoken" type="hidden" value="${otoken}"/>
 
                 <div>&nbsp;</div>
                 <div class="input-group">
                     <div class="input-row">
-                        <label for="name">货号</label>
-                        <input type="text" name="name" id="name" placeholder="请填写名称">
+                        <label for="articleno">货号</label>
+                        <input type="text" name="articleno" id="articleno" placeholder="请填写货号">
                     </div>
                     <div class="input-row">
                         <label for="num">数量</label>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="input-row">
                         <label for="phone">联系电话</label>
-                        <input type="phone" name="phone" id="phone" placeholder="请填写联系电话">
+                        <input type="text" name="phone" id="phone" placeholder="请填写联系电话">
                     </div>
                     <div class="input-row">
                         <label for="address">联系地址</label>
@@ -45,12 +45,11 @@
                     </div>
                     <div class="input-row">
                         <label for="remarks">备注</label>
-                        <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+                        <input type="text" name="remarks" id="remarks" placeholder="请填写备注">
                     </div>
-
                 </div>
                 <div>&nbsp;</div>
-                <button   class="submit block" data-icon="key">确认</button>
+                <button   class="submit block" data-icon="key">确认下单</button>
 
             </form>
         </div>
@@ -60,32 +59,34 @@
 
     $('body').delegate('#ordersave_section','pageinit',function(){
         $("#orderForm").submit(function(){
-            if ($('#name').val() == ''){
-                J.showToast('请填写名称', 'info');
+            if ($('#articleno').val() == ''){
+                J.showToast('请填写货号', 'info');
+            }
+            else if ($('#num').val() == ''){
+                J.showToast('请填写数量', 'info');
+            }
+            else if ($('#size').val() == ''){
+                J.showToast('请填写尺码', 'info');
+            }
+            else if ($('#sex').val() == ''){
+                J.showToast('请填写性别', 'info');
+            }
+            else if ($('#courier').val() == ''){
+                J.showToast('请填写快递', 'info');
             }else if ($('#phone').val() == ''){
                 J.showToast('请填写联系电话', 'info');
             }
-            else if ($('#mobile').val() == ''){
-                J.showToast('请填写联系手机', 'info');
-            }
-
             else if ($('#address').val() == ''){
                 J.showToast('请填写联系地址', 'info');
             }
-            else if ($('#apay').val() == ''){
-                J.showToast('请填写支付宝', 'info');
-            }
-            else if ($('#weixin').val() == ''){
-                J.showToast('请填写微信', 'info');
-            }
-            else if ($('#email').val() == ''){
-                J.showToast('请填写邮箱', 'info');
-            }
             else{
+                J.showMask();
                 var loginForm = $("#orderForm");
-                $.post(ctx+"/order/order/qfsave", loginForm.serializeArray(), function(data){
+                $.post(ctx+"/order/qfsave", loginForm.serializeArray(), function(data){
+                    J.hideMask();
                     if(data.status==0){
-                        J.showToast('保存成功！', 'success');
+                        $("#orderForm").reset();
+                        J.showToast('下单成功！联系商务客服进行支付和发货', 'success',0);
                     }
                     else{
                         J.showToast(data.message, 'error');
@@ -98,7 +99,7 @@
     });
     $('body').delegate('#ordersave_section','pageshow',function(){
 
-        $('#agent_article').addClass('active');
+        $('#ordersave_article').addClass('active');
 
     });
 </script>

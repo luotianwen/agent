@@ -45,7 +45,30 @@
 		<include refid="stockJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+
+	<select id="findList2" resultType="Stock">
+		SELECT
+		MAX(a.discount) as discount,a.brandname,a.size,a.sex,a.marketprice,sum(a.innernum)as innernum ,a.price,a.id
+		FROM a_stock a
+		<include refid="stockJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno =#{articleno}
+			</if>
+			<if test="size != null and size != ''">
+				AND a.size=#{size}
+			</if>
+			<if test="sex != null and sex != ''">
+				AND a.sex =#{sex}
+			</if>
+			<if test="brandname != null and brandname != ''">
+				AND a.brandname LIKE concat('%',#{brandname},'%')
+			</if>
+		</where>
+		GROUP BY a.articleno,a.size,a.sex
+
+	</select>
 	<select id="findList" resultType="Stock">
 		SELECT 
 			<include refid="stockColumns"/>

@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.agent.order.service.OrderService;
 /**
  * 代理订单Controller
  * @author luotianwen
- * @version 2017-10-29
+ * @version 2017-11-03
  */
 @Controller
 @RequestMapping(value = "${adminPath}/order/order")

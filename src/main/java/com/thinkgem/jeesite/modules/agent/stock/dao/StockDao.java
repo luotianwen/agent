@@ -8,6 +8,8 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 库存DAO接口
  * @author luotianwen
@@ -17,4 +19,6 @@ import org.apache.ibatis.annotations.Param;
 public interface StockDao extends CrudDao<Stock> {
 
     Stock getByName(@Param("warehousename") String warehousename, @Param("articleno") String articleno, @Param("size") String size);
+
+    List<Stock> findList2(Stock entity);
 }

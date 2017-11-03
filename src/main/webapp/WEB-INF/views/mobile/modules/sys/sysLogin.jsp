@@ -86,7 +86,9 @@ $('body').delegate('#login_section','pageinit',function(){
 			J.showToast('请填写验证码', 'info');
 		}else{
 			var loginForm = $("#loginForm");
+            J.showMask();
 			$.post(loginForm.attr('action'), loginForm.serializeArray(), function(data){
+			    J.hideMask();
 				if (data && data.sessionid){
 					sessionid = data.sessionid;
 					J.showToast('登录成功！', 'success');

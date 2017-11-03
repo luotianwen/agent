@@ -28,6 +28,8 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
 import com.thinkgem.jeesite.modules.agent.stock.service.StockService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -105,16 +107,18 @@ public class StockController extends BaseController {
 		User user =UserUtils.getUser();
 		Agent agent=agentService.getUserId(user.getId());
 		if(null!=agent&&!StringUtils.isEmpty(agent.getDiscountid())) {
-			Page<Stock> page = stockService.findPage(new Page<Stock>(request, response), stock);
+			Page<Stock> page = stockService.findPage2(new Page<Stock>(request, response), stock);
 			List<Stock> list=page.getList();
 			if (null != list && list.size() > 0) {
 				for (Stock s : list) {
-					double sd=Double.parseDouble(s.getDiscount());
-					double sm=Double.parseDouble(s.getMarketprice());
-					double ad=Double.parseDouble(agent.getDiscount());
-					double p=sm*(sd+ad)/10;
-					s.setDiscount((sd+ad)+"");
-					s.setPrice(p+"");
+					double sd=(s.getDiscount());
+					int sm=(s.getMarketprice());
+					double ad=(agent.getDiscount());
+					double p1=sm*(sd+ad)/10;
+					BigDecimal b   =   new   BigDecimal(p1);
+					int   p   =   b.setScale(0,   RoundingMode.HALF_UP).intValue();
+					s.setDiscount((sd+ad));
+					s.setPrice(p);
 					sList.add(s);
 				}
 			}

@@ -25,8 +25,11 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>订单号：</label>
+				<form:input path="onumber" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
 			<li><label>代理：</label>
-				<form:input path="agentid" htmlEscape="false" maxlength="32" class="input-medium"/>
+				<form:input path="agentName" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
 			<li><label>金额：</label>
 				<form:input path="money" htmlEscape="false" class="input-medium"/>
@@ -45,17 +48,18 @@
 					<form:options items="${fns:getDictList('a_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<li><label>折扣id：</label>
-				<form:input path="discountid" htmlEscape="false" maxlength="32" class="input-medium"/>
-			</li>
-			<li><label>折扣后价：</label>
-				<form:input path="discountmoney" htmlEscape="false" class="input-medium"/>
-			</li>
+
 			<li><label>快递单号：</label>
 				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
 			<li><label>快递公司：</label>
 				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-medium"/>
+			</li>
+			<li><label>支付状态：</label>
+				<form:select path="paystate" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -66,15 +70,20 @@
 		<thead>
 			<tr>
 				<th>代理</th>
+				<th>订单号</th>
+				<th>货号</th>
+				<th>尺码</th>
+				<th>性别</th>
+				<th>数量</th>
 				<th>金额</th>
-				<th>创建时间</th>
-				<th>更新时间</th>
-				<th>备注信息</th>
-				<th>状态</th>
-				<th>折扣id</th>
-				<th>折扣后价</th>
+				<th>折扣</th>
+				<th>付款金额</th>
+				<th>订单状态</th>
 				<th>快递单号</th>
 				<th>快递公司</th>
+				<th>支付状态</th>
+				<th>创建时间</th>
+				<th>备注信息</th>
 				<shiro:hasPermission name="order:order:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -82,34 +91,53 @@
 		<c:forEach items="${page.list}" var="order">
 			<tr>
 				<td><a href="${ctx}/order/order/form?id=${order.id}">
-					${order.agentid}
+					${order.agentName}
 				</a></td>
 				<td>
-					${order.money}
+						${order.onumber}
 				</td>
 				<td>
-					<fmt:formatDate value="${order.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						${order.articleno}
 				</td>
 				<td>
-					<fmt:formatDate value="${order.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						${order.size}
 				</td>
 				<td>
-					${order.remarks}
+						${order.sex}
 				</td>
+
+				<td>
+					${order.num}
+				</td>
+				<td>
+						${order.money}
+				</td>
+				<td>
+						${order.discount}
+				</td>
+				<td>
+						${order.discountmoney}
+				</td>
+
 				<td>
 					${fns:getDictLabel(order.state, 'a_order_state', '')}
 				</td>
-				<td>
-					${order.discountid}
-				</td>
-				<td>
-					${order.discountmoney}
-				</td>
+
 				<td>
 					${order.delivernumber}
 				</td>
 				<td>
 					${order.courier}
+				</td>
+				<td>
+					${fns:getDictLabel(order.paystate, 'yes_no', '')}
+				</td>
+				<td>
+					<fmt:formatDate value="${order.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+
+				<td>
+						${order.remarks}
 				</td>
 				<shiro:hasPermission name="order:order:edit"><td>
     				<a href="${ctx}/order/order/form?id=${order.id}">修改</a>

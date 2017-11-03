@@ -141,4 +141,14 @@ public class StockService extends CrudService<StockDao, Stock> {
         return 1;
     }
 
+    public Page<Stock> findPage2(Page<Stock> page, Stock entity) {
+            entity.setPage(page);
+            page.setList(dao.findList2(entity));
+            return page;
+
+    }
+
+    public List<Stock> findList2(Stock stock) {
+        return dao.findList2(stock);
+    }
 }

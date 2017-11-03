@@ -25,11 +25,16 @@
             </li>
             <li data-icon="next" data-selected="selected">
                 <span class="icon book"></span>
-                <a href="#order_section" data-target="section">
-                    <strong>订单管理</strong>
+                <a href="#orderquery_section" data-target="section">
+                    <strong>订单查询</strong>
                 </a>
             </li>
-
+           <li data-icon="next" data-selected="selected">
+               <span class="icon book"></span>
+               <a href="#ordersave_section" data-target="section">
+                   <strong>下订单</strong>
+               </a>
+           </li>
         </ul>
         </div>
     </article>

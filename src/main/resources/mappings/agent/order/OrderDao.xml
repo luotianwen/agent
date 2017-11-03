@@ -14,13 +14,20 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		a.state AS "state",
-		a.discountid AS "discountid",
+		a.discount AS "discount",
 		a.discountmoney AS "discountmoney",
 		a.delivernumber AS "delivernumber",
-		a.courier AS "courier"
+		a.courier AS "courier",
+		a.articleno AS "articleno",
+		a.size AS "size",
+		a.sex AS "sex",
+		a.paystate AS "paystate",
+		g.name AS "agentName",
+		a.onumber AS "onumber"
 	</sql>
 	
 	<sql id="orderJoins">
+		left join a_agent g on g.id=a.agentid
 	</sql>
     
 	<select id="get" resultType="Order">
@@ -38,6 +45,10 @@
 		<include refid="orderJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno = #{articleno}
+			</if>
+
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
 			</if>
@@ -50,18 +61,25 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
-			<if test="discountid != null and discountid != ''">
-				AND a.discountid = #{discountid}
-			</if>
 			<if test="discountmoney != null and discountmoney != ''">
 				AND a.discountmoney = #{discountmoney}
 			</if>
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
 			</if>
+			<if test="onumber != null and onumber != ''">
+				AND a.onumber = #{onumber}
+			</if>
 			<if test="courier != null and courier != ''">
 				AND a.courier = #{courier}
 			</if>
+			<if test="paystate != null and paystate != ''">
+				AND a.paystate = #{paystate}
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AND g.name LIKE concat('%',#{agentName},'%')
+			</if>
+
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -94,6 +112,7 @@
 	<insert id="insert">
 		INSERT INTO a_order(
 			id,
+			onumber,
 			agentid,
 			money,
 			num,
@@ -104,12 +123,17 @@
 			remarks,
 			del_flag,
 			state,
-			discountid,
+			discount,
 			discountmoney,
 			delivernumber,
-			courier
+			courier,
+			articleno,
+			size,
+			sex,
+			paystate
 		) VALUES (
 			#{id},
+			#{onumber},
 			#{agentid},
 			#{money},
 			#{num},
@@ -120,10 +144,14 @@
 			#{remarks},
 			#{delFlag},
 			#{state},
-			#{discountid},
+			#{discount},
 			#{discountmoney},
 			#{delivernumber},
-			#{courier}
+			#{courier},
+			#{articleno},
+			#{size},
+			#{sex},
+			#{paystate}
 		)
 	</insert>
 	
@@ -131,15 +159,20 @@
 		UPDATE a_order SET 	
 			agentid = #{agentid},
 			money = #{money},
+			onumber=#{onumber},
 			num = #{num},
-			update_by = #{updateBy.id},
+			create_date = #{createDate},
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			state = #{state},
-			discountid = #{discountid},
+			discount = #{discount},
 			discountmoney = #{discountmoney},
 			delivernumber = #{delivernumber},
-			courier = #{courier}
+			courier = #{courier},
+			articleno = #{articleno},
+			size = #{size},
+			sex = #{sex},
+			paystate = #{paystate}
 		WHERE id = #{id}
 	</update>
 	
@@ -148,5 +181,5 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
 </mapper>

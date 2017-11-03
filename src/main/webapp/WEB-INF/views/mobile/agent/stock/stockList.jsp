@@ -13,11 +13,15 @@
         <form id="stockForm"   >
             <div class="input-group">
                 <div class="input-row">
-                    <label for="articleno">货号</label>
-                    <input type="text" name="articleno" id="articleno"  value="${stock.articleno}" placeholder="请填写账号">
+                    <label for="articlenos">货号*</label>
+                    <input type="text" name="articlenos" id="articlenos"  value="${stock.articleno}" placeholder="请填写货号">
+                </div>
+                <div class="input-row">
+                    <label for="brandnames">品牌</label>
+                    <input type="text" name="brandnames" id="brandnames"  value="${stock.brandname}" placeholder="请填写品牌">
                 </div>
             </div>
-            <button id="btn" class="submit block" data-icon="key">query</button>
+            <button id="btn" class="submit block" data-icon="key">查询</button>
         </form>
         <div style="padding: 2px;" id="data">
 
@@ -28,13 +32,14 @@
     <script type="text/javascript">
         $('body').delegate('#stock_section','pageinit',function(){
             $("#stockForm").submit(function(){
-                if ($('#articleno').val() == ''){
+                if ($('#articlenos').val() == ''){
                     J.showToast('请填写货号', 'info');
                     return false;
                 }
                 else{
-                    var stockForm = $("#stockForm");
-                    $.post("${ctx}/stock/stock/data", stockForm.serializeArray(), function(data){
+                    J.showMask();
+                    $.post("${ctx}/stock/stock/data", {articleno:$('#articlenos').val(),brandname:$('#brandnames').val()}, function(data){
+                      J.hideMask();
                         $('#data').html(data);
                     });
                 }

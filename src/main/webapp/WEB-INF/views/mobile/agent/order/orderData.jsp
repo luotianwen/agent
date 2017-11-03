@@ -1,54 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-
-<table id="contentTable" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th>货号</th>
-        <th>品牌</th>
-        <th>尺码</th>
-        <th>性别</th>
-        <th>库存数量</th>
-        <th>市场价</th>
-        <th>折扣</th>
-        <th>销售价</th>
-
-
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${page.list}" var="stock">
-        <tr>
-            <td>
-                    ${stock.articleno}
-            </td>
-
-            <td>
-                    ${stock.brandname}
-            </td>
-
-            <td>
-                    ${stock.size}
-            </td>
-            <td>
-                    ${stock.sex}
-            </td>
-            <td>
-                    ${stock.innernum}
-            </td>
-            <td>
-                    ${stock.marketprice}
-            </td>
-            <td>
-                    ${stock.discount}
-            </td>
-            <td>
-                    ${stock.price}
-            </td>
-
-
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+<div class="grid demo-grid">
+    <div class="col-1">订单号</div>
+    <div class="col-1">货号</div>
+    <div class="col-1">快递单号</div>
+    <div class="col-1">状态</div>
+    <div class="col-1">金额</div>
+</div>
+<c:forEach items="${orders}" var="order">
+    <div class="grid ">
+        <div class="col-1">${order.onumber}</div>
+        <div class="col-1">${order.articleno}</div>
+        <div class="col-1">${order.delivernumber}</div>
+        <div class="col-1">${fns:getDictLabel(order.state, 'a_order_state', '')}</div>
+        <div class="col-1">${order.discountmoney}</div>
+    </div>
+</c:forEach>
 

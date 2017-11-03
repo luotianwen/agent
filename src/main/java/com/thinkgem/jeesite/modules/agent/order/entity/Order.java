@@ -5,31 +5,53 @@ package com.thinkgem.jeesite.modules.agent.order.entity;
 
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
-import java.util.List;
-import com.google.common.collect.Lists;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import org.springframework.beans.factory.annotation.Required;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 代理订单Entity
  * @author luotianwen
- * @version 2017-10-29
+ * @version 2017-11-03
  */
 public class Order extends DataEntity<Order> {
 	
 	private static final long serialVersionUID = 1L;
 	private String agentid;		// 代理
-	private String money;		// 金额
-	private String num;		// 数量
+	private String agentName;
+	private int money;		// 金额
+	private int num;		// 数量
 	private String state;		// 状态
-	private String discountid;		// 折扣id
-	private String discountmoney;		// 折扣后价
+	private double discount;		// 折扣
+	private int discountmoney;		// 折扣后价
 	private String delivernumber;		// 快递单号
 	private String courier;		// 快递公司
+	private String articleno;		// 货号
+	private String size;		// 尺码
+	private String sex;		// 性别
+	private String paystate;		// 支付状态
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
-	private List<OrderDetail> orderDetailList = Lists.newArrayList();		// 子表列表
-	
+    private  String onumber;
+
+	public String getOnumber() {
+		return onumber;
+	}
+
+	public void setOnumber(String onumber) {
+		this.onumber = onumber;
+	}
+
+	public String getAgentName() {
+		return agentName;
+	}
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+
 	public Order() {
 		super();
 	}
@@ -46,21 +68,20 @@ public class Order extends DataEntity<Order> {
 	public void setAgentid(String agentid) {
 		this.agentid = agentid;
 	}
-	
-	public String getMoney() {
+
+	public int getMoney() {
 		return money;
 	}
 
-	public void setMoney(String money) {
+	public void setMoney(int money) {
 		this.money = money;
 	}
-	
-	@Length(min=0, max=11, message="数量长度必须介于 0 和 11 之间")
-	public String getNum() {
+	@NotNull
+	public int getNum() {
 		return num;
 	}
 
-	public void setNum(String num) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 	
@@ -72,21 +93,21 @@ public class Order extends DataEntity<Order> {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	@Length(min=1, max=32, message="折扣id长度必须介于 1 和 32 之间")
-	public String getDiscountid() {
-		return discountid;
+
+
+	public double getDiscount() {
+		return discount;
 	}
 
-	public void setDiscountid(String discountid) {
-		this.discountid = discountid;
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
 	
-	public String getDiscountmoney() {
+	public int getDiscountmoney() {
 		return discountmoney;
 	}
 
-	public void setDiscountmoney(String discountmoney) {
+	public void setDiscountmoney(int discountmoney) {
 		this.discountmoney = discountmoney;
 	}
 	
@@ -98,7 +119,7 @@ public class Order extends DataEntity<Order> {
 	public void setDelivernumber(String delivernumber) {
 		this.delivernumber = delivernumber;
 	}
-	
+	@NotNull
 	@Length(min=0, max=100, message="快递公司长度必须介于 0 和 100 之间")
 	public String getCourier() {
 		return courier;
@@ -106,6 +127,42 @@ public class Order extends DataEntity<Order> {
 
 	public void setCourier(String courier) {
 		this.courier = courier;
+	}
+	@NotNull
+	@Length(min=0, max=50, message="货号长度必须介于 0 和 50 之间")
+	public String getArticleno() {
+		return articleno;
+	}
+
+	public void setArticleno(String articleno) {
+		this.articleno = articleno;
+	}
+	@NotNull
+	@Length(min=0, max=10, message="尺码长度必须介于 0 和 10 之间")
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+	@NotNull
+	@Length(min=0, max=10, message="性别长度必须介于 0 和 10 之间")
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	@Length(min=0, max=1, message="支付状态长度必须介于 0 和 1 之间")
+	public String getPaystate() {
+		return paystate;
+	}
+
+	public void setPaystate(String paystate) {
+		this.paystate = paystate;
 	}
 	
 	public Date getBeginCreateDate() {
@@ -124,11 +181,4 @@ public class Order extends DataEntity<Order> {
 		this.endCreateDate = endCreateDate;
 	}
 		
-	public List<OrderDetail> getOrderDetailList() {
-		return orderDetailList;
-	}
-
-	public void setOrderDetailList(List<OrderDetail> orderDetailList) {
-		this.orderDetailList = orderDetailList;
-	}
 }

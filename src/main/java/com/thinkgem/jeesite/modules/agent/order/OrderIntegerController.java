@@ -7,8 +7,14 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
+import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
 import com.thinkgem.jeesite.modules.agent.order.entity.Order;
 import com.thinkgem.jeesite.modules.agent.order.service.OrderService;
+import com.thinkgem.jeesite.modules.agent.stock.entity.Stock;
+import com.thinkgem.jeesite.modules.agent.stock.service.StockService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +27,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 代理订单Controller
@@ -37,7 +44,10 @@ public class OrderIntegerController extends BaseController {
 
 	@Autowired
 	private OrderService orderService;
-
+	@Autowired
+	private AgentService agentService;
+	@Autowired
+	private StockService stockService;
 	private static final Random RANDOM = new Random();
 	public static String generateGUID()
 	{
@@ -74,7 +84,63 @@ public class OrderIntegerController extends BaseController {
 			map.put("message","别重复提交");
 		}
 		else{
-			orderService.save(order);
+			try {
+				User user = UserUtils.getUser();
+				Agent agent = agentService.getUserId(user.getId());
+				if (null == agent) {
+					map.put("status", 1);
+					map.put("message", "代理不存在");
+					return renderString(response, map);
+				}
+
+				double dd = (agent.getDiscount());
+				Stock stock = new Stock();
+				stock.setArticleno(order.getArticleno());
+				stock.setSize(order.getSize());
+				stock.setSex(order.getSex());
+				List<Stock> slist = stockService.findList2(stock);
+				if (null == slist || slist.size() == 0) {
+					stock.setSex("中");
+					slist = stockService.findList2(stock);
+					if (null == slist || slist.size() == 0) {
+						map.put("status", 1);
+						map.put("message", "此货号不存在");
+						return renderString(response, map);
+					}
+				}
+				Stock s = slist.get(0);
+				int num = order.getNum();
+				double sd = (s.getDiscount());
+				int m = (s.getMarketprice());
+				double p = num * m * (sd + dd) / 10;
+				BigDecimal b = new BigDecimal(p);
+				int f1 = b.setScale(0, RoundingMode.HALF_UP).intValue();
+				order.setAgentid(agent.getId());
+				order.setMoney(num * m);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+				String onumber = sdf.format(new Date());
+				order.setOnumber(onumber);
+				order.setDiscount((sd + dd));
+				String remarks = order.getRemarks();
+				if (order.getCourier().contains("顺丰")) {
+					order.setRemarks(remarks + "售价:" + f1 + ",顺丰快递+15元");
+					f1 = f1 + 15;
+				} else {
+					order.setRemarks(remarks + "售价:" + f1 + ",其他快递+13元");
+					f1 = f1 + 13;
+				}
+				order.setDiscountmoney(f1);
+				order.setState("1");
+				order.setPaystate("0");
+				orderService.save(order);
+				request.getSession().removeAttribute("otoken");
+			}catch (Exception e){
+				e.printStackTrace();
+				map.put("status", 1);
+				map.put("message", "下单失败!");
+				return renderString(response, map);
+			}
+
 		}
 		return renderString(response,map);
 	}
@@ -87,8 +153,19 @@ public class OrderIntegerController extends BaseController {
 	}
 	@RequiresPermissions("order:order:view")
 	@RequestMapping(value = "data")
-	public String data( HttpServletRequest request, Model model) {
-
+	public String data( Order order, Model model) {
+		User user = UserUtils.getUser();
+		Agent agent=agentService.getUserId(user.getId());
+		if(null==order){
+			  order=new Order();
+		}
+		order.setAgentid(agent.getId());
+	    List<Order>orders=orderService.findList(order);
+		for (Order o:orders ) {
+			if(StringUtils.isNotEmpty(o.getDelivernumber()))
+			  o.setDelivernumber(o.getCourier()+"_"+o.getDelivernumber());
+		}
+		model.addAttribute("orders", orders);
 		return "agent/order/orderData";
 	}
 }

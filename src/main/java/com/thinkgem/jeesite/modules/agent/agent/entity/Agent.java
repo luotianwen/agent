@@ -32,7 +32,7 @@ public class Agent extends DataEntity<Agent> {
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
 
-	private String discount;		// 折扣
+	private double discount;		// 折扣
 	private String discountName;		// 折扣名称
 	private String userid;
 
@@ -44,11 +44,11 @@ public class Agent extends DataEntity<Agent> {
 		this.userid = userid;
 	}
 
-	public String getDiscount() {
+	public double getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(String discount) {
+	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 

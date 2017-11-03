@@ -22,10 +22,10 @@ public class Stock extends DataEntity<Stock> {
 	private String size;		// 尺码1
 	private String innernum;		// 库存数量
 	private String sex;		// 性别
-	private String marketprice;		// 市场价
-	private String price;		// 销售价
+	private int marketprice;		// 市场价
+	private int price;		// 销售价
 	private String quarter;		// 商品上市季节
-	private String discount;		// 折扣信息
+	private double discount;		// 折扣信息
 	private String warehousename;		// 货源名
 	
 	public Stock() {
@@ -99,19 +99,19 @@ public class Stock extends DataEntity<Stock> {
 		this.sex = sex;
 	}
 	
-	public String getMarketprice() {
+	public int getMarketprice() {
 		return marketprice;
 	}
 
-	public void setMarketprice(String marketprice) {
+	public void setMarketprice(int marketprice) {
 		this.marketprice = marketprice;
 	}
 	
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	
@@ -124,11 +124,11 @@ public class Stock extends DataEntity<Stock> {
 		this.quarter = quarter;
 	}
 	
-	public String getDiscount() {
+	public double getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(String discount) {
+	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 	
