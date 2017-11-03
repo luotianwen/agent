@@ -74,7 +74,6 @@
     });
     $('body').delegate('#agent_section','pageinit',function(){
         $("#agentForm").submit(function(){
-            if (sessionid != '') {
                 if ($('#name').val() == '') {
                     J.showToast('请填写名称', 'info');
                 } else if ($('#phone').val() == '') {
@@ -110,7 +109,6 @@
 
                     });
                 }
-            }
             return false;
         });
     });
