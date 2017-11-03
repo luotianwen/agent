@@ -90,6 +90,7 @@ public class StockService extends CrudService<StockDao, Stock> {
             def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
             TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
             try {
+                System.out.println("保存"+j.getRows());
                 for (Object p1 : j.getRows()) {
                     Stock p = JSON.parseObject(p1.toString(), Stock.class);
                     Stock p2 = getByName(p.getWarehousename(), p.getArticleno(), p.getSize());
@@ -104,7 +105,10 @@ public class StockService extends CrudService<StockDao, Stock> {
                 b.setState(1);
                 brandService.updateState(b);
                 transactionManager.commit(status);
+                System.out.println("保存"+j.getRows()+"结束");
             } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("保存"+j.getRows()+"回滚");
                 transactionManager.rollback(status);
             }
         }else{
@@ -117,6 +121,7 @@ public class StockService extends CrudService<StockDao, Stock> {
                  brandService.updateState(b);
                 transactionManager.commit(status);
             } catch (Exception e) {
+                e.printStackTrace();
                 transactionManager.rollback(status);
             }
         }
