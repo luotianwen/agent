@@ -72,7 +72,7 @@
         <div class="col-1">${stock.sex}</div>
         <div class="col-1">${stock.innernum}</div>
         <div class="col-1">${stock.marketprice}</div>
-        <div class="col-1">${stock.discount}</div>
+        <div class="col-1"><fmt:formatNumber type="number" value="${stock.discount}" pattern="0.00" maxFractionDigits="2"/></div>
 
     </div>
 </c:forEach>

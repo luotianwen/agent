@@ -130,7 +130,7 @@
 					${agent.address}
 				</td>
 				<shiro:hasPermission name="agent:agent:edit"><td>
-    				<a href="${ctx}/agent/agent/form?id=${agent.id}">s</a>
+    				<a href="${ctx}/agent/agent/form?id=${agent.id}">审核</a>
 					<a href="${ctx}/agent/agent/delete?id=${agent.id}" onclick="return confirmx('确认要删除该代理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

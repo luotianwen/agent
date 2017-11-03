@@ -114,7 +114,7 @@
 			<div class="controls">
 
 				<form:select path="discountid" class="input-medium">
-					<form:option value="" label="wu"/>
+					<form:option value="" label="无"/>
 					<form:options items="${s}" itemLabel="name" itemValue="id" htmlEscape="false"/>
 				</form:select>
 
