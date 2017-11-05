@@ -112,7 +112,17 @@ public class OrderIntegerController extends BaseController {
 				int num = order.getNum();
 				double sd = (s.getDiscount());
 				int m = (s.getMarketprice());
-				double p = num * m * (sd + dd) / 10;
+				double zd=sd+dd;
+				if(sd>=9.6){
+					zd=sd;
+				}
+				else{
+					if(zd>=9.6){
+						zd=9.6;
+					}
+				}
+				double p = num * m * zd / 10;
+
 				BigDecimal b = new BigDecimal(p);
 				int f1 = b.setScale(0, RoundingMode.HALF_UP).intValue();
 				order.setAgentid(agent.getId());
@@ -120,7 +130,7 @@ public class OrderIntegerController extends BaseController {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
 				String onumber = sdf.format(new Date());
 				order.setOnumber(onumber);
-				order.setDiscount((sd + dd));
+				order.setDiscount(zd);
 				String remarks = order.getRemarks();
 				if (order.getCourier().contains("顺丰")) {
 					order.setRemarks(remarks + "售价:" + f1 + ",顺丰快递+15元");

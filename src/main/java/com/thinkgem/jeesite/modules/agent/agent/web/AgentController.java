@@ -82,7 +82,7 @@ public class AgentController extends BaseController {
 		}
 		if("1".equals(agent.getState())){
 			if(StringUtils.isEmpty(agent.getDiscountid())){
-				addMessage(model,"代理bixutianxie");
+				addMessage(model,"代理必须选择");
 				return form(agent, model);
 			}
 		}

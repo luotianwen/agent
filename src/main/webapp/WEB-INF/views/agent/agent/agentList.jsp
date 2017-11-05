@@ -69,9 +69,9 @@
 				<th>邮箱</th>
 				<th>微信</th>
 				<th>联系手机</th>
-				<th>创建时间</th>
+
 				<th>更新时间</th>
-				<th>备注信息</th>
+
 				<th>登录名</th>
 				<th>状态</th>
 				<th>折扣</th>
@@ -102,15 +102,11 @@
 				<td>
 					${agent.mobile}
 				</td>
-				<td>
-					<fmt:formatDate value="${agent.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
+
 				<td>
 					<fmt:formatDate value="${agent.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td>
-					${agent.remarks}
-				</td>
+
 				<td>
 					${agent.loginName}
 				</td>

@@ -172,11 +172,12 @@
 			state = #{state},
 			discountid = #{discountid},
 			apay = #{apay},
+			userid=#{userid},
 			address = #{address}
 		WHERE id = #{id}
 	</update>
 	<delete id="delete">
-		DELETE  a_agent WHERE id = #{id}
+		DELETE  a_agent from WHERE id = #{id}
 	</delete>
 	<!--<update id="delete">
 		UPDATE a_agent SET

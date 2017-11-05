@@ -114,10 +114,19 @@ public class StockController extends BaseController {
 					double sd=(s.getDiscount());
 					int sm=(s.getMarketprice());
 					double ad=(agent.getDiscount());
-					double p1=sm*(sd+ad)/10;
+					double zd=sd+ad;
+					if(sd>=9.6){
+						zd=sd;
+					}
+					else{
+						if(zd>=9.6){
+							zd=9.6;
+						}
+					}
+					double p1=sm*zd/10;
 					BigDecimal b   =   new   BigDecimal(p1);
 					int   p   =   b.setScale(0,   RoundingMode.HALF_UP).intValue();
-					s.setDiscount((sd+ad));
+					s.setDiscount(zd);
 					s.setPrice(p);
 					sList.add(s);
 				}

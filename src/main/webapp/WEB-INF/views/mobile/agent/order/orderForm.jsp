@@ -75,7 +75,7 @@
                 $.post(ctx+"/order/qfsave", loginForm.serializeArray(), function(data){
                     $.mobile.loading( "hide" );
                     if(data.status==0){
-                        $("#orderForm").reset();
+                        $("#orderForm")[0].reset();
                         showToast('下单成功！联系商务客服进行支付和发货', 'success',0);
                     }
                     else{

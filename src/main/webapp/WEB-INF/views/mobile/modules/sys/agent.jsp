@@ -19,8 +19,8 @@
 			<input type="text" name="name" id="name" placeholder="请填写名称">
 			<label  for="sex">性别</label>
 			<select name="sex" id="sex" data-role="slider">
-				        <option value="true">男</option>
-				    <option value="false">女</option>
+				        <option value="1">男</option>
+				    <option value="2">女</option>
 			</select>
 
 			<label for="phone">联系电话</label>

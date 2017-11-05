@@ -49,23 +49,25 @@ public class AgentInterfaceController  extends BaseController {
         if (!beanValidator(model, agent)){
              map.put("status",1);
             map.put("message","验证未通过");
+            return renderString(response,map);
         }
 
        String  mtoken=(String)request.getSession().getAttribute("token");
         if(null==mtoken||null==token||"".equals(token)||!mtoken.equals(token)){
             map.put("status",1);
             map.put("message","别重复提交");
+            return renderString(response,map);
         }
         User u=new User();
         u.setId("1");
         agent.setCreateBy(u);
         agent.setUpdateBy(u);
-        if("true".equals(agent.getSex())){
+      /*  if("true".equals(agent.getSex())){
             agent.setSex("1");
         }
         else{
             agent.setSex("2");
-        }
+        }*/
         Agent agent1=new Agent();
         agent1.setPhone(agent.getPhone());
         agent1.setMobile(agent.getMobile());
@@ -78,11 +80,13 @@ public class AgentInterfaceController  extends BaseController {
                 e.printStackTrace();
                 map.put("status",1);
                 map.put("message","保存"+agent.getName()+"代理失败");
+                return renderString(response,map);
             }
         }
         else{
             map.put("status",1);
             map.put("message","手机号已存在");
+            return renderString(response,map);
         }
         return renderString(response,map);
     }
