@@ -1,120 +1,114 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%><!DOCTYPE >
+<html>
+<%@ include file="/WEB-INF/views/include/mhead.jsp"%><!DOCTYPE >
+<body>
 
-	<section id="agent_section" class="active">
-		<header>
-			<nav class="left">
-				<a href="#index_section?index" data-icon="previous" data-target="back">返回</a>
-			</nav>
-			<h1 class="title">代理申请</h1>
-		</header>
-		<article data-scroll="true" id="agent_article">
-			<div class="indented">
-				<form id="agentForm"   method="post">
-					<input id="token" name="token" type="hidden" value="${token}"/>
+<div data-role="page">
+	<div data-role="header">
+		<%--<button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">back</button> --%>
+    <a href="#index_section?index"  class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back" data-rel="back" >返回</a>
 
-					<div>&nbsp;</div>
-					<div class="input-group">
-						<div class="input-row">
-							<label for="name">名称</label>
-							<input type="text" name="name" id="name" placeholder="请填写名称">
-						</div>
-						<div class="input-row">
-							<label>性别</label>
-							<div class="toggle active" name="sex" id="sex" data-on="男"  data-off="女" ></div>
-						</div>
-						<div class="input-row">
-							<label for="phone">联系电话</label>
-							<input type="phone" name="phone" id="phone" placeholder="请填写联系电话">
-						</div>
-						<div class="input-row">
-							<label for="mobile">联系手机</label>
-							<input type="phone" name="mobile" id="mobile" placeholder="请填写联系手机">
-						</div>
-						<div class="input-row">
-							<label for="address">联系地址</label>
-							<input type="text" name="address" id="address" placeholder="请填写联系地址">
-						</div>
-						<div class="input-row">
-							<label for="apay">支付宝</label>
-							<input type="text" name="apay" id="apay" placeholder="请填写支付宝">
-						</div>
+		<h1  >代理申请</h1>
+	</div>
+	<div data-role="main" class="ui-content">
+		<form id="agentForm"   method="post">
+			<input id="token" name="token" type="hidden" value="${token}"/>
+			<label for="name">名称</label>
+			<input type="text" name="name" id="name" placeholder="请填写名称">
+			<label  for="sex">性别</label>
+			<select name="sex" id="sex" data-role="slider">
+				        <option value="true">男</option>
+				    <option value="false">女</option>
+			</select>
 
-						<div class="input-row">
-							<label for="weixin">微信</label>
-							<input type="text" name="weixin" id="weixin" placeholder="请填写微信">
-						</div>
-						<div class="input-row">
-							<label for="email">邮箱</label>
-							<input type="email" name="email" id="email" placeholder="请填写邮箱">
-						</div>
-					</div>
-					<button   class="submit block" data-icon="key">申请</button>
-					<div>&nbsp;</div>
-					<input id="agentbtn" type="button" class="button block" data-icon="cogs" value="查询结果">
-					<%--<button id="btn2" class="button block" data-icon="cogs">查询结果</button>--%>
-				</form>
-			</div>
-		</article>
-	</section>
+			<label for="phone">联系电话</label>
+			<input type="tel" name="phone" id="phone" placeholder="请填写联系电话">
+			<label for="mobile">联系手机</label>
+			<input type="tel" name="mobile" id="mobile" placeholder="请填写联系手机">
+			<label for="address">联系地址</label>
+			<input type="text" name="address" id="address" placeholder="请填写联系地址">
+			<label for="apay">支付宝</label>
+			<input type="text" name="apay" id="apay" placeholder="请填写支付宝">
+			<label for="weixin">微信</label>
+			<input type="text" name="weixin" id="weixin" placeholder="请填写微信">
+			<label for="email">邮箱</label>
+			<input type="email" name="email" id="email" placeholder="请填写邮箱">
+			<button type="submit"  class="ui-icon-user">申请</button>
+			<input id="agentbtn" type="button" class="ui-icon-query" value="查询结果">
+		</form>
+		<div data-role="popup" id="popupBasic">
+			<p id="content">ss</p>
+		</div>
+	</div>
+
+
+</div>
 <script type="text/javascript">
+    var sessionid = '${not empty fns:getPrincipal() ? fns:getPrincipal().sessionid : ""}';
+    if(sessionid==''){
+        window.location=ctx+"/login";
+    }
+    $(function () {
+        $("#agentbtn").on('click',function(){
+            var mobile=$('#mobile').val();
+            var phone=$('#phone').val();
 
-    $("#agentbtn").click(function(){
-        var mobile=$('#mobile').val();
-        var phone=$('#phone').val();
+            if (phone== ''&&mobile == ''){
+                showToast("请填写联系电话或者联系手机");
+            }
+            else{
+                $.mobile.loading('show');
+                $.post("/agent/query", {"phone":phone,"mobile":mobile}, function(data){
+                    $.mobile.loading( "hide" );
+                    $("#content").html(data.message);
+                    $("#popupBasic").popup('open');
+                });
+            }
+        });
 
-        if (phone== ''&&mobile == ''){
-            J.showToast('请填写联系电话或者联系手机', 'info');
-        }
-        else{
-            $.post("/agent/query", {"phone":phone,"mobile":mobile}, function(data){
-                J.showToast(data.message, 'info');
-            });
-        }
-    });
-    $('body').delegate('#agent_section','pageinit',function(){
+
         $("#agentForm").submit(function(){
-                if ($('#name').val() == '') {
-                    J.showToast('请填写名称', 'info');
-                } else if ($('#phone').val() == '') {
-                    J.showToast('请填写联系电话', 'info');
-                }
-                else if ($('#mobile').val() == '') {
-                    J.showToast('请填写联系手机', 'info');
-                }
+            if ($('#name').val() == '') {
+                showToast('请填写名称', 'info');
+            } else if ($('#phone').val() == '') {
+                showToast('请填写联系电话', 'info');
+            }
+            else if ($('#mobile').val() == '') {
+                showToast('请填写联系手机', 'info');
+            }
 
-                else if ($('#address').val() == '') {
-                    J.showToast('请填写联系地址', 'info');
-                }
-                else if ($('#apay').val() == '') {
-                    J.showToast('请填写支付宝', 'info');
-                }
-                else if ($('#weixin').val() == '') {
-                    J.showToast('请填写微信', 'info');
-                }
-                else if ($('#email').val() == '') {
-                    J.showToast('请填写邮箱', 'info');
-                }
-                else {
-                    var loginForm = $("#agentForm");
-                    J.showMask();
-                    $.post("/agent/saveadd", loginForm.serializeArray(), function (data) {
-                        J.hideMask();
-                        if (data.status == 0) {
-                            J.showToast('保存成功！', 'success');
-                        }
-                        else {
-                            J.showToast(data.message, 'error');
-                        }
+            else if ($('#address').val() == '') {
+                showToast('请填写联系地址', 'info');
+            }
+            else if ($('#apay').val() == '') {
+                showToast('请填写支付宝', 'info');
+            }
+            else if ($('#weixin').val() == '') {
+                showToast('请填写微信', 'info');
+            }
+            else if ($('#email').val() == '') {
+                showToast('请填写邮箱', 'info');
+            }
+            else {
+                var loginForm = $("#agentForm");
+                $.mobile.loading('show');
+                $.post("/agent/saveadd", loginForm.serializeArray(), function (data) {
+                    $.mobile.loading( "hide" );
+                    if (data.status == 0) {
+                        showToast('保存成功！', 'success');
+                    }
+                    else {
+                        showToast(data.message, 'error');
+                    }
 
-                    });
-                }
+                });
+            }
             return false;
         });
     });
-    $('body').delegate('#agent_section','pageshow',function(){
-
-        $('#agent_article').addClass('active');
-
-    });
 </script>
+
+</body>
+</html>

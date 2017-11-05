@@ -1,44 +1,50 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<section id="orderquery_section" >
-    <header>
-        <nav class="left">
-            <a href="#" data-icon="previous" data-target="back">Back</a>
-        </nav>
-        <h1 class="title">订单查询</h1>
-    </header>
+<%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%><!DOCTYPE >
+<html>
+<%@ include file="/WEB-INF/views/include/mhead.jsp"%><!DOCTYPE >
+<body>
 
+<div data-role="page">
+    <div data-role="header">
+        <a href="#index_section?index"  class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back" data-rel="back" >返回</a>
+        <h1  >订单查询</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+        <form id="orderqueryForm"   method="post">
+            <label for="onumbers">订单号</label>
+            <input type="text" name="onumbers" id="onumbers"  value="${order.onumber}" placeholder="请填写订单号">
+            <button type="submit"  class="ui-icon-user">查询</button>
 
-    <article class="active" data-scroll="true" id="orderquery_article">
-        <form id="orderqueryForm"   >
-            <div class="input-group">
-                <div class="input-row">
-                    <label for="onumbers">订单号</label>
-                    <input type="text" name="onumbers" id="onumbers"  value="${order.onumber}" placeholder="请填写订单号">
-                </div>
-            </div>
-            <button id="btn" class="submit block" data-icon="key">查询</button>
         </form>
-        <div style="padding: 2px;" id="orderdata">
 
-
-
+        <div data-role="popup" id="popupBasic">
+            <p id="content">ss</p>
         </div>
-    </article>
-    <script type="text/javascript">
-        $('body').delegate('#orderquery_section','pageinit',function(){
-            $("#orderqueryForm").submit(function(){
-                J.showMask();
-                var orderForm = $("#orderqueryForm");
-                $.post("${ctx}/order/data", {onumber:$("#onumbers").val()}, function(data){
-                    J.hideMask();
-                    $('#orderdata').html(data);
-                });
-                return false;
+    </div>
+
+
+    <div style="padding: 1px;" id="orderdata">
+    </div>
+
+</div>
+<script type="text/javascript">
+    var sessionid = '${not empty fns:getPrincipal() ? fns:getPrincipal().sessionid : ""}';
+    if(sessionid==''){
+        window.location=ctx+"/login";
+    }
+    $(function () {
+        $("#orderqueryForm").submit(function(){
+            $.mobile.loading('show');
+            $.post("${ctx}/order/data", {onumber:$("#onumbers").val()}, function(data){
+                $.mobile.loading( "hide" );
+                $('#orderdata').html(data);
             });
+            return false;
         });
-        $('body').delegate('#orderquery_section','pageshow',function(){
-            $('#orderquery_article').addClass('active');
-        });
-    </script>
-</section>
+
+    });
+</script>
+
+</body>
+</html>
