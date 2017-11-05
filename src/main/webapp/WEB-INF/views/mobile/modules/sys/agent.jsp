@@ -46,10 +46,7 @@
 
 </div>
 <script type="text/javascript">
-    var sessionid = '${not empty fns:getPrincipal() ? fns:getPrincipal().sessionid : ""}';
-    if(sessionid==''){
-        window.location=ctx+"/login";
-    }
+
     $(function () {
         $("#agentbtn").on('click',function(){
             var mobile=$('#mobile').val();
@@ -67,7 +64,6 @@
                 });
             }
         });
-
 
         $("#agentForm").submit(function(){
             if ($('#name').val() == '') {
