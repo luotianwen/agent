@@ -121,8 +121,8 @@ public class OrderIntegerController extends BaseController {
 						zd=9.6;
 					}
 				}
+				zd=new BigDecimal(zd).setScale(2,RoundingMode.HALF_UP).doubleValue();
 				double p = num * m * zd / 10;
-
 				BigDecimal b = new BigDecimal(p);
 				int f1 = b.setScale(0, RoundingMode.HALF_UP).intValue();
 				order.setAgentid(agent.getId());

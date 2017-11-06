@@ -57,12 +57,13 @@ public class OrderService extends CrudService<OrderDao, Order> {
 		j.put("com",order.getCourier());
 		j.put("number",order.getDelivernumber());
 		try {
-			SmsDemo.sendSms(agent.getPhone(),j.toString(),"SMS_109485025");
+			sms.sendSms(agent.getPhone(),j.toString(),"SMS_109485025");
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
 	}
-
+	@Autowired
+	private SmsDemo sms;
 	@Transactional(readOnly = false)
 	public void delete(Order order) {
 		super.delete(order);

@@ -34,6 +34,8 @@ import com.thinkgem.jeesite.modules.agent.agent.dao.AgentDao;
 public class AgentService extends CrudService<AgentDao, Agent> {
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private SmsDemo sms;
 	public Agent get(String id) {
 		return super.get(id);
 	}
@@ -74,7 +76,7 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 		j.put("name",agent.getName());
 		j.put("account",agent.getLoginName());
 		try {
-			SmsDemo.sendSms(phone,j.toString(),"SMS_109505038");
+			sms.sendSms(phone,j.toString(),"SMS_109505038");
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>货源仓库名称：</label>
+			<li><label>仓库名称：</label>
 				<form:input path="warehousename" htmlEscape="false" maxlength="255" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -54,16 +54,16 @@
 					${brand.warehousename}
 				</a></td>
 				<td>
-						${brand.pickingNum}
+						${brand.pickingnum}
 				</td>
 				<td>
-						${brand.pickingDate}
+						${brand.pickingdate}
 				</td>
 				<td>
 						${brand.brands}
 				</td>
 				<td>
-						${brand.pickingRate}
+						${brand.pickingrate}
 				</td>
 				<td>
 						${brand.state}

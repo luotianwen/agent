@@ -93,6 +93,7 @@
                 $.post("/agent/saveadd", loginForm.serializeArray(), function (data) {
                     $.mobile.loading( "hide" );
                     if (data.status == 0) {
+                        $("#agentForm")[0].reset();
                         showToast('保存成功！', 'success');
                     }
                     else {

@@ -101,27 +101,12 @@ public class StockService extends CrudService<StockDao, Stock> {
                     }
                     save(p);
                 }
-                b.setUdate(udate);
-                b.setState(1);
-                brandService.updateState(b);
+
                 transactionManager.commit(status);
                 System.out.println("保存"+j.getRows()+"结束");
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("保存"+j.getRows()+"回滚");
-                transactionManager.rollback(status);
-            }
-        }else{
-            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
-            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
-            b.setUdate(udate);
-            b.setState(0);
-            try {
-                 brandService.updateState(b);
-                transactionManager.commit(status);
-            } catch (Exception e) {
-                e.printStackTrace();
                 transactionManager.rollback(status);
             }
         }
@@ -138,8 +123,20 @@ public class StockService extends CrudService<StockDao, Stock> {
         List<Brand> brands = brandService.findList(new Brand());
         if (null != brands && 0 < brands.size()) {
             for (Brand b : brands) {
-                if(!udate.equals(b.getUdate())||1==b.getState()) {
+                if(!udate.equals(b.getUdate())&&1!=b.getState()) {
                     data(1, b);
+                }
+                DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+                def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+                TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+                b.setUdate(udate);
+                b.setState(1);
+                try {
+                    brandService.updateState(b);
+                    transactionManager.commit(status);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    transactionManager.rollback(status);
                 }
             }
         }

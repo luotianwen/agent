@@ -10,6 +10,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
  * 备注:Demo工程编码采用UTF-8
  * 国际短信发送请勿参照此DEMO
  */
+@Component
 public class SmsDemo {
     protected static Logger logger = Logger.getLogger(SmsDemo.class);
     //产品名称:云通信短信API产品,开发者无需替换
@@ -31,11 +33,11 @@ public class SmsDemo {
     static final String domain = "dysmsapi.aliyuncs.com";
 
 	 @Value("#{APP_PROP['aliyun.accessKeyId']}")
-     static String accessKeyId;
+       String accessKeyId;
     @Value("#{APP_PROP['aliyun.accessKeySecret']}")
-    static String accessKeySecret;
+      String accessKeySecret;
 
-    public  static SendSmsResponse sendSms(String phone,String smsParam,String templateCode) throws ClientException {
+    public    SendSmsResponse sendSms(String phone,String smsParam,String templateCode) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
