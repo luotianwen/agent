@@ -82,8 +82,7 @@
 				<th>库存</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
-				<th>商品id</th>
-				<th>销售价</th>
+
 				<shiro:hasPermission name="product:product:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -123,12 +122,7 @@
 				<td>
 					${product.remarks}
 				</td>
-				<td>
-					${product.pid}
-				</td>
-				<td>
-					${product.price}
-				</td>
+
 				<shiro:hasPermission name="product:product:edit"><td>
     				<a href="${ctx}/product/product/form?id=${product.id}">修改</a>
 					<a href="${ctx}/stock/stock/list?articleno=${product.articleno}">查看库存</a>

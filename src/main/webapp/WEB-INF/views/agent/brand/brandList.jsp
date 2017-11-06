@@ -37,6 +37,11 @@
 		<thead>
 			<tr>
 				<th>货源仓库名称</th>
+				<th>起配件数</th>
+				<th>配货时间</th>
+				<th>经营品牌</th>
+				<th>配货率</th>
+				<th>更新值</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="brand:brand:edit"><th>操作</th></shiro:hasPermission>
@@ -48,6 +53,24 @@
 				<td><a href="${ctx}/brand/brand/form?id=${brand.id}">
 					${brand.warehousename}
 				</a></td>
+				<td>
+						${brand.pickingNum}
+				</td>
+				<td>
+						${brand.pickingDate}
+				</td>
+				<td>
+						${brand.brands}
+				</td>
+				<td>
+						${brand.pickingRate}
+				</td>
+				<td>
+						${brand.state}
+				</td><td>
+					    ${brand.udate}
+			    </td>
+
 				<td>
 					<fmt:formatDate value="${brand.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>

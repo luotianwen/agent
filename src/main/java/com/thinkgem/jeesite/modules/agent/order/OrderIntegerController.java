@@ -53,13 +53,13 @@ public class OrderIntegerController extends BaseController {
 	{
 		return new BigInteger(165, RANDOM).toString(36).toUpperCase();
 	}
-	@RequiresPermissions("order:order:view")
+	@RequiresPermissions("order:order:mview")
 	@RequestMapping(value = "list")
 	public String list( HttpServletRequest request, Model model) {
 
 		return "agent/order/orderList";
 	}
-	@RequiresPermissions("order:order:view")
+	@RequiresPermissions("order:order:mview")
 	@RequestMapping(value = "qf")
 	public String qf( HttpServletRequest request, Model model) {
 		String token=generateGUID();
@@ -68,7 +68,7 @@ public class OrderIntegerController extends BaseController {
 		return "agent/order/orderForm";
 	}
 
-	@RequiresPermissions("order:order:edit")
+	@RequiresPermissions("order:order:medit")
 	@RequestMapping(value = "qfsave")
 	@ResponseBody
 	public String qfsave(Order order,String otoken, HttpServletRequest request,HttpServletResponse response, Model model) {
@@ -155,13 +155,13 @@ public class OrderIntegerController extends BaseController {
 		return renderString(response,map);
 	}
 
-	@RequiresPermissions("order:order:view")
+	@RequiresPermissions("order:order:mview")
 	@RequestMapping(value = "query")
 	public String query( HttpServletRequest request, Model model) {
 
 		return "agent/order/orderQuery";
 	}
-	@RequiresPermissions("order:order:view")
+	@RequiresPermissions("order:order:mview")
 	@RequestMapping(value = "data")
 	public String data( Order order, Model model) {
 		User user = UserUtils.getUser();

@@ -90,14 +90,14 @@ public class StockController extends BaseController {
 		addMessage(redirectAttributes, "删除库存成功");
 		return "redirect:"+Global.getAdminPath()+"/stock/stock/?repage";
 	}
-	@RequiresPermissions("stock:stock:view")
+	@RequiresPermissions("stock:stock:mview")
 	@RequestMapping(value = {"query"})
 	public String query(Stock stock, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		return "agent/stock/stockList";
 	}
 
-	@RequiresPermissions("stock:stock:view")
+	@RequiresPermissions("stock:stock:mview")
 	@RequestMapping(value = {"data"})
 	public String data(Stock stock, HttpServletRequest request, HttpServletResponse response, Model model) {
 		if(StringUtils.isEmpty(stock.getArticleno())){

@@ -5,7 +5,11 @@ package com.thinkgem.jeesite.modules.agent.agent.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.exceptions.ClientException;
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.utils.SmsDemo;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -51,8 +55,9 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 		super.save(agent);
 	}
 	private void saveUser(Agent agent){
+		String phone=agent.getPhone();
 		User user=new User();
-		user.setPassword(SystemService.entryptPassword(agent.getPassword()));
+		user.setPassword(SystemService.entryptPassword(phone.substring(phone.length()-6,phone.length())));
 		user.setLoginName(agent.getLoginName());
 		user.setCompany(new Office("1"));
 		user.setOffice(new Office("2"));
@@ -65,6 +70,14 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 		// 保存用户信息
 		systemService.saveUser(user);
 		agent.setUserid(user.getId());
+		JSONObject j=new JSONObject();
+		j.put("name",agent.getName());
+		j.put("account",agent.getLoginName());
+		try {
+			SmsDemo.sendSms(phone,j.toString(),"SMS_109505038");
+		} catch (ClientException e) {
+			e.printStackTrace();
+		}
 	}
 	@Transactional(readOnly = false)
 	public void delete(Agent agent) {

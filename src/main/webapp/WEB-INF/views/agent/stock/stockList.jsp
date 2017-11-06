@@ -44,7 +44,7 @@
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
-			<tr>
+			<tr><th>货源名</th>
 				<th>商品货号</th>
 				<th>商品类别</th>
 				<th>品牌</th>
@@ -52,10 +52,11 @@
 				<th>尺码1</th>
 				<th>库存数量</th>
 				<th>性别</th>
+				<th>上市季节</th>
+				<th>市场价</th>
+				<th>折扣</th>
 				<th>更新时间</th>
-				<th>备注信息</th>
-				<th>销售价</th>
-				<th>货源名</th>
+
 				<shiro:hasPermission name="stock:stock:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -63,8 +64,12 @@
 		<c:forEach items="${page.list}" var="stock">
 			<tr>
 				<td><a href="${ctx}/stock/stock/form?id=${stock.id}">
-					${stock.articleno}
+					${stock.warehousename}
 				</a></td>
+
+				<td>
+						${stock.articleno}
+				</td>
 				<td>
 					${stock.division}
 				</td>
@@ -84,17 +89,19 @@
 					${stock.sex}
 				</td>
 				<td>
+						${stock.quarter}
+				</td>
+				<td>
+						${stock.marketprice}
+				</td>
+				<td>
+						${stock.discount}
+				</td>
+				<td>
 					<fmt:formatDate value="${stock.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td>
-					${stock.remarks}
-				</td>
-				<td>
-					${stock.price}
-				</td>
-				<td>
-					${stock.warehousename}
-				</td>
+
+
 				<shiro:hasPermission name="stock:stock:edit"><td>
     				<a href="${ctx}/stock/stock/form?id=${stock.id}">修改</a>
 					<a href="${ctx}/stock/stock/delete?id=${stock.id}" onclick="return confirmx('确认要删除该库存吗？', this.href)">删除</a>
