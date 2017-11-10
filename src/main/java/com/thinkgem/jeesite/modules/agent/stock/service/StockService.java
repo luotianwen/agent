@@ -71,12 +71,12 @@ public class StockService extends CrudService<StockDao, Stock> {
 
     private void data(int page, Brand b) {
         try {
-            Thread.sleep(1000*10);
+            Thread.sleep(1000 * 10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        String udate=sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String udate = sdf.format(new Date());
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
         map.put("page", page + "");
@@ -86,12 +86,14 @@ public class StockService extends CrudService<StockDao, Stock> {
         System.out.println(str);
         BackData j = JSON.parseObject(str, BackData.class);
         if (j.getRows() != null && j.getRows().size() > 0) {
-            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
-            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
-            try {
-                System.out.println("保存"+j.getRows());
-                for (Object p1 : j.getRows()) {
+
+
+            System.out.println("保存");
+            for (Object p1 : j.getRows()) {
+                DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+                def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+                TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+                try {
                     Stock p = JSON.parseObject(p1.toString(), Stock.class);
                     Stock p2 = getByName(p.getWarehousename(), p.getArticleno(), p.getSize());
                     if (p2 == null) {
@@ -100,15 +102,16 @@ public class StockService extends CrudService<StockDao, Stock> {
                         p.setId(p2.getId());
                     }
                     save(p);
+                    transactionManager.commit(status);
+                    System.out.println("保存结束");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("保存回滚");
+                    transactionManager.rollback(status);
                 }
-
-                transactionManager.commit(status);
-                System.out.println("保存"+j.getRows()+"结束");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("保存"+j.getRows()+"回滚");
-                transactionManager.rollback(status);
             }
+
+
         }
         int tpage = j.getTotal() / 300 + 1;
         if (page < tpage) {
@@ -118,12 +121,13 @@ public class StockService extends CrudService<StockDao, Stock> {
 
 
     public int saveOrUpdate() {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        String udate=sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String udate = sdf.format(new Date());
         List<Brand> brands = brandService.findList(new Brand());
+
         if (null != brands && 0 < brands.size()) {
             for (Brand b : brands) {
-                if(!udate.equals(b.getUdate())&&1!=b.getState()) {
+                if (!udate.equals(b.getUdate()) && 1 != b.getState()) {
                     data(1, b);
                 }
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
@@ -144,9 +148,9 @@ public class StockService extends CrudService<StockDao, Stock> {
     }
 
     public Page<Stock> findPage2(Page<Stock> page, Stock entity) {
-            entity.setPage(page);
-            page.setList(dao.findList2(entity));
-            return page;
+        entity.setPage(page);
+        page.setList(dao.findList2(entity));
+        return page;
 
     }
 
