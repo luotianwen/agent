@@ -94,7 +94,7 @@ public class StockController extends BaseController {
 	@RequestMapping(value = {"query"})
 	public String query(Stock stock, HttpServletRequest request, HttpServletResponse response, Model model) {
 
-		return "agent/stock/stockList";
+		return "agent/stock/mstockList";
 	}
 
 	@RequiresPermissions("stock:stock:mview")

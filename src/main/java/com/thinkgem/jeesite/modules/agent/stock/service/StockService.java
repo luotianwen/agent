@@ -127,9 +127,9 @@ public class StockService extends CrudService<StockDao, Stock> {
 
         if (null != brands && 0 < brands.size()) {
             for (Brand b : brands) {
-                if (!udate.equals(b.getUdate()) && 1 != b.getState()) {
+             /*   if (!udate.equals(b.getUdate()) && 1 != b.getState()) {*/
                     data(1, b);
-                }
+               /* }
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
                 def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
                 TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
@@ -141,7 +141,7 @@ public class StockService extends CrudService<StockDao, Stock> {
                 } catch (Exception e) {
                     e.printStackTrace();
                     transactionManager.rollback(status);
-                }
+                }*/
             }
         }
         return 1;

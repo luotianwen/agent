@@ -65,7 +65,7 @@ public class OrderIntegerController extends BaseController {
 		String token=generateGUID();
 		request.getSession().setAttribute("otoken",token);
 		model.addAttribute("otoken",token);
-		return "agent/order/orderForm";
+		return "agent/order/morderForm";
 	}
 
 	@RequiresPermissions("order:order:medit")
