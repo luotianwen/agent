@@ -69,6 +69,7 @@ public class SimpleOrderIntegerController extends BaseController {
 		if(null==aSimpleOrder){
 			aSimpleOrder=new SimpleOrder();
 		}
+		model.addAttribute("agent", agent);
 		aSimpleOrder.setAgentid(agent.getId());
 		Page<SimpleOrder> page = aSimpleOrderService.findPage(new Page<SimpleOrder>(request, response), aSimpleOrder);
 		model.addAttribute("page", page);
@@ -84,7 +85,7 @@ public class SimpleOrderIntegerController extends BaseController {
 
 	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
 	@RequestMapping(value = "save")
-	public String save(SimpleOrder aSimpleOrder, Model model, RedirectAttributes redirectAttributes) {
+	public String save(SimpleOrder aSimpleOrder, Model model, RedirectAttributes redirectAttributes) throws Exception {
 		if (!beanValidator(model, aSimpleOrder)){
 			return form(aSimpleOrder, model);
 		}
@@ -92,7 +93,7 @@ public class SimpleOrderIntegerController extends BaseController {
 		Agent agent=agentService.getUserId(user.getId());
 		aSimpleOrder.setState("1");
 		aSimpleOrder.setAgentid(agent.getId());
-		aSimpleOrderService.save(aSimpleOrder);
+		aSimpleOrderService.asave(aSimpleOrder);
 		addMessage(redirectAttributes, "保存下单管理成功");
 		return "redirect:"+ Global.getAdminPath()+"/msimpleorder/?repage";
 	}

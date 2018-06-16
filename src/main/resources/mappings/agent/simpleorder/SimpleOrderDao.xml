@@ -14,9 +14,12 @@
 		a.courier AS "courier",
 		a.delivernumber AS "delivernumber",
 		a.deliverinfo AS "deliverinfo",
+		a.delivermoney AS "delivermoney",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
+		a.totalmoney AS "totalmoney",
 		a.update_by AS "updateBy.id",
+		a.isaccount AS "isaccount",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
@@ -52,6 +55,9 @@
 			</if>
 			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
 				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+			<if test="isaccount != null and isaccount != ''">
+				AND a.isaccount = #{isaccount}
 			</if>
 		</where>
 		<choose>
@@ -94,9 +100,12 @@
 			courier,
 			delivernumber,
 			deliverinfo,
+			delivermoney,
 			create_by,
 			create_date,
+			totalmoney,
 			update_by,
+			isaccount,
 			update_date,
 			remarks,
 			del_flag
@@ -111,9 +120,12 @@
 			#{courier},
 			#{delivernumber},
 			#{deliverinfo},
+			#{delivermoney},
 			#{createBy.id},
 			#{createDate},
+			#{totalmoney},
 			#{updateBy.id},
+			#{isaccount},
 			#{updateDate},
 			#{remarks},
 			#{delFlag}
@@ -131,12 +143,26 @@
 			courier = #{courier},
 			delivernumber = #{delivernumber},
 			deliverinfo = #{deliverinfo},
+			delivermoney = #{delivermoney},
+			totalmoney = #{totalmoney},
 			update_by = #{updateBy.id},
+			isaccount = #{isaccount},
 			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-	
+
+	<update id="deliver">
+		UPDATE a_simple_order SET
+
+		delivernumber = #{delivernumber},
+		deliverinfo = #{deliverinfo},
+		delivermoney = #{delivermoney},
+		totalmoney = #{totalmoney},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
 	<update id="delete">
 		UPDATE a_simple_order SET 
 			del_flag = #{DEL_FLAG_DELETE}

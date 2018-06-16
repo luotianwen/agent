@@ -35,6 +35,15 @@ public class Agent extends DataEntity<Agent> {
 	private double discount;		// 折扣
 	private String discountName;		// 折扣名称
 	private String userid;
+	private Double money;		// 余额金额
+
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
 
 	public String getUserid() {
 		return userid;

@@ -24,7 +24,8 @@
 		a.address AS "address",
 		a.userid AS "userid",
 		d.discount AS "discount",
-		d.name AS "discountName"
+		d.name AS "discountName",
+		a.money AS "money"
 	</sql>
 	
 	<sql id="agentJoins">
@@ -155,7 +156,17 @@
 			#{address}
 		)
 	</insert>
-	
+
+	<update id="addMoney">
+	UPDATE a_agent SET
+	money=money+#{money}
+	WHERE id = #{id}
+	</update>
+	<update id="reduceMoney">
+		UPDATE a_agent SET
+		money=money-#{money}
+		WHERE id = #{id}
+	</update>
 	<update id="update">
 		UPDATE a_agent SET 	
 			name = #{name},

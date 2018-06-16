@@ -28,9 +28,9 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/simpleorder/simpleOrder/">下单管理列表</a></li>
-		<li class="active"><a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">下单管理<shiro:hasPermission name="simpleorder:simpleOrder:edit">${not empty simpleOrder.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="simpleorder:simpleOrder:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"> 发货</li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/simpleorder/simpleOrder/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/simpleorder/simpleOrder/deliver" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<form:hidden path="agentid"/>
 		<sys:message content="${message}"/>
@@ -104,15 +104,7 @@
 				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">是否对账：</label>
-			<div class="controls">
-				<form:select path="isaccount" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">

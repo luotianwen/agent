@@ -64,20 +64,22 @@
 		<thead>
 			<tr>
 				<th>名称</th>
+				<th>余额</th>
 				<th>性别</th>
 				<th>联系电话</th>
 				<th>邮箱</th>
 				<th>微信</th>
-				<th>联系手机</th>
+				<%--<th>联系手机</th>--%>
 
-				<th>更新时间</th>
+
 
 				<th>登录名</th>
 				<th>状态</th>
 				<th>折扣</th>
 				<th>折扣名称</th>
 				<th>支付宝</th>
-				<th>联系地址</th>
+				<th>创建时间</th>
+			<%--<th>联系地址</th>--%>
 				<shiro:hasPermission name="agent:agent:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -87,6 +89,9 @@
 				<td><a href="${ctx}/agent/agent/form?id=${agent.id}">
 					${agent.name}
 				</a></td>
+				<td>
+						${agent.money}
+				</td>
 				<td>
 					${fns:getDictLabel(agent.sex, 'sex', '')}
 				</td>
@@ -99,13 +104,11 @@
 				<td>
 					${agent.weixin}
 				</td>
-				<td>
-					${agent.mobile}
-				</td>
 
-				<td>
-					<fmt:formatDate value="${agent.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
+
+			<%--	<td>
+					${agent.mobile}
+				</td>--%>
 
 				<td>
 					${agent.loginName}
@@ -123,10 +126,14 @@
 					${agent.apay}
 				</td>
 				<td>
-					${agent.address}
+					<fmt:formatDate value="${agent.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
+				<%--<td>
+					${agent.address}
+				</td>--%>
 				<shiro:hasPermission name="agent:agent:edit"><td>
     				<a href="${ctx}/agent/agent/form?id=${agent.id}">审核</a>
+					<a href="${ctx}/agent/recharge/form?agentid=${agent.id}&agentName=${agent.name}">充值</a>
 					<a href="${ctx}/agent/agent/delete?id=${agent.id}" onclick="return confirmx('确认要删除该代理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

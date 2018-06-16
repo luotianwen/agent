@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>下单管理管理</title>
+	<title>充值管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,34 +27,21 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/msimpleorder/">下单管理列表</a></li>
-		<li class="active"><a href="${ctx}/msimpleorder/form?id=${simpleOrder.id}">下单管理 ${not empty simpleOrder.id?'修改':'添加'}   </a></li>
+		<li><a href="${ctx}/agent/recharge/">充值列表</a></li>
+		<li class="active"><a href="${ctx}/agent/recharge/form?id=${recharge.id}">充值<shiro:hasPermission name="agent:recharge:edit">${not empty recharge.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="agent:recharge:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/msimpleorder/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="recharge" action="${ctx}/agent/recharge/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<form:hidden path="agentid"/>
 		<sys:message content="${message}"/>		
-
 		<div class="control-group">
-			<label class="control-label">货号：</label>
+			<label class="control-label">代理：</label>
 			<div class="controls">
-				<form:input path="articleno" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="agentName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">数量：</label>
-			<div class="controls">
-				<form:input path="num" htmlEscape="false" maxlength="11" class="input-xlarge "/>
-			</div>
-		</div>
-
-		<div class="control-group">
-			<label class="control-label">收件信息：</label>
-			<div class="controls">
-				<form:textarea path="deliverinfo" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">金额：</label>
+			<label class="control-label">充值金额：</label>
 			<div class="controls">
 				<form:input path="money" htmlEscape="false" class="input-xlarge "/>
 			</div>
@@ -66,7 +53,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			 <input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+			<shiro:hasPermission name="agent:recharge:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

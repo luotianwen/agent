@@ -89,4 +89,14 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 	public Agent getUserId(String id) {
 		return  dao.getUserId(id);
 	}
+
+    public void addMoney(Agent agent) {
+		   dao.addMoney(agent);
+    }
+
+	public void reduceMoney(Agent agent) {
+		dao.reduceMoney(agent);
+	}
+
+
 }

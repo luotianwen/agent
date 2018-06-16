@@ -16,4 +16,9 @@ import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 public interface AgentDao extends CrudDao<Agent> {
 
     Agent getUserId(String id);
+
+    void addMoney(Agent agent);
+
+    void reduceMoney(Agent agent);
+
 }

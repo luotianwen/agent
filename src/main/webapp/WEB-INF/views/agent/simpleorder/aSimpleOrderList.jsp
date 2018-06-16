@@ -45,6 +45,9 @@
 					   value="<fmt:formatDate value="${order.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
+			<li><label>剩余金额:${agent.money}</label>
+
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -57,8 +60,11 @@
 				<th>货号</th>
 				<th>数量</th>
 				<th>状态</th>
+				<th>售价</th>
 				<th>快递公司</th>
 				<th>快递单号</th>
+				<th>快递费用</th>
+				<th>总计</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<th>操作</th>
@@ -67,9 +73,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
-				<td><a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">
+				<td>
 					${simpleOrder.agentName}
-				</a></td>
+				 </td>
 				<td>
 					${simpleOrder.articleno}
 				</td>
@@ -80,10 +86,19 @@
 					${fns:getDictLabel(simpleOrder.state, 'a_simple_order_state', '')}
 				</td>
 				<td>
-					${simpleOrder.courier}
+						${simpleOrder.money}
 				</td>
 				<td>
-					${simpleOrder.delivernumber}
+						${simpleOrder.courier}
+				</td>
+				<td>
+						${simpleOrder.delivernumber}
+				</td>
+				<td>
+						${simpleOrder.delivermoney}
+				</td>
+				<td>
+						${simpleOrder.totalmoney}
 				</td>
 				<td>
 					<fmt:formatDate value="${simpleOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.agent.simpleorder.service.SimpleOrderService
 /**
  * 下单管理Controller
  * @author 罗天文
- * @version 2018-06-10
+ * @version 2018-06-16
  */
 @Controller
 @RequestMapping(value = "${adminPath}/simpleorder/simpleOrder")
@@ -60,6 +60,12 @@ public class SimpleOrderController extends BaseController {
 		model.addAttribute("simpleOrder", simpleOrder);
 		return "agent/simpleorder/simpleOrderForm";
 	}
+	@RequiresPermissions("simpleorder:simpleOrder:view")
+	@RequestMapping(value = "deliverform")
+	public String deliverform(SimpleOrder simpleOrder, Model model) {
+		model.addAttribute("simpleOrder", simpleOrder);
+		return "agent/simpleorder/simpleOrderdeliverForm";
+	}
 
 	@RequiresPermissions("simpleorder:simpleOrder:edit")
 	@RequestMapping(value = "save")
@@ -71,7 +77,16 @@ public class SimpleOrderController extends BaseController {
 		addMessage(redirectAttributes, "保存下单管理成功");
 		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
 	}
-	
+	@RequiresPermissions("simpleorder:simpleOrder:edit")
+	@RequestMapping(value = "deliver")
+	public String deliver(SimpleOrder simpleOrder, Model model, RedirectAttributes redirectAttributes) throws Exception {
+		if (!beanValidator(model, simpleOrder)){
+			return deliverform(simpleOrder, model);
+		}
+		simpleOrderService.deliver(simpleOrder);
+		addMessage(redirectAttributes, "保存下单管理成功");
+		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
+	}
 	@RequiresPermissions("simpleorder:simpleOrder:edit")
 	@RequestMapping(value = "delete")
 	public String delete(SimpleOrder simpleOrder, RedirectAttributes redirectAttributes) {
