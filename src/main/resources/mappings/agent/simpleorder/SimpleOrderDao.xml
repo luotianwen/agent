@@ -168,5 +168,10 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+	<update id="isaccount">
+		UPDATE a_simple_order SET
+		isaccount = 1
+		WHERE id = #{id}
+	</update>
+
 </mapper>

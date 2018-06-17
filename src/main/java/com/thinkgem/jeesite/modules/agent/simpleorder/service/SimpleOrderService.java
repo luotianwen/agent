@@ -15,6 +15,7 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
 import com.thinkgem.jeesite.modules.agent.simpleorder.dao.SimpleOrderDao;
+import sun.management.resources.agent;
 
 /**
  * 下单管理Service
@@ -52,11 +53,12 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 	@Transactional(readOnly = false)
 	public void deliver(SimpleOrder simpleOrder) throws Exception {
 		if(simpleOrder.getState().equals("3")){
+			double moneys=simpleOrder.getTotalmoney()-simpleOrder.getMoney();
 			Agent agent=new Agent();
 			agent.setId(simpleOrder.getAgentid());
-			agent.setMoney(simpleOrder.getMoney());
+			agent.setMoney(moneys);
 			Double money=agentService.get(agent).getMoney();
-			if(money>=simpleOrder.getMoney()) {
+			if(money>=moneys) {
 				agentService.reduceMoney(agent);
 			}
 			else{
@@ -69,7 +71,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 	public void asave(SimpleOrder simpleOrder) throws Exception {
 		Agent agent=new Agent();
 		agent.setId(simpleOrder.getAgentid());
-		agent.setMoney(simpleOrder.getTotalmoney());
+		agent.setMoney(simpleOrder.getMoney());
 		Double money=agentService.get(agent).getMoney();
 		if(money>=simpleOrder.getMoney()) {
 			agentService.reduceMoney(agent);
@@ -78,5 +80,9 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 			throw new Exception("金额不够");
 		}
 		super.save(simpleOrder);
+	}
+	@Transactional(readOnly = false)
+	public void isaccount(SimpleOrder simpleOrder) {
+		dao.isaccount(simpleOrder);
 	}
 }

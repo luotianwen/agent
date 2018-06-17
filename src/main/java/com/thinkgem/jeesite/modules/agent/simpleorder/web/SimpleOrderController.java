@@ -94,5 +94,12 @@ public class SimpleOrderController extends BaseController {
 		addMessage(redirectAttributes, "删除下单管理成功");
 		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
 	}
+	@RequiresPermissions("simpleorder:simpleOrder:edit")
+	@RequestMapping(value = "isaccount")
+	public String isaccount(SimpleOrder simpleOrder, RedirectAttributes redirectAttributes) {
+		simpleOrderService.isaccount(simpleOrder);
+		addMessage(redirectAttributes, "对账成功");
+		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
+	}
 
 }

@@ -49,13 +49,13 @@
 		<div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
-				<form:input path="num" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:input path="num" htmlEscape="false"    maxlength="11" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">金额：</label>
 			<div class="controls">
-				<form:input path="money" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="money" htmlEscape="false" readonly="true"  class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

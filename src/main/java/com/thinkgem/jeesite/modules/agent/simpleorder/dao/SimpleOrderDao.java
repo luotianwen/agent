@@ -16,4 +16,6 @@ import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
 public interface SimpleOrderDao extends CrudDao<SimpleOrder> {
 
     void deliver(SimpleOrder simpleOrder);
+
+    void isaccount(SimpleOrder simpleOrder);
 }

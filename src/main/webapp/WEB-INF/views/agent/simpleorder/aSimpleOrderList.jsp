@@ -45,7 +45,13 @@
 					   value="<fmt:formatDate value="${order.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
-			<li><label>剩余金额:${agent.money}</label>
+			<li><label>是否对账：</label>
+				<form:select path="isaccount" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
+			<li>剩余金额:${agent.money}
 
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -61,11 +67,13 @@
 				<th>数量</th>
 				<th>状态</th>
 				<th>售价</th>
-				<th>快递公司</th>
-				<th>快递单号</th>
 				<th>快递费用</th>
 				<th>总计</th>
-				<th>更新时间</th>
+				<th>快递公司</th>
+				<th>快递单号</th>
+
+				<th>是否对账</th>
+				<th>创建时间</th>
 				<th>备注信息</th>
 				<th>操作</th>
 			</tr>
@@ -89,19 +97,23 @@
 						${simpleOrder.money}
 				</td>
 				<td>
-						${simpleOrder.courier}
-				</td>
-				<td>
-						${simpleOrder.delivernumber}
-				</td>
-				<td>
 						${simpleOrder.delivermoney}
 				</td>
 				<td>
 						${simpleOrder.totalmoney}
 				</td>
 				<td>
-					<fmt:formatDate value="${simpleOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						${simpleOrder.courier}
+				</td>
+				<td>
+						${simpleOrder.delivernumber}
+				</td>
+
+				<td>
+						${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}
+				</td>
+				<td>
+					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${simpleOrder.remarks}
