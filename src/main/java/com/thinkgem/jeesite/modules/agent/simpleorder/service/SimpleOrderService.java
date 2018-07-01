@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.agent.simpleorder.service;
 
 import java.util.List;
 
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,10 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 	
 	@Transactional(readOnly = false)
 	public void delete(SimpleOrder simpleOrder) {
+		Agent agent=new Agent();
+		agent.setId(simpleOrder.getAgentid());
+		agent.setMoney(simpleOrder.getMoney());
+		agentService.addMoney(agent);
 		super.delete(simpleOrder);
 	}
 	@Transactional(readOnly = false)
@@ -69,11 +74,18 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 	}
    @Transactional(readOnly = false)
 	public void asave(SimpleOrder simpleOrder) throws Exception {
+		double f=0d;
+		if(StringUtils.isEmpty(simpleOrder.getId())){
+			f=simpleOrder.getMoney();
+		}else{
+			SimpleOrder a=this.get(simpleOrder.getId());
+			f=simpleOrder.getMoney()-a.getMoney();
+		}
 		Agent agent=new Agent();
 		agent.setId(simpleOrder.getAgentid());
-		agent.setMoney(simpleOrder.getMoney());
+		agent.setMoney(f);
 		Double money=agentService.get(agent).getMoney();
-		if(money>=simpleOrder.getMoney()) {
+		if(money>=f) {
 			agentService.reduceMoney(agent);
 		}
 		else{

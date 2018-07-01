@@ -63,6 +63,7 @@ public class SimpleOrderController extends BaseController {
 	@RequiresPermissions("simpleorder:simpleOrder:view")
 	@RequestMapping(value = "deliverform")
 	public String deliverform(SimpleOrder simpleOrder, Model model) {
+		simpleOrder.setState("3");
 		model.addAttribute("simpleOrder", simpleOrder);
 		return "agent/simpleorder/simpleOrderdeliverForm";
 	}

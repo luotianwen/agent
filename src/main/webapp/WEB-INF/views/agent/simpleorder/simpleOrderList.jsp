@@ -69,6 +69,7 @@
 				<th>快递单号</th>
 				<th title="财务对账">是否对账</th>
 				<th>创建时间</th>
+				<th>发货时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="simpleorder:simpleOrder:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -108,6 +109,9 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					<fmt:formatDate value="${simpleOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${simpleOrder.remarks}

@@ -33,6 +33,7 @@
 	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/simpleorder/simpleOrder/deliver" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<form:hidden path="agentid"/>
+
 		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">代理：</label>
@@ -67,7 +68,7 @@
 		<div class="control-group">
 			<label class="control-label">状态：</label>
 			<div class="controls">
-				<form:select path="state" class="input-xlarge required">
+				<form:select path="state" class="input-xlarge required"  >
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('a_simple_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>

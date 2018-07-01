@@ -147,14 +147,15 @@
 			totalmoney = #{totalmoney},
 			update_by = #{updateBy.id},
 			isaccount = #{isaccount},
-			update_date = #{updateDate},
+
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 
 	<update id="deliver">
 		UPDATE a_simple_order SET
-
+		state = #{state},
+		courier = #{courier},
 		delivernumber = #{delivernumber},
 		deliverinfo = #{deliverinfo},
 		delivermoney = #{delivermoney},
@@ -162,6 +163,7 @@
 		update_by = #{updateBy.id},
 		update_date = #{updateDate}
 		WHERE id = #{id}
+		and state='1'
 	</update>
 	<update id="delete">
 		UPDATE a_simple_order SET 
