@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.agent.simpleorder.entity;
 
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 
@@ -26,18 +27,35 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
 	}
+	@ExcelField(title="货号", align=2, sort=1)
 
 	private String articleno;		// 货号
+	@ExcelField(title="数量", align=2, sort=2)
+
 	private String num;		// 数量
+	@ExcelField(title="金额", align=2, sort=3)
+
 	private Double money;		// 金额
 	private Double price;		// 市场价
+	@ExcelField(title="状态", align=2, sort=4, dictType="a_simple_order_state")
+
 	private String state;		// 状态
+	@ExcelField(title="快递公司", align=2, sort=5)
+
 	private String courier;		// 快递公司
+	@ExcelField(title="快递单号", align=2, sort=6)
+
 	private String delivernumber;		// 快递单号
+	@ExcelField(title="快递信息", align=2, sort=7)
+
 	private String deliverinfo;		// 快递信息
+	@ExcelField(title="快递费", align=2, sort=8)
 	private Double delivermoney;		// 快递费
+	@ExcelField(title="总价", align=2, sort=9)
 	private Double totalmoney;		// 总价
+	@ExcelField(title="是否对账", align=2, sort=10, dictType="yes_no")
 	private String isaccount;		// 是否对账
+
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
 	

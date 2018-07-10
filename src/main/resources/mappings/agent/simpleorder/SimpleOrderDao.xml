@@ -47,6 +47,9 @@
 			<if test="articleno != null and articleno != ''">
 				AND a.articleno = #{articleno}
 			</if>
+			<if test="agentid != null and agentid != ''">
+				AND a.agentid = #{agentid}
+			</if>
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
@@ -77,7 +80,25 @@
 		<include refid="simpleOrderJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno = #{articleno}
+			</if>
+			<if test="agentid != null and agentid != ''">
+				AND a.agentid = #{agentid}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+			<if test="delivernumber != null and delivernumber != ''">
+				AND a.delivernumber = #{delivernumber}
+			</if>
+			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
+				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+			<if test="isaccount != null and isaccount != ''">
+				AND a.isaccount = #{isaccount}
+			</if>
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
