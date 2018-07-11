@@ -53,6 +53,9 @@
 					value="<fmt:formatDate value="${simpleOrder.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
+			<li><label>快递信息：</label>
+				<form:input path="deliverinfo" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
 			<li><label>是否对账：</label>
 				<form:select path="isaccount" class="input-medium">
 					<form:option value="" label=""/>
@@ -68,7 +71,7 @@
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
-			<tr>
+			<tr><th>客户名称</th>
 				<th>货号</th>
 				<th>数量</th>
 				<th>金额</th>
@@ -87,6 +90,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
+				<td>
+						${simpleOrder.agentName}
+				</td>
 				<td><a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">
 					${simpleOrder.articleno}
 				</a></td>

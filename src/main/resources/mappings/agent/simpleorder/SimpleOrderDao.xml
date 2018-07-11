@@ -53,6 +53,9 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
+			<if test="deliverinfo != null and deliverinfo != ''">
+				AND a.deliverinfo  LIKE concat('%',#{deliverinfo},'%')
+			</if>
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
 			</if>
