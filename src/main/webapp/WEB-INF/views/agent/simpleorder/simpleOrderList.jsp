@@ -133,7 +133,7 @@
 					${simpleOrder.remarks}
 				</td>
 				<shiro:hasPermission name="simpleorder:simpleOrder:edit"><td>
-					<c:if test="${simpleOrder.state==1}">
+					<c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
 						<a href="${ctx}/simpleorder/simpleOrder/deliverform?id=${simpleOrder.id}">发货</a>
 					</c:if>
     				<a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">修改</a>
