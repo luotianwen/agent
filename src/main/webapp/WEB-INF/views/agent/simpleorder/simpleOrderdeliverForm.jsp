@@ -90,7 +90,7 @@
 		<div class="control-group">
 			<label class="control-label">快递信息：</label>
 			<div class="controls">
-				<form:input path="deliverinfo" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:textarea path="deliverinfo" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

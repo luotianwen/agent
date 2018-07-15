@@ -80,6 +80,7 @@
 				<th>状态</th>
 				<th>快递公司</th>
 				<th>快递单号</th>
+				<th>快递信息</th>
 				<th title="财务对账">是否对账</th>
 				<th>创建时间</th>
 				<th>发货时间</th>
@@ -118,7 +119,9 @@
 					${simpleOrder.delivernumber}
 				</td>
 
-
+				<td>
+						${simpleOrder.deliverinfo}
+				</td>
 
 				<td>
 					${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}
