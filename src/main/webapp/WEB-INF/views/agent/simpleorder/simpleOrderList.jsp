@@ -140,7 +140,7 @@
 						<a href="${ctx}/simpleorder/simpleOrder/deliverform?id=${simpleOrder.id}">发货</a>
 					</c:if>
     				<a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">修改</a>
-					<c:if test="${empty simpleOrder.isaccount && simpleOrder.state==3}">
+					<c:if test="${(empty simpleOrder.isaccount||simpleOrder.isaccount==0) && simpleOrder.state==3}">
 					<a href="${ctx}/simpleorder/simpleOrder/isaccount?id=${simpleOrder.id}" onclick="return confirmx('确认要对账吗？', this.href)">对账</a>
 					</c:if>
 					<a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}" onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
