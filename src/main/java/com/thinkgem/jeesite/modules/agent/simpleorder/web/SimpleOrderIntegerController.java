@@ -107,8 +107,8 @@ public class SimpleOrderIntegerController extends BaseController {
 			if(null==aSimpleOrder){
 				aSimpleOrder=new SimpleOrder();
 			}
-            List<SimpleOrder> list=aSimpleOrderService.findList(aSimpleOrder);
 			aSimpleOrder.setAgentid(agent.getId());
+            List<SimpleOrder> list=aSimpleOrderService.findList(aSimpleOrder);
 			new ExportExcel("订单数据", SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
 			return null;
 		} catch (Exception e) {
@@ -116,4 +116,5 @@ public class SimpleOrderIntegerController extends BaseController {
 		}
 		return "redirect:" + adminPath + "/msimpleorder/list?repage";
 	}
+
 }

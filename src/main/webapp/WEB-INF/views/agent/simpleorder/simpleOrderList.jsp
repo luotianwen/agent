@@ -1,10 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
+
 <head>
 	<title>下单管理管理</title>
 	<meta name="decorator" content="default"/>
+	<style>
+		.table-striped tbody tr:nth-child(odd) td {
+			background-color: #8DBE5A;
+		}
+
+	</style>
 	<script type="text/javascript">
+
 		$(document).ready(function() {
             $("#btnExport").click(function(){
                 top.$.jBox.confirm("确认要导出数据吗？","系统提示",function(v,h,f){
@@ -69,19 +77,19 @@
 		</ul>
 	</form:form>
 	<sys:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered table-condensed">
+	<table id="contentTable" class="table  table-bordered table-striped  table-condensed table-hover">
 		<thead>
 			<tr><th>客户名称</th>
 				<th>货号</th>
 				<th>数量</th>
-				<th>金额</th>
-				<th>快递费</th>
-				<th>总价</th>
 				<th>状态</th>
+				<th>售价</th>
+				<th>快递费用</th>
+				<th>总计</th>
 				<th>快递公司</th>
 				<th>快递单号</th>
 				<th>快递信息</th>
-				<th title="财务对账">是否对账</th>
+				<th>是否对账</th>
 				<th>创建时间</th>
 				<th>发货时间</th>
 				<th>备注信息</th>
@@ -94,14 +102,17 @@
 				<td>
 						${simpleOrder.agentName}
 				</td>
-				<td><a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">
-					${simpleOrder.articleno}
-				</a></td>
 				<td>
-					${simpleOrder.num}
+						${simpleOrder.articleno}
 				</td>
 				<td>
-					${simpleOrder.money}
+						${simpleOrder.num}
+				</td>
+				<td>
+						${fns:getDictLabel(simpleOrder.state, 'a_simple_order_state', '')}
+				</td>
+				<td>
+						${simpleOrder.money}
 				</td>
 				<td>
 						${simpleOrder.delivermoney}
@@ -110,21 +121,16 @@
 						${simpleOrder.totalmoney}
 				</td>
 				<td>
-					${fns:getDictLabel(simpleOrder.state, 'a_simple_order_state', '')}
+						${simpleOrder.courier}
 				</td>
 				<td>
-					${simpleOrder.courier}
+						${simpleOrder.delivernumber}
 				</td>
-				<td>
-					${simpleOrder.delivernumber}
-				</td>
-
 				<td>
 						${simpleOrder.deliverinfo}
 				</td>
-
 				<td>
-					${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}
+						${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}
 				</td>
 				<td>
 					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -133,7 +139,7 @@
 					<fmt:formatDate value="${simpleOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${simpleOrder.remarks}
+						${simpleOrder.remarks}
 				</td>
 				<shiro:hasPermission name="simpleorder:simpleOrder:edit"><td>
 					<c:if test="${simpleOrder.state==1||simpleOrder.state==2}">

@@ -130,7 +130,7 @@
 			totalmoney,
 			update_by,
 			isaccount,
-			update_date,
+
 			remarks,
 			del_flag
 		) VALUES (
@@ -150,7 +150,7 @@
 			#{totalmoney},
 			#{updateBy.id},
 			#{isaccount},
-			#{updateDate},
+
 			#{remarks},
 			#{delFlag}
 		)
