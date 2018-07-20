@@ -64,6 +64,17 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	protected Date updateDate;	// 更新日期
 	@ExcelField(title="备注", align=2, sort=13)
 	protected String remarks;	// 备注
+
+	private String isdelivernumber;
+
+	public String getIsdelivernumber() {
+		return isdelivernumber;
+	}
+
+	public void setIsdelivernumber(String isdelivernumber) {
+		this.isdelivernumber = isdelivernumber;
+	}
+
 	public SimpleOrder() {
 		super();
 	}

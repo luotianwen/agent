@@ -47,6 +47,7 @@
 			<if test="articleno != null and articleno != ''">
 				AND a.articleno = #{articleno}
 			</if>
+
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
 			</if>
@@ -59,6 +60,15 @@
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
 			</if>
+            <if test="isdelivernumber != null and isdelivernumber != ''">
+
+                <if test="isdelivernumber == 0 ">
+                    AND (a.delivernumber is null or a.delivernumber='')
+                </if>
+                <if test="isdelivernumber == 1 ">
+                    AND (a.delivernumber is not  null and a.delivernumber !='')
+                </if>
+            </if>
 			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
 				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
 			</if>

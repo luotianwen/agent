@@ -50,6 +50,12 @@
 					<form:options items="${fns:getDictList('a_simple_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
+			<li><label>是否有单号：</label>
+				<form:select path="isdelivernumber" class="input-medium">
+					<form:option value="" label="全部"/>
+					<form:options items="${fns:getDictList('yes_no')}"  itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
 			<li><label>快递单号：</label>
 				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
@@ -66,7 +72,7 @@
 			</li>
 			<li><label>是否对账：</label>
 				<form:select path="isaccount" class="input-medium">
-					<form:option value="" label=""/>
+					<form:option value="" label="全部"/>
 					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>

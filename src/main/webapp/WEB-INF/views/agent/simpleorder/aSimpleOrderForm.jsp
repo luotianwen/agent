@@ -43,7 +43,11 @@
 		<div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
-				<form:input path="num" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:select path="num" class="input-medium">
+					<c:forEach var="x" begin="1" end="50" step="1">
+						<form:option value="${x}"    htmlEscape="false"/>
+					</c:forEach>
+				</form:select>
 			</div>
 		</div>
 

@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.agent.simpleorder.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -70,6 +71,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 				throw new Exception("金额不够");
 			}
 		}
+		simpleOrder.preUpdate();
 		 dao.deliver(simpleOrder);
 	}
    @Transactional(readOnly = false)

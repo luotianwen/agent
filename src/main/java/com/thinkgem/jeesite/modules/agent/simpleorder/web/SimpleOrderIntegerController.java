@@ -80,6 +80,7 @@ public class SimpleOrderIntegerController extends BaseController {
 		if (!beanValidator(model, aSimpleOrder)){
 			return form(aSimpleOrder, model);
 		}
+		aSimpleOrder.setIsaccount("0");
 		User user = UserUtils.getUser();
 		Agent agent=agentService.getUserId(user.getId());
 		aSimpleOrder.setState("1");
