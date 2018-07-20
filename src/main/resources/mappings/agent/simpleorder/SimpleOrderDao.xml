@@ -206,8 +206,19 @@
 	</update>
 	<update id="isaccount">
 		UPDATE a_simple_order SET
-		isaccount = 1
+		isaccount = '1'
 		WHERE id = #{id}
+		and isaccount = '0'
+	</update>
+	<update id="account">
+		UPDATE a_simple_order SET
+		isaccount = '1'
+		WHERE id in
+		        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+			              #{item}
+			     </foreach>
+		and isaccount = '0'
+		and state=3
 	</update>
 
 </mapper>

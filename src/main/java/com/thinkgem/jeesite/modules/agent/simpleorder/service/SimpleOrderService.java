@@ -99,4 +99,10 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 	public void isaccount(SimpleOrder simpleOrder) {
 		dao.isaccount(simpleOrder);
 	}
+    @Transactional(readOnly = false)
+    public void account(String ids) {
+
+            dao.account(ids.split(","));
+
+    }
 }

@@ -23,6 +23,12 @@
                 },{buttonsFocus:1});
                 top.$('.jbox-body .jbox-icon').css('top','55px');
             });
+            $(":checkbox[name='orderId']").click(function(){
+                $("#checkId").attr('checked', $(":checkbox[name='orderId']").length==$(":checkbox[name='orderId']:checked").length);
+            });
+            $(":checkbox[name='checkId']").click(function(){
+                checkAll(this, 'orderId');
+            });
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -30,6 +36,29 @@
 			$("#searchForm").submit();
         	return false;
         }
+
+
+        function checkdel(){
+            var num = $("input[type='checkbox']:checked").length;
+            if(num == 0){
+                top.$.jBox.alert("请选择你要对账的数据");
+            }else{
+                confirmx('确定要对账已选中的数据吗？',repairDel);
+            }
+
+        }
+
+        function repairDel(){
+            var ids=[];
+            $("input[name='orderId']:checked").each(function(){
+                ids.push($(this).val());
+            });
+            var delIds=ids.join(",");
+            $("#searchForm").attr("action","${ctx}/simpleorder/simpleOrder/account?ids="+delIds);
+            $("#searchForm").submit();
+        }
+
+
 	</script>
 </head>
 <body>
@@ -77,7 +106,8 @@
 				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/></li>
+				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+				<a href="#" onclick="checkdel()" class="btn btn-primary">批量对账</a></li>
 			</li>
 			<li class="clearfix"></li>
 		</ul>
@@ -85,7 +115,9 @@
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table  table-bordered table-striped  table-condensed table-hover">
 		<thead>
-			<tr><th>客户名称</th>
+			<tr>
+				<th><input type=checkbox name="checkId" id="checkId"  ></th>
+				<th>客户名称</th>
 				<th>货号</th>
 				<th>数量</th>
 				<th>状态</th>
@@ -105,6 +137,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
+				<td><input type="checkbox" name="orderId" value="${simpleOrder.id}"   /></td>
 				<td>
 						${simpleOrder.agentName}
 				</td>

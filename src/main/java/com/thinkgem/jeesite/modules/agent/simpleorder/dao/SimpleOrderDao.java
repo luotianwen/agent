@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.agent.simpleorder.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 下单管理DAO接口
@@ -18,4 +19,6 @@ public interface SimpleOrderDao extends CrudDao<SimpleOrder> {
     void deliver(SimpleOrder simpleOrder);
 
     void isaccount(SimpleOrder simpleOrder);
+
+    void account(@Param("ids")String[] ids);
 }

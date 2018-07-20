@@ -111,6 +111,13 @@ public class SimpleOrderController extends BaseController {
 		addMessage(redirectAttributes, "对账成功");
 		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
 	}
+	@RequiresPermissions("simpleorder:simpleOrder:edit")
+	@RequestMapping(value = "account")
+	public String account(String ids, RedirectAttributes redirectAttributes) {
+		simpleOrderService.account(ids);
+		addMessage(redirectAttributes, "对账成功");
+		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
+	}
 	@RequiresPermissions("simpleorder:simpleOrder:view")
 	@RequestMapping(value = "export", method= RequestMethod.POST)
 	public String exportFile(SimpleOrder aSimpleOrder, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {

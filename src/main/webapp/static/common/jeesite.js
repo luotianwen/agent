@@ -17,6 +17,10 @@ $(document).ready(function() {
 		// blank
 	}
 });
+function checkAll(e, itemName){
+    var flag=e.checked;
+    $(":checkbox[name="+itemName+"]").attr('checked',flag);
+}
 
 // 引入js和css文件
 function include(id, path, file){
