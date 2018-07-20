@@ -49,6 +49,9 @@
 					<form:options items="${fns:getDictList('yes_no')}"  itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
+			<li><label>收件人：</label>
+				<form:input path="consignee" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
 			<li><label>快递单号：</label>
 				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
@@ -85,6 +88,8 @@
 			<tr>
 
 				<th>货号</th>
+				<th>颜色</th>
+				<th>规格尺码</th>
 				<th>数量</th>
 				<th>状态</th>
 				<th>售价</th>
@@ -92,6 +97,9 @@
 				<th>总计</th>
 				<th>快递公司</th>
 				<th>快递单号</th>
+				<th>收件人</th>
+				<th>电话</th>
+				<th>地址</th>
 				<th>快递信息</th>
 				<th>是否对账</th>
 				<th>创建时间</th>
@@ -106,6 +114,13 @@
 
 				<td>
 					${simpleOrder.articleno}
+				</td>
+
+				<td>
+						${simpleOrder.colour}
+				</td>
+				<td>
+						${simpleOrder.spec}
 				</td>
 				<td>
 					${simpleOrder.num}
@@ -127,6 +142,15 @@
 				</td>
 				<td>
 						${simpleOrder.delivernumber}
+				</td>
+				<td>
+						${simpleOrder.consignee}
+				</td>
+				<td>
+						${simpleOrder.phone}
+				</td>
+				<td>
+						${simpleOrder.address}
 				</td>
 				<td>
 						${simpleOrder.deliverinfo}

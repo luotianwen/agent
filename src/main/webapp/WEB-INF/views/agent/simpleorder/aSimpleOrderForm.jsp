@@ -41,6 +41,18 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">颜色：</label>
+			<div class="controls">
+				<form:input path="colour" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">规格尺码：</label>
+			<div class="controls">
+				<form:input path="spec" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
 				<form:select path="num" class="input-medium">
@@ -50,13 +62,32 @@
 				</form:select>
 			</div>
 		</div>
-
 		<div class="control-group">
+			<label class="control-label">收件人：</label>
+			<div class="controls">
+				<form:input path="consignee" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">手机：</label>
+			<div class="controls">
+				<form:input path="phone" htmlEscape="false" maxlength="50" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">地址：</label>
+			<div class="controls">
+				<form:textarea path="address" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+			</div>
+		</div>
+
+
+		<%--<div class="control-group">
 			<label class="control-label">收件信息：</label>
 			<div class="controls">
 				<form:textarea path="deliverinfo" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
 			</div>
-		</div>
+		</div>--%>
 		<div class="control-group">
 			<label class="control-label">金额：</label>
 			<div class="controls">
