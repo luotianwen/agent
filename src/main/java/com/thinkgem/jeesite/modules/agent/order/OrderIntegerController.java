@@ -111,7 +111,7 @@ public class OrderIntegerController extends BaseController {
 				Stock s = slist.get(0);
 				int num = order.getNum();
 				double sd = (s.getDiscount());
-				int m = (s.getMarketprice());
+				double m = (s.getMarketprice());
 				double zd=sd+dd;
 				if(sd>=9.6){
 					zd=sd;

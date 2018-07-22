@@ -22,8 +22,8 @@ public class Stock extends DataEntity<Stock> {
 	private String size;		// 尺码1
 	private String innernum;		// 库存数量
 	private String sex;		// 性别
-	private int marketprice;		// 市场价
-	private int price;		// 销售价
+	private double marketprice;		// 市场价
+	private double price;		// 销售价
 	private String quarter;		// 商品上市季节
 	private double discount;		// 折扣信息
 	private String warehousename;		// 货源名
@@ -99,19 +99,19 @@ public class Stock extends DataEntity<Stock> {
 		this.sex = sex;
 	}
 	
-	public int getMarketprice() {
+	public double getMarketprice() {
 		return marketprice;
 	}
 
-	public void setMarketprice(int marketprice) {
+	public void setMarketprice(double marketprice) {
 		this.marketprice = marketprice;
 	}
 	
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	

@@ -203,7 +203,25 @@
 		<!-- 加入相关的执行类和方法 -->
 		<property name="jobDetail" ref="timingScheduleOrderJobDetail"/>
 		<!-- 设置时间规则 （为了方便测试，设置成一分钟一次。具体的规则见详情）-->
-		<property name="cronExpression" value="0 /30 * * * ?  "/>
+		<property name="cronExpression" value="0 0/5 * * * ?  "/>
+	</bean>
+
+
+
+	<bean id="DlybJob" class="com.thinkgem.jeesite.modules.agent.job.DlybJob"/>
+	<!-- 加入定时执行的方法 -->
+	<bean id="timingScheduleDlybJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 定时执行的类 -->
+		<property name="targetObject" ref="DlybJob"/>
+		<!-- 具体的方法 -->
+		<property name="targetMethod" value="execute"/>
+	</bean>
+	<!-- 调度触发器，设置自己想要的时间规则 -->
+	<bean id="timingScheduleDlybJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 加入相关的执行类和方法 -->
+		<property name="jobDetail" ref="timingScheduleDlybJobDetail"/>
+		<!-- 设置时间规则 （为了方便测试，设置成一分钟一次。具体的规则见详情）-->
+		<property name="cronExpression" value="0 0/3 * * * ?  "/>
 	</bean>
 
 	<!-- 加入调度工厂 ,设置调度触发器即可-->
@@ -214,8 +232,8 @@
 				<!--<ref bean="timingScheduleBrandJobTrigger"/>
 				<ref bean="timingScheduleProductJobTrigger"/>-->
 				<ref bean="timingScheduleStockJobTrigger"/>
-				<ref bean="timingScheduleOrderJobTrigger"/>
-
+			    <ref bean="timingScheduleOrderJobTrigger"/>
+				<ref bean="timingScheduleDlybJobTrigger"/>
 			</list>
 		</property>
 	</bean>

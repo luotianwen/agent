@@ -21,11 +21,11 @@ public class Order extends DataEntity<Order> {
 	private static final long serialVersionUID = 1L;
 	private String agentid;		// 代理
 	private String agentName;
-	private int money;		// 金额
+	private double money;		// 金额
 	private int num;		// 数量
 	private String state;		// 状态
 	private double discount;		// 折扣
-	private int discountmoney;		// 折扣后价
+	private double discountmoney;		// 折扣后价
 	private String delivernumber;		// 快递单号
 	private String courier;		// 快递公司
 	private String articleno;		// 货号
@@ -69,11 +69,11 @@ public class Order extends DataEntity<Order> {
 		this.agentid = agentid;
 	}
 
-	public int getMoney() {
+	public double getMoney() {
 		return money;
 	}
 
-	public void setMoney(int money) {
+	public void setMoney(double money) {
 		this.money = money;
 	}
 	@NotNull
@@ -103,11 +103,11 @@ public class Order extends DataEntity<Order> {
 		this.discount = discount;
 	}
 	
-	public int getDiscountmoney() {
+	public double getDiscountmoney() {
 		return discountmoney;
 	}
 
-	public void setDiscountmoney(int discountmoney) {
+	public void setDiscountmoney(double discountmoney) {
 		this.discountmoney = discountmoney;
 	}
 	

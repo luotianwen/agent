@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.agent.dlyb.dao.DlybProductLogDao">
+    
+	<sql id="dlybProductLogColumns">
+		a.id AS "id",
+		a.articleno AS "articleno",
+		a.name AS "name",
+		a.brandname AS "brandname",
+		a.marketprice AS "marketprice",
+		a.changediscount AS "changediscount",
+		a.discount AS "discount",
+		a.state AS "state",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="dlybProductLogJoins">
+	</sql>
+    
+	<select id="get" resultType="DlybProductLog">
+		SELECT 
+			<include refid="dlybProductLogColumns"/>
+		FROM a_dlyb_product_log a
+		<include refid="dlybProductLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findLastList" resultType="DlybProductLog">
+		SELECT
+		<include refid="dlybProductLogColumns"/>
+		FROM a_dlyb_product_log a
+		where
+		  a.articleno = #{articleno}
+
+		order by a.create_date desc
+		limit  5
+
+	</select>
+	<select id="findList" resultType="DlybProductLog">
+		SELECT 
+			<include refid="dlybProductLogColumns"/>
+		FROM a_dlyb_product_log a
+		<include refid="dlybProductLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno = #{articleno}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE  concat('%',#{name},'%')
+			</if>
+			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
+				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+			<if test="brandname != null and brandname != ''">
+				AND a.brandname = #{brandname}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="DlybProductLog">
+		SELECT 
+			<include refid="dlybProductLogColumns"/>
+		FROM a_dlyb_product_log a
+		<include refid="dlybProductLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_dlyb_product_log(
+			id,
+			articleno,
+			name,
+			brandname,
+			marketprice,
+			changediscount,
+			discount,
+			state,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{articleno},
+			#{name},
+			#{brandname},
+			#{marketprice},
+			#{changediscount},
+			#{discount},
+			#{state},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE a_dlyb_product_log SET 	
+			articleno = #{articleno},
+			name = #{name},
+			brandname = #{brandname},
+			marketprice = #{marketprice},
+			changediscount = #{changediscount},
+			discount = #{discount},
+			state = #{state},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE a_dlyb_product_log SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<update id="deleteByDate">
+		<![CDATA[
+		DELETE  FROM a_dlyb_product_log
+		 where create_date <#{createDate}
+		 ]]>
+	</update>
+
+</mapper>

@@ -112,7 +112,7 @@ public class StockController extends BaseController {
 			if (null != list && list.size() > 0) {
 				for (Stock s : list) {
 					double sd=(s.getDiscount());
-					int sm=(s.getMarketprice());
+					double sm=(s.getMarketprice());
 					double ad=(agent.getDiscount());
 					double zd=sd+ad;
 					if(sd>=9.6){
