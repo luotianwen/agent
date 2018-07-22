@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.agent.dlyb.entity;
 
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
@@ -17,6 +18,7 @@ import java.util.Date;
 public class DlybProductLog extends DataEntity<DlybProductLog> {
 	
 	private static final long serialVersionUID = 1L;
+
 	private String articleno;		// 商品货号
 	private String name;		// 商品名称
 	private String brandname;		// 品牌
@@ -52,6 +54,7 @@ public class DlybProductLog extends DataEntity<DlybProductLog> {
 	}
 
 	@Length(min=0, max=100, message="商品货号长度必须介于 0 和 100 之间")
+	@ExcelField(title="商品货号", align=2, sort=1)
 	public String getArticleno() {
 		return articleno;
 	}
@@ -61,6 +64,7 @@ public class DlybProductLog extends DataEntity<DlybProductLog> {
 	}
 	
 	@Length(min=0, max=2000, message="商品名称长度必须介于 0 和 2000 之间")
+	@ExcelField(title="商品名称", align=2, sort=10)
 	public String getName() {
 		return name;
 	}
@@ -70,6 +74,7 @@ public class DlybProductLog extends DataEntity<DlybProductLog> {
 	}
 	
 	@Length(min=0, max=100, message="品牌长度必须介于 0 和 100 之间")
+	@ExcelField(title="商品品牌", align=2, sort=20)
 	public String getBrandname() {
 		return brandname;
 	}
@@ -77,7 +82,7 @@ public class DlybProductLog extends DataEntity<DlybProductLog> {
 	public void setBrandname(String brandname) {
 		this.brandname = brandname;
 	}
-	
+	@ExcelField(title="商品价格", align=2, sort=22)
 	public Double getMarketprice() {
 		return marketprice;
 	}
@@ -85,7 +90,7 @@ public class DlybProductLog extends DataEntity<DlybProductLog> {
 	public void setMarketprice(Double marketprice) {
 		this.marketprice = marketprice;
 	}
-	
+	@ExcelField(title="商品变动折扣", align=2, sort=40)
 	public Double getChangediscount() {
 		return changediscount;
 	}
@@ -93,7 +98,7 @@ public class DlybProductLog extends DataEntity<DlybProductLog> {
 	public void setChangediscount(Double changediscount) {
 		this.changediscount = changediscount;
 	}
-	
+	@ExcelField(title="商品折扣", align=2, sort=30)
 	public Double getDiscount() {
 		return discount;
 	}

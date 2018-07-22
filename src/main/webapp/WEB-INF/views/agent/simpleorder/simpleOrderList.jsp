@@ -143,6 +143,48 @@
 			</tr>
 		</thead>
 		<tbody>
+		<tr>
+			<td> </td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+				${simpleOrder2.money}
+			</td>
+			<td>
+				${simpleOrder2.delivermoney}
+			</td>
+			<td>
+				${simpleOrder2.totalmoney}
+			</td>
+			<td>
+
+			</td>
+			<td>
+
+			</td>
+			<td>
+
+			</td>
+			<td>
+
+			</td>
+			<td>
+
+			</td>
+			<td>
+
+			</td>
+			<td>
+			</td>
+		</tr>
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
 				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   /></td>
@@ -209,6 +251,7 @@
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
+
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>

@@ -27,4 +27,6 @@ public interface SimpleOrderDao extends CrudDao<SimpleOrder> {
     List<SimpleOrder> getOrderIdDeliver();
 
     void Tmdeliver(SimpleOrder simpleOrder);
+
+    SimpleOrder sum(SimpleOrder simpleOrder);
 }

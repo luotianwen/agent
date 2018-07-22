@@ -183,4 +183,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 		}
 	}
 
+    public SimpleOrder sum(SimpleOrder simpleOrder) {
+		return dao.sum(simpleOrder);
+    }
 }

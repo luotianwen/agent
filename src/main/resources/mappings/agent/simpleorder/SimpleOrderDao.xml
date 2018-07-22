@@ -43,7 +43,52 @@
 		<include refid="simpleOrderJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+	<select id="sum" resultType="SimpleOrder">
+		SELECT
+		sum(a.delivermoney) as delivermoney,
+		sum(a.totalmoney) as totalmoney,
+		sum(a.money) as money
+		from a_simple_order a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno = #{articleno}
+			</if>
+
+			<if test="orderId != null and orderId != ''">
+				AND a.orderId = #{orderId}
+			</if>
+			<if test="agentid != null and agentid != ''">
+				AND a.agentid = #{agentid}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+
+			<if test="consignee != null and consignee != ''">
+				AND (a.consignee = #{consignee}
+				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
+			</if>
+			<if test="delivernumber != null and delivernumber != ''">
+				AND a.delivernumber = #{delivernumber}
+			</if>
+			<if test="isdelivernumber != null and isdelivernumber != ''">
+
+				<if test="isdelivernumber == 0 ">
+					AND (a.delivernumber is null or a.delivernumber='')
+				</if>
+				<if test="isdelivernumber == 1 ">
+					AND (a.delivernumber is not  null and a.delivernumber !='')
+				</if>
+			</if>
+			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
+				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+			<if test="isaccount != null and isaccount != ''">
+				AND a.isaccount = #{isaccount}
+			</if>
+		</where>
+	</select>
 	<select id="findList" resultType="SimpleOrder">
 		SELECT 
 			<include refid="simpleOrderColumns"/>
