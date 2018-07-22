@@ -16,9 +16,10 @@ public class DlybJob {
     @Autowired
     private DlybProductLogService dlybProductLogService;
     public void execute(){
-        logger.info("折扣开始");
+        System.out.println("折扣开始");
+        logger.error("折扣开始");
         dlybProductLogService.saveOrUpdate();
-        logger.info("折扣结束");
+        logger.error("折扣结束");
     }
 
 }

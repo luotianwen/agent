@@ -135,6 +135,8 @@
 		<property name="targetObject" ref="BrandJob"/>
 		<!-- 具体的方法 -->
 		<property name="targetMethod" value="execute"/>
+		<!--作业不并发调度-->
+		<property name="concurrent" value="false"/>
 	</bean><!-- 调度触发器，设置自己想要的时间规则 -->
 	<bean id="timingScheduleBrandJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<!-- 加入相关的执行类和方法 -->
@@ -155,6 +157,8 @@
 		<property name="targetObject" ref="ProductJob"/>
 		<!-- 具体的方法 -->
 		<property name="targetMethod" value="execute"/>
+		<!--作业不并发调度-->
+		<property name="concurrent" value="false"/>
 	</bean>
 
 
@@ -197,6 +201,8 @@
 		<property name="targetObject" ref="OrderJob"/>
 		<!-- 具体的方法 -->
 		<property name="targetMethod" value="execute"/>
+		<!--作业不并发调度-->
+		<property name="concurrent" value="false"/>
 	</bean>
 	<!-- 调度触发器，设置自己想要的时间规则 -->
 	<bean id="timingScheduleOrderJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -215,6 +221,8 @@
 		<property name="targetObject" ref="DlybJob"/>
 		<!-- 具体的方法 -->
 		<property name="targetMethod" value="execute"/>
+		<!--作业不并发调度-->
+		  <property name="concurrent" value="false"/>
 	</bean>
 	<!-- 调度触发器，设置自己想要的时间规则 -->
 	<bean id="timingScheduleDlybJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -230,9 +238,10 @@
 			<list>
 
 				<!--<ref bean="timingScheduleBrandJobTrigger"/>
-				<ref bean="timingScheduleProductJobTrigger"/>-->
+				<ref bean="timingScheduleProductJobTrigger"/>
 				<ref bean="timingScheduleStockJobTrigger"/>
 			    <ref bean="timingScheduleOrderJobTrigger"/>
+				<ref bean="timingScheduleDlybJobTrigger"/>-->
 				<ref bean="timingScheduleDlybJobTrigger"/>
 			</list>
 		</property>

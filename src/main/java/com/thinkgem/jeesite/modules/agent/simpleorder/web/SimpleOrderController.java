@@ -29,6 +29,8 @@ import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
 import com.thinkgem.jeesite.modules.agent.simpleorder.service.SimpleOrderService;
 import sun.management.resources.agent;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,6 +85,9 @@ public class SimpleOrderController extends BaseController {
 		if (!beanValidator(model, simpleOrder)){
 			return form(simpleOrder, model);
 		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+		String onumber = sdf.format(new Date());
+		simpleOrder.setOrderId(onumber);
 		simpleOrderService.save(simpleOrder);
 		addMessage(redirectAttributes, "保存下单管理成功");
 		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";

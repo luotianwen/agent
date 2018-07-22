@@ -17,8 +17,9 @@ public class OrderJob {
     @Autowired
     private SimpleOrderService simpleOrderService;
     public void execute(){
-        logger.info("快递开始");
+        System.out.println("快递开始");
+        logger.error("快递开始");
         simpleOrderService.saveOrUpdate();
-        logger.info("快递结束");
+        logger.error("快递结束");
     }
 }

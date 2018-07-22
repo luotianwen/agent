@@ -158,7 +158,8 @@
 			spec,
 			address,
 			remarks,
-			del_flag
+			del_flag,
+			orderId
 		) VALUES (
 			#{id},
 			#{agentid},
@@ -182,7 +183,8 @@
 			#{spec},
 			#{address},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{orderId}
 		)
 	</insert>
 	
@@ -206,7 +208,7 @@
 			colour = #{colour},
 			spec = #{spec},
 			address = #{address},
-			orderId=#{orderId},
+
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
@@ -239,7 +241,7 @@
 		deliverinfo = #{deliverinfo},
 		delivermoney = #{delivermoney},
 		totalmoney = #{totalmoney},
-		orderId=#{orderId},
+
 		update_by = #{updateBy.id},
 		update_date = #{updateDate}
 		WHERE id = #{id}

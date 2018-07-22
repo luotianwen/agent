@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,6 +87,9 @@ public class SimpleOrderIntegerController extends BaseController {
 		Agent agent=agentService.getUserId(user.getId());
 		aSimpleOrder.setState("1");
 		aSimpleOrder.setAgentid(agent.getId());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+		String onumber = sdf.format(new Date());
+		aSimpleOrder.setOrderId(onumber);
 		aSimpleOrderService.asave(aSimpleOrder);
 		addMessage(redirectAttributes, "保存下单管理成功");
 		return "redirect:"+ Global.getAdminPath()+"/msimpleorder/?repage";

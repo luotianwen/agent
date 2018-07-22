@@ -87,6 +87,7 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 		map.put("wareHouseName", "天马总仓1仓");
 		map.put("articleno", d.getArticleno());
 
+		//String str ="{\"total\":5,\"page\":\"1\",\"rows\":[{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"L\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"L\",\"innerNum\":\"100\",\"warehouse_size\":\"L\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"M\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"M\",\"innerNum\":\"100\",\"warehouse_size\":\"M\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"S\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"S\",\"innerNum\":\"62\",\"warehouse_size\":\"S\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"XL\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"XL\",\"innerNum\":\"100\",\"warehouse_size\":\"XL\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"XS\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"XS\",\"innerNum\":\"2\",\"warehouse_size\":\"XS\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"}]}";//
 		String str =Cont.post(Cont.STOCK, map);
 		logger.info(str);
 		BackData j = JSON.parseObject(str, BackData.class);
@@ -102,9 +103,9 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 			DlybProductLog dlybProductLog;
 			double m=0;
 			try {
-				for (Object p1 : j.getRows()) {
+				   Object p1=j.getRows().get(0);
 					p= JSON.parseObject(p1.toString(), Stock.class);
-					logger.info(p1.toString());
+					logger.error(p1.toString());
 					dp=dlybProductService.getByNo(p.getArticleno());
 
 					if(null!=dp){
@@ -113,28 +114,21 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 						dp.setDiscount(p.getDiscount());
 						dlybProductService.save(dp);
 					   ds=this.findLastList(p.getArticleno());
-                      if(ds!=null&&ds.size()>0){
-						  if(m!=0){
-							  dlybProductLog=new DlybProductLog();
-							  MyBeanUtils.copyBean2Bean(dp,dlybProductLog);
-							  dlybProductLog.setId(IdGen.uuid());
-							  dlybProductLog.setChangediscount(m);
-							  dlybProductLog.setState(m>0?"1":"0");
-							  this.save(dlybProductLog);
-							  this.deleteByDate(ds.get(ds.size()-1));
-						  }
-					  }
-						else{
-						  dlybProductLog=new DlybProductLog();
-						  MyBeanUtils.copyBean2Bean(dp,dlybProductLog);
-						  dlybProductLog.setId(IdGen.uuid());
-						  dlybProductLog.setChangediscount(m);
-						  dlybProductLog.setState(m>0?"1":"0");
-						  this.save(dlybProductLog);
+                       if(ds!=null&&ds.size()>0){
+						   if(m!=0) {
+							   this.deleteByDate(ds.get(ds.size() - 1));
+						   }
+					     }
+						if(m!=0) {
+							dlybProductLog = new DlybProductLog();
+							MyBeanUtils.copyBean2Bean(dlybProductLog, dp);
+							dlybProductLog.setId(null);
+							dlybProductLog.setChangediscount(m);
+							dlybProductLog.setState(m > 0 ? "1" : "0");
+							this.save(dlybProductLog);
+						}
 
-					  }
 					}
-				}
 				transactionManager.commit(status);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
