@@ -23,8 +23,8 @@
                 },{buttonsFocus:1});
                 top.$('.jbox-body .jbox-icon').css('top','55px');
             });
-            $(":checkbox[name='orderId']").click(function(){
-                $("#checkId").attr('checked', $(":checkbox[name='orderId']").length==$(":checkbox[name='orderId']:checked").length);
+            $(":checkbox[name='orderIds']").click(function(){
+                $("#checkId").attr('checked', $(":checkbox[name='orderIds']").length==$(":checkbox[name='orderIds']:checked").length);
             });
             $(":checkbox[name='checkId']").click(function(){
                 checkAll(this, 'orderId');
@@ -50,7 +50,7 @@
 
         function repairDel(){
             var ids=[];
-            $("input[name='orderId']:checked").each(function(){
+            $("input[name='orderIds']:checked").each(function(){
                 ids.push($(this).val());
             });
             var delIds=ids.join(",");
@@ -70,6 +70,9 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>订单号：</label>
+				<form:input path="orderId" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
 			<li><label>货号：</label>
 				<form:input path="articleno" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
@@ -100,9 +103,9 @@
 				<form:input path="consignee" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
 
-			<li><label>快递信息：</label>
+		<%--	<li><label>快递信息：</label>
 				<form:input path="deliverinfo" htmlEscape="false" maxlength="32" class="input-medium"/>
-			</li>
+			</li>--%>
 			<li><label>是否对账：</label>
 				<form:select path="isaccount" class="input-medium">
 					<form:option value="" label="全部"/>
@@ -121,21 +124,17 @@
 		<thead>
 			<tr>
 				<th><input type=checkbox name="checkId" id="checkId"  ></th>
+				<th>订单号</th>
 				<th>客户名称</th>
-				<th>货号</th>
-				<th>颜色</th>
-				<th>规格尺码</th>
+				<th>货号/颜色/尺码</th>
 				<th>数量</th>
 				<th>状态</th>
 				<th>售价</th>
 				<th>快递费用</th>
 				<th>总计</th>
-				<th>快递公司</th>
-				<th>快递单号</th>
-				<th>收件人</th>
-				<th>电话</th>
-				<th>地址</th>
-				<th>快递信息</th>
+				<th>快递</th>
+				<th>收件信息</th>
+				<%--<th>快递信息</th>--%>
 				<th>是否对账</th>
 				<th>创建时间</th>
 				<th>发货时间</th>
@@ -146,18 +145,15 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
-				<td><input type="checkbox" name="orderId" value="${simpleOrder.id}"   /></td>
+				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   /></td>
+				<td>
+						${simpleOrder.orderId}
+				</td>
 				<td>
 						${simpleOrder.agentName}
 				</td>
 				<td>
-						${simpleOrder.articleno}
-				</td>
-				<td>
-						${simpleOrder.colour}
-				</td>
-				<td>
-						${simpleOrder.spec}
+						${simpleOrder.articleno}  ${simpleOrder.colour} ${simpleOrder.spec}
 				</td>
 				<td>
 						${simpleOrder.num}
@@ -176,21 +172,18 @@
 				</td>
 				<td>
 						${simpleOrder.courier}
-				</td>
-				<td>
 						${simpleOrder.delivernumber}
 				</td>
 				<td>
-						${simpleOrder.consignee}
-				</td>
-				<td>
-						${simpleOrder.phone}
-				</td>
-				<td>
-						${simpleOrder.address}
-				</td>
-				<td>
-						${simpleOrder.deliverinfo}
+				<c:if test="${empty simpleOrder.deliverinfo}">
+					${simpleOrder.consignee}
+					${simpleOrder.phone}
+					${simpleOrder.address}
+
+				</c:if>
+				<c:if test="${not empty simpleOrder.deliverinfo}">
+					${simpleOrder.deliverinfo}
+				</c:if>
 				</td>
 				<td>
 						${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}

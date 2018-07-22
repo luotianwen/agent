@@ -73,6 +73,16 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	protected Date updateDate;	// 更新日期
 	@ExcelField(title="备注", align=2, sort=130)
 	protected String remarks;	// 备注
+	@ExcelField(title="订单号", align=2, sort=0)
+	private String orderId;
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 
 	public String getConsignee() {
 		return consignee;

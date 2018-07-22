@@ -10,7 +10,10 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
+import com.thinkgem.jeesite.modules.agent.job.BrandJob;
 import com.thinkgem.jeesite.modules.agent.product.entity.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @Service
 @Transactional(readOnly = true)
 public class BrandService extends CrudService<BrandDao, Brand> {
-
+    private static Logger logger = LoggerFactory.getLogger(BrandService.class);
     public Brand get(String id) {
         return super.get(id);
     }
@@ -71,7 +74,7 @@ public class BrandService extends CrudService<BrandDao, Brand> {
         map.put("page", page + "");
         map.put("rows", "300");
         String str = Cont.post(Cont.BAND, map);
-        System.out.println(str);
+
         BackData j = JSON.parseObject(str, BackData.class);
 
         if (j.getRows() != null && j.getRows().size() > 0) {
@@ -99,7 +102,13 @@ public class BrandService extends CrudService<BrandDao, Brand> {
             }
             int tpage = j.getTotal() / 300 + 1;
             if (page < tpage) {
-                data(page + 1);
+                try {
+                    Thread.sleep(1000*3);
+                    data(page + 1);
+                } catch (InterruptedException e) {
+                    logger.error(e.getMessage());
+                }
+
             }
         }
 

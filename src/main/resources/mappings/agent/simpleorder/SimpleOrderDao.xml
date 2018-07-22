@@ -28,6 +28,7 @@
 		a.address AS "address",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
+		a.orderId AS "orderId",
 		a.update_by AS "updateBy.id"
 	</sql>
 	
@@ -54,17 +55,19 @@
 				AND a.articleno = #{articleno}
 			</if>
 
+			<if test="orderId != null and orderId != ''">
+				AND a.orderId = #{orderId}
+			</if>
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
 			</if>
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
-			<if test="deliverinfo != null and deliverinfo != ''">
-				AND a.deliverinfo  LIKE concat('%',#{deliverinfo},'%')
-			</if>
+
 			<if test="consignee != null and consignee != ''">
-				AND a.consignee = #{consignee}
+				AND (a.consignee = #{consignee}
+				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
 			</if>
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
@@ -203,9 +206,30 @@
 			colour = #{colour},
 			spec = #{spec},
 			address = #{address},
+			orderId=#{orderId},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
+	<select id="getOrderIdDeliver" resultType="SimpleOrder">
+
+		SELECT
+		 a.id AS "id",
+		 a.agentid,
+		a.money AS "money",
+		a.courier AS "courier",
+		a.delivernumber AS "delivernumber",
+		a.delivermoney AS "delivermoney",
+		a.orderId AS "orderId"
+
+		from a_simple_order a
+		where   a.state=3
+		<![CDATA[
+		   AND (a.orderId is not null or a.orderId <> '')
+		]]>
+		  AND (a.delivernumber is null or a.delivernumber='')
+
+
+	</select>
 
 	<update id="deliver">
 		UPDATE a_simple_order SET
@@ -215,10 +239,22 @@
 		deliverinfo = #{deliverinfo},
 		delivermoney = #{delivermoney},
 		totalmoney = #{totalmoney},
+		orderId=#{orderId},
 		update_by = #{updateBy.id},
 		update_date = #{updateDate}
 		WHERE id = #{id}
 		and state='1'
+	</update>
+	<update id="Tmdeliver">
+		UPDATE a_simple_order SET
+
+		courier = #{courier},
+		delivernumber = #{delivernumber},
+		delivermoney = #{delivermoney},
+		totalmoney = #{totalmoney}
+
+		WHERE id = #{id}
+
 	</update>
 	<update id="delete">
 		UPDATE a_simple_order SET 

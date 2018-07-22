@@ -12,6 +12,9 @@ import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
+import com.thinkgem.jeesite.modules.agent.job.ProductJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @Service
 @Transactional(readOnly = true)
 public class ProductService extends CrudService<ProductDao, Product> {
+    private static Logger logger = LoggerFactory.getLogger(ProductService.class);
     @Autowired
     private BrandService brandService;
 
@@ -92,10 +96,16 @@ public class ProductService extends CrudService<ProductDao, Product> {
             }
                 transactionManager.commit(status);
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 transactionManager.rollback(status);
             }
             int tpage = j.getTotal() / 300 + 1;
             if (page < tpage) {
+                try {
+                    Thread.sleep(1000*3);
+                } catch (InterruptedException e) {
+
+                }
                 data(page + 1);
             }
         }

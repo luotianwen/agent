@@ -14,7 +14,10 @@ import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
+import com.thinkgem.jeesite.modules.agent.job.StockJob;
 import com.thinkgem.jeesite.modules.agent.product.entity.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -37,7 +40,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @Service
 @Transactional(readOnly = true)
 public class StockService extends CrudService<StockDao, Stock> {
-
+    private static Logger logger = LoggerFactory.getLogger(StockService.class);
     public Stock get(String id) {
         return super.get(id);
     }
@@ -88,7 +91,7 @@ public class StockService extends CrudService<StockDao, Stock> {
         if (j.getRows() != null && j.getRows().size() > 0) {
 
 
-            System.out.println("保存");
+
             for (Object p1 : j.getRows()) {
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
                 def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
@@ -103,10 +106,9 @@ public class StockService extends CrudService<StockDao, Stock> {
                     }
                     save(p);
                     transactionManager.commit(status);
-                    System.out.println("保存结束");
+
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("保存回滚");
+                    logger.error(e.getMessage());
                     transactionManager.rollback(status);
                 }
             }
@@ -115,6 +117,11 @@ public class StockService extends CrudService<StockDao, Stock> {
         }
         int tpage = j.getTotal() / 300 + 1;
         if (page < tpage) {
+            try {
+                Thread.sleep(1000*3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             data(page + 1, b);
         }
     }
@@ -129,6 +136,7 @@ public class StockService extends CrudService<StockDao, Stock> {
             for (Brand b : brands) {
              /*   if (!udate.equals(b.getUdate()) && 1 != b.getState()) {*/
                     data(1, b);
+
                /* }
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
                 def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务

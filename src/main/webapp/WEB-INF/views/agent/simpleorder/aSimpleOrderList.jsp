@@ -33,7 +33,9 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-
+			<li><label>订单号：</label>
+				<form:input path="orderId" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
 			<li><label>货号：</label>
 				<form:input path="articleno" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
@@ -55,9 +57,9 @@
 			<li><label>快递单号：</label>
 				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
-			<li><label>快递信息：</label>
+			<%--<li><label>快递信息：</label>
 				<form:input path="deliverinfo" htmlEscape="false" maxlength="32" class="input-medium"/>
-			</li>
+			</li>--%>
 			<li><label>是否对账：</label>
 				<form:select path="isaccount" class="input-medium">
 					<form:option value="" label="全部"/>
@@ -86,21 +88,16 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-
-				<th>货号</th>
-				<th>颜色</th>
-				<th>规格尺码</th>
+				<th>订单号</th>
+				<th>货号/颜色/尺码</th>
 				<th>数量</th>
 				<th>状态</th>
 				<th>售价</th>
 				<th>快递费用</th>
 				<th>总计</th>
-				<th>快递公司</th>
-				<th>快递单号</th>
-				<th>收件人</th>
-				<th>电话</th>
-				<th>地址</th>
-				<th>快递信息</th>
+				<th>快递</th>
+				<th>收件信息</th>
+				<%--<th>快递信息</th>--%>
 				<th>是否对账</th>
 				<th>创建时间</th>
 				<th>发货时间</th>
@@ -111,16 +108,11 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
-
 				<td>
-					${simpleOrder.articleno}
-				</td>
-
-				<td>
-						${simpleOrder.colour}
+						${simpleOrder.orderId}
 				</td>
 				<td>
-						${simpleOrder.spec}
+					    ${simpleOrder.articleno} ${simpleOrder.colour} ${simpleOrder.spec}
 				</td>
 				<td>
 					${simpleOrder.num}
@@ -139,21 +131,20 @@
 				</td>
 				<td>
 						${simpleOrder.courier}
-				</td>
-				<td>
 						${simpleOrder.delivernumber}
 				</td>
 				<td>
+
+					<c:if test="${empty simpleOrder.deliverinfo}">
 						${simpleOrder.consignee}
-				</td>
-				<td>
 						${simpleOrder.phone}
-				</td>
-				<td>
 						${simpleOrder.address}
-				</td>
-				<td>
+
+					</c:if>
+					<c:if test="${not empty simpleOrder.deliverinfo}">
 						${simpleOrder.deliverinfo}
+					</c:if>
+
 				</td>
 				<td>
 						${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}

@@ -41,6 +41,7 @@
 				<form:input path="agentName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
+
 		<div class="control-group">
 			<label class="control-label">货号：</label>
 			<div class="controls">
@@ -71,6 +72,8 @@
 				<form:input path="money" htmlEscape="false" readonly="true"  class="input-xlarge "/>
 			</div>
 		</div>
+
+
 		<div class="control-group">
 			<label class="control-label">市场价：</label>
 			<div class="controls">
@@ -105,7 +108,12 @@
 				<form:textarea path="address" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
-
+		<div class="control-group">
+			<label class="control-label">订单号：</label>
+			<div class="controls">
+				<form:input path="orderId" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">快递公司：</label>
 			<div class="controls">
