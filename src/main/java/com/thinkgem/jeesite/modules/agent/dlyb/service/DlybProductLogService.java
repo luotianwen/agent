@@ -87,7 +87,7 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 		map.put("wareHouseName", "天马总仓1仓");
 		map.put("articleno", d.getArticleno());
 
-		//String str ="{\"total\":5,\"page\":\"1\",\"rows\":[{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"L\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"L\",\"innerNum\":\"100\",\"warehouse_size\":\"L\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"M\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"M\",\"innerNum\":\"100\",\"warehouse_size\":\"M\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"S\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"S\",\"innerNum\":\"62\",\"warehouse_size\":\"S\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"XL\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"XL\",\"innerNum\":\"100\",\"warehouse_size\":\"XL\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"},{\"sex\":\"女\",\"marketprice\":249.00,\"ukSize\":\"XS\",\"brandName\":\"耐克\",\"warehouse_goods_no\":\"899371-100\",\"size\":\"XS\",\"innerNum\":\"2\",\"warehouse_size\":\"XS\",\"discount\":\"6.2\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"899371-100\",\"quarter\":\"18Q3\"}]}";//
+		//String str ="{\"total\":3,\"page\":\"1\",\"rows\":[{\"sex\":\"女\",\"marketprice\":199.00,\"ukSize\":\"L\",\"brandName\":\"阿迪达斯\",\"warehouse_goods_no\":\"CW3549\",\"size\":\"A/L\",\"innerNum\":\"39\",\"warehouse_size\":\"A/L\",\"discount\":\"5.8\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"CW3549\",\"quarter\":\"18Q2\"},{\"sex\":\"女\",\"marketprice\":199.00,\"ukSize\":\"M\",\"brandName\":\"阿迪达斯\",\"warehouse_goods_no\":\"CW3549\",\"size\":\"A/M\",\"innerNum\":\"54\",\"warehouse_size\":\"A/M\",\"discount\":\"5.8\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"CW3549\",\"quarter\":\"18Q2\"},{\"sex\":\"女\",\"marketprice\":199.00,\"ukSize\":\"S\",\"brandName\":\"阿迪达斯\",\"warehouse_goods_no\":\"CW3549\",\"size\":\"A/S\",\"innerNum\":\"43\",\"warehouse_size\":\"A/S\",\"discount\":\"5.8\",\"wareHouseName\":\"天马总仓1仓\",\"division\":\"服\",\"articleno\":\"CW3549\",\"quarter\":\"18Q2\"}]}";//
 		String str =Cont.post(Cont.STOCK, map);
 		logger.info(str);
 		BackData j = JSON.parseObject(str, BackData.class);
@@ -107,9 +107,11 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 					p= JSON.parseObject(p1.toString(), Stock.class);
 					logger.error(p1.toString());
 					dp=dlybProductService.getByNo(p.getArticleno());
-
+				    m=p.getDiscount();
 					if(null!=dp){
-						m=p.getDiscount()-dp.getDiscount();
+						if(null!=dp.getDiscount()){
+							m=p.getDiscount()-dp.getDiscount();
+						}
 						dp.setMarketprice(p.getMarketprice());
 						dp.setDiscount(p.getDiscount());
 						dlybProductService.save(dp);
