@@ -126,7 +126,8 @@
 				<th><input type=checkbox name="checkId" id="checkId"  ></th>
 				<th>订单号</th>
 				<th>客户名称</th>
-				<th>货号/颜色/尺码</th>
+				<th>货号</th>
+				<th>颜色|尺码</th>
 				<th>数量</th>
 				<th>状态</th>
 				<th>售价</th>
@@ -145,6 +146,8 @@
 		<tbody>
 		<tr>
 			<td> </td>
+			<td>
+			</td>
 			<td>
 			</td>
 			<td>
@@ -195,7 +198,15 @@
 						${simpleOrder.agentName}
 				</td>
 				<td>
-						${simpleOrder.articleno}  ${simpleOrder.colour} ${simpleOrder.spec}
+						${simpleOrder.articleno}
+
+				</td>
+				<td>
+
+				        	<c:if test="${not empty simpleOrder.colour}">
+							 ${simpleOrder.colour}<span style="color: red">|</span>
+							</c:if>
+							  ${simpleOrder.spec}
 				</td>
 				<td>
 						${simpleOrder.num}
@@ -218,8 +229,8 @@
 				</td>
 				<td>
 				<c:if test="${empty simpleOrder.deliverinfo}">
-					${simpleOrder.consignee}
-					${simpleOrder.phone}
+					${simpleOrder.consignee},
+					${simpleOrder.phone},
 					${simpleOrder.address}
 
 				</c:if>

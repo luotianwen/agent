@@ -103,7 +103,7 @@ public class BrandService extends CrudService<BrandDao, Brand> {
             int tpage = j.getTotal() / 300 + 1;
             if (page < tpage) {
                 try {
-                    Thread.sleep(1000*3);
+                    Thread.sleep(Cont.SECONDS);
                     data(page + 1);
                 } catch (InterruptedException e) {
                     logger.error(e.getMessage());

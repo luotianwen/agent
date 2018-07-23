@@ -118,7 +118,7 @@ public class StockService extends CrudService<StockDao, Stock> {
         int tpage = j.getTotal() / 300 + 1;
         if (page < tpage) {
             try {
-                Thread.sleep(1000*3);
+                Thread.sleep(Cont.SECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -75,7 +75,7 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 			 ) {
 			data(d);
 			try {
-				Thread.sleep(1000*3);
+				Thread.sleep(Cont.SECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

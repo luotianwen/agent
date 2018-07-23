@@ -139,7 +139,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 			try {
 				for (Object p1 : j.getRows()) {
 					TmOrder p = JSON.parseObject(p1.toString(), TmOrder.class);
-					logger.error(p1.toString());
+					logger.info(p1.toString());
 					double moneys=p.getPostage();
 					Agent agent=new Agent();
 					agent.setId(simpleOrder.getAgentid());
@@ -155,7 +155,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 					simpleOrder.setTotalmoney(simpleOrder.getMoney()+p.getPostage());
 					simpleOrder.preUpdate();
 					dao.Tmdeliver(simpleOrder);
-					logger.error(simpleOrder.toString());
+					logger.info(simpleOrder.toString());
 				}
 				transactionManager.commit(status);
 			} catch (Exception e) {
@@ -176,7 +176,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 		for (SimpleOrder s:simpleOrders) {
 			data(s);
 			try {
-				Thread.sleep(1000*3);
+				Thread.sleep(Cont.SECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

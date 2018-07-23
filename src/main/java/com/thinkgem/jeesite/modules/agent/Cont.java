@@ -33,6 +33,15 @@ public class Cont {
     public static String STOCK="http://open.xingyunyezi.com/api/openapi/getInventoryList.do";
     //快递
     public static String DELIVER="http://open.xingyunyezi.com/api/openapi/getOrderFeedBackList.do";
+    public static int SECONDS=500;
+    public static void ThreadSleep(){
+        try {
+
+            Thread.sleep(SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 发送 post请求访问本地应用并根据传递参数不同返回不同结果
      */
