@@ -101,11 +101,7 @@ public class ProductService extends CrudService<ProductDao, Product> {
             }
             int tpage = j.getTotal() / 300 + 1;
             if (page < tpage) {
-                try {
-                    Thread.sleep(Cont.SECONDS);
-                } catch (InterruptedException e) {
-
-                }
+                Cont.ThreadSleep();
                 data(page + 1);
             }
         }

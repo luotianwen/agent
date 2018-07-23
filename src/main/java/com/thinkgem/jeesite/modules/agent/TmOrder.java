@@ -17,7 +17,7 @@ public class TmOrder {
     private String expressno;
     private String order_sn;
     private String delivery;
-    private int order_status;
+    private int status;
     private String size2;
     private double postage;
     private String size1;
@@ -61,12 +61,12 @@ public class TmOrder {
         this.delivery = delivery;
     }
 
-    public int getOrder_status() {
-        return order_status;
+    public int getStatus() {
+        return status;
     }
 
-    public void setOrder_status(int order_status) {
-        this.order_status = order_status;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getSize2() {

@@ -149,7 +149,7 @@
 	<update id="deleteByDate">
 		<![CDATA[
 		DELETE  FROM a_dlyb_product_log
-		 where create_date <#{createDate}
+		 where articleno = #{articleno}  and  create_date <#{createDate}
 		 ]]>
 	</update>
 

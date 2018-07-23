@@ -60,9 +60,10 @@ public class SimpleOrderController extends BaseController {
 	@RequiresPermissions("simpleorder:simpleOrder:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(SimpleOrder simpleOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute("simpleOrder2", simpleOrderService.sum(simpleOrder));
 		Page<SimpleOrder> page = simpleOrderService.findPage(new Page<SimpleOrder>(request, response), simpleOrder); 
 		model.addAttribute("page", page);
-		model.addAttribute("simpleOrder2", simpleOrderService.sum(simpleOrder));
+
 		return "agent/simpleorder/simpleOrderList";
 	}
 

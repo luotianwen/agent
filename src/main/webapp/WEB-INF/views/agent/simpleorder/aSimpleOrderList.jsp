@@ -145,9 +145,7 @@
 				<td>
 
 					<c:if test="${empty simpleOrder.deliverinfo}">
-						${simpleOrder.consignee},
-						${simpleOrder.phone},
-						${simpleOrder.address}
+						${simpleOrder.consignee}，${simpleOrder.phone}，${simpleOrder.address}，
 
 					</c:if>
 					<c:if test="${not empty simpleOrder.deliverinfo}">

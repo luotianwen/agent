@@ -73,11 +73,7 @@ public class StockService extends CrudService<StockDao, Stock> {
     private DataSourceTransactionManager transactionManager;
 
     private void data(int page, Brand b) {
-        try {
-            Thread.sleep(1000 * 10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String udate = sdf.format(new Date());
         Map map = new HashMap();
@@ -117,11 +113,7 @@ public class StockService extends CrudService<StockDao, Stock> {
         }
         int tpage = j.getTotal() / 300 + 1;
         if (page < tpage) {
-            try {
-                Thread.sleep(Cont.SECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Cont.ThreadSleep();
             data(page + 1, b);
         }
     }

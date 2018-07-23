@@ -74,11 +74,7 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 		for (DlybProduct d:dlybProducts
 			 ) {
 			data(d);
-			try {
-				Thread.sleep(Cont.SECONDS);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			Cont.ThreadSleep();
 		}
 	}
 	private void data(DlybProduct  d) {
@@ -105,7 +101,7 @@ public class DlybProductLogService extends CrudService<DlybProductLogDao, DlybPr
 			try {
 				   Object p1=j.getRows().get(0);
 					p= JSON.parseObject(p1.toString(), Stock.class);
-					logger.error(p1.toString());
+					logger.info(p1.toString());
 					dp=dlybProductService.getByNo(p.getArticleno());
 				    m=p.getDiscount();
 					if(null!=dp){

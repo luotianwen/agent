@@ -137,26 +137,26 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
 			TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
 			try {
-				for (Object p1 : j.getRows()) {
-					TmOrder p = JSON.parseObject(p1.toString(), TmOrder.class);
-					logger.info(p1.toString());
-					double moneys=p.getPostage();
-					Agent agent=new Agent();
-					agent.setId(simpleOrder.getAgentid());
-					agent.setMoney(moneys);
-					Double money=agentService.get(agent).getMoney();
-					if(money>=moneys) {
-						agentService.reduceMoney(agent);
-					}
 
-					simpleOrder.setCourier(p.getDelivery());
-					simpleOrder.setDelivernumber(p.getExpressno());
-					simpleOrder.setDelivermoney(p.getPostage());
-					simpleOrder.setTotalmoney(simpleOrder.getMoney()+p.getPostage());
-					simpleOrder.preUpdate();
-					dao.Tmdeliver(simpleOrder);
-					logger.info(simpleOrder.toString());
-				}
+					TmOrder p = JSON.parseObject(j.getRows().get(0).toString(), TmOrder.class);
+				   logger.info(p.toString());
+					if(p.getStatus()==1) {
+						double moneys = p.getPostage();
+						Agent agent = new Agent();
+						agent.setId(simpleOrder.getAgentid());
+						agent.setMoney(moneys);
+						Double money = agentService.get(agent).getMoney();
+						if (money >= moneys) {
+							agentService.reduceMoney(agent);
+						}
+						simpleOrder.setCourier(p.getDelivery());
+						simpleOrder.setDelivernumber(p.getExpressno());
+						simpleOrder.setDelivermoney(p.getPostage());
+						simpleOrder.setTotalmoney(simpleOrder.getMoney() + p.getPostage());
+						simpleOrder.preUpdate();
+						dao.Tmdeliver(simpleOrder);
+						logger.info(simpleOrder.toString());
+					}
 				transactionManager.commit(status);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
@@ -175,11 +175,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 		List<SimpleOrder> simpleOrders = dao.getOrderIdDeliver();
 		for (SimpleOrder s:simpleOrders) {
 			data(s);
-			try {
-				Thread.sleep(Cont.SECONDS);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			 Cont.ThreadSleep();
 		}
 	}
 

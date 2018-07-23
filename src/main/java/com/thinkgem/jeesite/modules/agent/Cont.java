@@ -36,8 +36,10 @@ public class Cont {
     public static int SECONDS=500;
     public static void ThreadSleep(){
         try {
-
-            Thread.sleep(SECONDS);
+            long x = System.nanoTime();
+            if(x%2==0) {
+                Thread.sleep(SECONDS);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
