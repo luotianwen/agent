@@ -135,7 +135,7 @@ public class SimpleOrderController extends BaseController {
 				aSimpleOrder=new SimpleOrder();
 			}
 			List<SimpleOrder> list=simpleOrderService.findList(aSimpleOrder);
-			new ExportExcel("订单数据", SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
+			new ExportExcel(null, SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
 			return null;
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());

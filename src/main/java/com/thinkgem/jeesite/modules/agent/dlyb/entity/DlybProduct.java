@@ -31,7 +31,7 @@ public class DlybProduct extends DataEntity<DlybProduct> {
 	}
 
 	@Length(min=0, max=100, message="商品货号长度必须介于 0 和 100 之间")
-	@ExcelField(title="商品货号", align=2, sort=1)
+	@ExcelField(title="商品货号", align=1, sort=1 )
 	public String getArticleno() {
 		return articleno;
 	}
@@ -41,7 +41,7 @@ public class DlybProduct extends DataEntity<DlybProduct> {
 	}
 	
 	@Length(min=0, max=2000, message="名称长度必须介于 0 和 2000 之间")
-	@ExcelField(title="商品名称", align=2, sort=10)
+	@ExcelField(title="商品名称", align=1, sort=10)
 	public String getName() {
 		return name;
 	}
@@ -51,7 +51,7 @@ public class DlybProduct extends DataEntity<DlybProduct> {
 	}
 	
 	@Length(min=0, max=100, message="品牌长度必须介于 0 和 100 之间")
-	@ExcelField(title="商品品牌", align=2, sort=20)
+	@ExcelField(title="商品品牌", align=1, sort=20)
 	public String getBrandname() {
 		return brandname;
 	}
@@ -59,7 +59,7 @@ public class DlybProduct extends DataEntity<DlybProduct> {
 	public void setBrandname(String brandname) {
 		this.brandname = brandname;
 	}
-	@ExcelField(title="市场价", align=2, sort=30)
+	@ExcelField(title="市场价", align=1, sort=30,type=1)
 	public Double getMarketprice() {
 		return marketprice;
 	}
@@ -67,7 +67,7 @@ public class DlybProduct extends DataEntity<DlybProduct> {
 	public void setMarketprice(Double marketprice) {
 		this.marketprice = marketprice;
 	}
-	@ExcelField(title="折扣", align=2, sort=40)
+	@ExcelField(title="折扣", align=1, sort=40,type=1)
 	public Double getDiscount() {
 		return discount;
 	}

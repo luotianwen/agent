@@ -28,52 +28,52 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
 	}
-	@ExcelField(title="货号", align=2, sort=10)
+	@ExcelField(title="货号", align=1, sort=10)
 
 	private String articleno;		// 货号
-	@ExcelField(title="数量", align=2, sort=40)
+	@ExcelField(title="数量", align=1, sort=40)
 
 	private String num;		// 数量
-	@ExcelField(title="金额", align=2, sort=44)
+	@ExcelField(title="金额", align=1, sort=44)
 
 	private Double money;		// 金额
 	private Double price;		// 市场价
-	@ExcelField(title="状态", align=2, sort=43, dictType="a_simple_order_state")
+	@ExcelField(title="状态", align=1, sort=43, dictType="a_simple_order_state")
 
 	private String state;		// 状态
-	@ExcelField(title="快递公司", align=2, sort=67)
+	@ExcelField(title="快递公司", align=1, sort=67 )
 	private String courier;		// 快递公司
-	@ExcelField(title="快递单号", align=2, sort=68)
+	@ExcelField(title="快递单号", align=1, sort=68)
 
 	private String delivernumber;		// 快递单号
-	@ExcelField(title="快递信息", align=2, sort=165)
+	@ExcelField(title="快递信息", align=1, sort=165)
 	private String deliverinfo;		// 快递信息
-	@ExcelField(title="快递费", align=2, sort=65)
+	@ExcelField(title="快递费", align=1, sort=65)
 	private Double delivermoney;		// 快递费
-	@ExcelField(title="总价", align=2, sort=66)
+	@ExcelField(title="总价", align=1, sort=66)
 	private Double totalmoney;		// 总价
-	@ExcelField(title="是否对账", align=2, sort=87, dictType="yes_no")
+	@ExcelField(title="是否对账", align=1, sort=87, dictType="yes_no")
 	private String isaccount;		// 是否对账
-	@ExcelField(title="收件人", align=2, sort=69)
+	@ExcelField(title="收件人", align=1, sort=69)
 	private String consignee;		// 收件人
-	@ExcelField(title="手机", align=2, sort=79)
+	@ExcelField(title="手机", align=1, sort=79)
 	private String phone;		// 手机
-	@ExcelField(title="颜色", align=2, sort=20)
+	@ExcelField(title="颜色", align=1, sort=20)
 	private String colour;		// 颜色
-	@ExcelField(title="规格尺码", align=2, sort=30)
+	@ExcelField(title="规格尺码", align=1, sort=30)
 	private String spec;		// 规格尺码
-	@ExcelField(title="地址", align=2, sort=89)
+	@ExcelField(title="地址", align=1, sort=89)
 	private String address;		// 地址
 
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
-	@ExcelField(title="创建时间", align=2, sort=110)
+	@ExcelField(title="创建时间", align=1, sort=110)
 	protected Date createDate;	// 创建日期
-	@ExcelField(title="发货时间", align=2, sort=120)
+	@ExcelField(title="发货时间", align=1, sort=120)
 	protected Date updateDate;	// 更新日期
-	@ExcelField(title="备注", align=2, sort=130)
+	@ExcelField(title="备注", align=1, sort=130)
 	protected String remarks;	// 备注
-	@ExcelField(title="订单号", align=2, sort=0)
+	@ExcelField(title="订单号", align=1, sort=0)
 	private String orderId;
 
 	public String getOrderId() {
