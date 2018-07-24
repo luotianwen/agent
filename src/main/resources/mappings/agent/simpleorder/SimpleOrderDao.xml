@@ -297,8 +297,8 @@
 		courier = #{courier},
 		delivernumber = #{delivernumber},
 		delivermoney = #{delivermoney},
-		totalmoney = #{totalmoney}
-
+		totalmoney = #{totalmoney},
+		update_date = now()
 		WHERE id = #{id}
 
 	</update>
