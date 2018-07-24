@@ -52,7 +52,7 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private Double delivermoney;		// 快递费
 	@ExcelField(title="总价", align=1, sort=66)
 	private Double totalmoney;		// 总价
-	@ExcelField(title="是否对账", align=1, sort=87, dictType="yes_no")
+	@ExcelField(title="是否对账", align=1, sort=90, dictType="yes_no")
 	private String isaccount;		// 是否对账
 	@ExcelField(title="收件人", align=1, sort=69)
 	private String consignee;		// 收件人
