@@ -47,7 +47,7 @@
 		SELECT
 		sum(a.delivermoney) as delivermoney,
 		sum(a.totalmoney) as totalmoney,
-		sum(a.money) as money
+		sum(a.money*a.num) as money
 		from a_simple_order a
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
@@ -294,7 +294,6 @@
 	</update>
 	<update id="Tmdeliver">
 		UPDATE a_simple_order SET
-
 		courier = #{courier},
 		delivernumber = #{delivernumber},
 		delivermoney = #{delivermoney},
