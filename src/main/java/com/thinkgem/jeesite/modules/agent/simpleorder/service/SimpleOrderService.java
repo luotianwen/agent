@@ -137,7 +137,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 			for (Object o:j.getRows()
 				 ) {
 				  p = JSON.parseObject(o.toString(), TmOrder.class);
-				  if(StringUtils.isNotBlank(p.getExpressno())){
+				  if(StringUtils.isNotBlank(p.getExpressno())&&simpleOrder.getOrderId().equals(p.getOrder_sn_sub())){
 				  	break;
 				  }
 			}
