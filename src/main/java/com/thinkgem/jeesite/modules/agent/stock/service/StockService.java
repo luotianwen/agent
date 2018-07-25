@@ -4,12 +4,12 @@
 package com.thinkgem.jeesite.modules.agent.stock.service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.alibaba.druid.sql.dialect.oracle.ast.stmt.OracleSelectRestriction;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
@@ -41,6 +41,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @Transactional(readOnly = true)
 public class StockService extends CrudService<StockDao, Stock> {
     private static Logger logger = LoggerFactory.getLogger(StockService.class);
+
     public Stock get(String id) {
         return super.get(id);
     }
@@ -67,6 +68,12 @@ public class StockService extends CrudService<StockDao, Stock> {
         super.delete(stock);
     }
 
+    @Transactional(readOnly = false)
+    public void copy() {
+        dao.copyold();
+        dao.deleteold();
+    }
+
     @Autowired
     private BrandService brandService;
     @Autowired
@@ -74,42 +81,33 @@ public class StockService extends CrudService<StockDao, Stock> {
 
     private void data(int page, Brand b) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String udate = sdf.format(new Date());
+
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
         map.put("page", page + "");
         map.put("rows", "300");
         map.put("wareHouseName", b.getWarehousename());
         String str = Cont.post(Cont.STOCK, map);
-        System.out.println(str);
         BackData j = JSON.parseObject(str, BackData.class);
         if (j.getRows() != null && j.getRows().size() > 0) {
-
-
-
+            List<Stock> list = Lists.newArrayList();
             for (Object p1 : j.getRows()) {
+                Stock p = JSON.parseObject(p1.toString(), Stock.class);
+                p.setId(IdGen.uuid());
+                list.add(p);
+            }
+            if (null != list && list.size() > 0) {
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
                 def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
                 TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
                 try {
-                    Stock p = JSON.parseObject(p1.toString(), Stock.class);
-                    Stock p2 = getByName(p.getWarehousename(), p.getArticleno(), p.getSize());
-                    if (p2 == null) {
-                        p.setId(null);
-                    } else {
-                        p.setId(p2.getId());
-                    }
-                    save(p);
+                    saveList(list);
                     transactionManager.commit(status);
-
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                     transactionManager.rollback(status);
                 }
             }
-
-
         }
         int tpage = j.getTotal() / 300 + 1;
         if (page < tpage) {
@@ -118,33 +116,51 @@ public class StockService extends CrudService<StockDao, Stock> {
         }
     }
 
+    @Transactional(readOnly = false)
+    void saveList(List<Stock> list) {
+        dao.saveList(list);
+    }
+
 
     public int saveOrUpdate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String udate = sdf.format(new Date());
         List<Brand> brands = brandService.findList(new Brand());
-
         if (null != brands && 0 < brands.size()) {
             for (Brand b : brands) {
-             /*   if (!udate.equals(b.getUdate()) && 1 != b.getState()) {*/
-                    data(1, b);
-
-               /* }
-                DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-                def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
-                TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
-                b.setUdate(udate);
-                b.setState(1);
-                try {
-                    brandService.updateState(b);
-                    transactionManager.commit(status);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    transactionManager.rollback(status);
-                }*/
+                data(1, b);
             }
         }
+
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+        TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+
+        try {
+            if (isLastDayOfMonth()) {
+                logger.error("移交数据失败");
+                this.copy();
+                logger.error("移交数据成功");
+            }
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            transactionManager.rollback(status);
+        }
         return 1;
+    }
+
+    /**
+     * 判断给定日期是否为月末的一天
+     *
+     * @return true:是|false:不是
+     */
+    public static boolean isLastDayOfMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.DATE, (calendar.get(Calendar.DATE) + 1));
+        if (calendar.get(Calendar.DAY_OF_MONTH) == 1) {
+            return true;
+        }
+        return false;
     }
 
     public Page<Stock> findPage2(Page<Stock> page, Stock entity) {

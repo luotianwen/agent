@@ -129,17 +129,25 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 		map.put("name", name);
 		map.put("pwd", pwd);
 		String str =Cont.post(Cont.DELIVER, map);
-		logger.info(str);
+		logger.error(str);
 		BackData j = JSON.parseObject(str, BackData.class);
 
 		if (j.getRows() != null && j.getRows().size() > 0) {
+			TmOrder p = null;
+			for (Object o:j.getRows()
+				 ) {
+				  p = JSON.parseObject(o.toString(), TmOrder.class);
+				  if(StringUtils.isNotBlank(p.getExpressno())){
+				  	break;
+				  }
+			}
 			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
 			TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
 			try {
 
-					TmOrder p = JSON.parseObject(j.getRows().get(0).toString(), TmOrder.class);
-				   logger.info(p.toString());
+					//TmOrder p = JSON.parseObject(j.getRows().get(0).toString(), TmOrder.class);
+				   //logger.info(p.toString());
 					if(p.getStatus()==1) {
 						double moneys = p.getPostage();
 						Agent agent = new Agent();
@@ -155,7 +163,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 						simpleOrder.setTotalmoney(simpleOrder.getMoney() + p.getPostage());
 						simpleOrder.preUpdate();
 						dao.Tmdeliver(simpleOrder);
-						logger.info(simpleOrder.toString());
+						//logger.info(simpleOrder.toString());
 					}
 				transactionManager.commit(status);
 			} catch (Exception e) {

@@ -21,4 +21,8 @@ public interface StockDao extends CrudDao<Stock> {
     Stock getByName(@Param("warehousename") String warehousename, @Param("articleno") String articleno, @Param("size") String size);
 
     List<Stock> findList2(Stock entity);
+    void copyold();
+    void deleteold();
+
+    void saveList(List<Stock> list);
 }

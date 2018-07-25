@@ -181,11 +181,45 @@
 			warehousename = #{warehousename}
 		WHERE id = #{id}
 	</update>
-	
+
+
 	<update id="delete">
 		UPDATE a_stock SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+	<insert id="saveList" parameterType="java.util.List">
+			INSERT INTO a_stock(
+			id,
+			articleno,
+			division,
+			brandname,
+			uksize,
+			size,
+			innernum,
+			sex,
+			marketprice,
+			create_date,
+			update_date,
+			remarks,
+			del_flag,
+			price,
+			quarter,
+			discount,
+			warehousename
+		) VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id}, #{item.articleno},#{item.division},
+			#{item.brandname},#{item.uksize},#{item.size},#{item.innernum},#{item.sex}
+			,#{item.marketprice},now(),now(),#{item.remarks},0,#{item.price},#{item.quarter}
+			,#{item.discount},#{item.warehousename})
+		</foreach>
+	</insert>
+	<insert id="copyold">
+		INSERT into a_stock_old SELECT * from a_stock where  PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( update_date, '%Y%m' ) )>1
+	</insert>
+   <delete id="deleteold">
+	   delete from a_stock where  PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( update_date, '%Y%m' ) )>1
+   </delete>
 </mapper>

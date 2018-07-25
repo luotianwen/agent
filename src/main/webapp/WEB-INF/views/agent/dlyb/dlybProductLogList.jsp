@@ -50,10 +50,10 @@
 			</li>
 			<li><label>创建时间：</label>
 				<input name="beginCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					   value="<fmt:formatDate value="${order.beginCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					   value="<fmt:formatDate value="${dlybProductLog.beginCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> -
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					   value="<fmt:formatDate value="${order.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					   value="<fmt:formatDate value="${dlybProductLog.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 
@@ -72,6 +72,7 @@
 				<th>市场价</th>
 				<th>折扣</th>
 				<th>是否增加</th>
+				<th>变化量</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="dlyb:dlybProductLog:edit"><th>操作</th></shiro:hasPermission>
@@ -98,6 +99,10 @@
 				<td>
 					${fns:getDictLabel(dlybProductLog.state, 'yes_no', '')}
 				</td>
+				<td>
+						${dlybProductLog.changediscount}
+				</td>
+
 				<td>
 					<fmt:formatDate value="${dlybProductLog.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
