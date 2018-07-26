@@ -269,9 +269,9 @@
 		a.orderId AS "orderId"
 
 		from a_simple_order a
-		where   a.state=3
+		where
 		<![CDATA[
-		   AND (a.orderId is not null or a.orderId <> '')
+		     (a.orderId is not null or a.orderId <> '')
 		]]>
 		  AND (a.delivernumber is null or a.delivernumber='')
 
@@ -298,6 +298,7 @@
 		delivernumber = #{delivernumber},
 		delivermoney = #{delivermoney},
 		totalmoney = #{totalmoney},
+		state='3',
 		update_date = now()
 		WHERE id = #{id}
 
