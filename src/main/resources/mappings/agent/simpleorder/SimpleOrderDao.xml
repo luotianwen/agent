@@ -269,9 +269,9 @@
 		a.orderId AS "orderId"
 
 		from a_simple_order a
-		where
+		where (a.state='3' or a.state='1')
 		<![CDATA[
-		     (a.orderId is not null or a.orderId <> '')
+		    AND (a.orderId is not null or a.orderId <> '')
 		]]>
 		  AND (a.delivernumber is null or a.delivernumber='')
 
