@@ -201,7 +201,9 @@
 			sex,
 			marketprice,
 			create_date,
+			  create_by,
 			update_date,
+		update_by,
 			remarks,
 			del_flag,
 			price,
@@ -212,7 +214,7 @@
 		<foreach collection="list" item="item" index="index" separator=",">
 			(#{item.id}, #{item.articleno},#{item.division},
 			#{item.brandname},#{item.uksize},#{item.size},#{item.innernum},#{item.sex}
-			,#{item.marketprice},now(),now(),#{item.remarks},0,#{item.price},#{item.quarter}
+			,#{item.marketprice},now(),1,now(),1,#{item.remarks},0,#{item.price},#{item.quarter}
 			,#{item.discount},#{item.warehousename})
 		</foreach>
 	</insert>
