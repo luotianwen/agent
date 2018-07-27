@@ -7,20 +7,21 @@
 	<script type="text/javascript">
 
 		$(document).ready(function() {
-            jQuery.validator.addMethod("totalmoney", function(value, element) {
-                var num=$("#num").val();
-                var money=$("#money").val();
-                var delivermoney=$("#delivermoney").val();
 
-
-                return this.optional(element) || (money*num+delivermoney==value);
-            }, "总金额不对，请先更正。");
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
+                    var num=Number($("#num").val());
+                    var money=Number($("#money").val());
+                    var delivermoney=Number($("#delivermoney").val());
+                    var totalmoney=Number($("#totalmoney").val());
+                    if(money*num+delivermoney!=totalmoney){
+                        top.$.jBox.alert((money*num+delivermoney)+"总价输入有误，请先更正。");
+					}
+                       else {
                         loading('正在提交，请稍等...');
-						form.submit();
-
+                        form.submit();
+                    }
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
@@ -151,7 +152,7 @@
 		<div class="control-group">
 			<label class="control-label">总价：</label>
 			<div class="controls">
-				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge " readonly="true"/>
+				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge "  />
 			</div>
 		</div>
 
