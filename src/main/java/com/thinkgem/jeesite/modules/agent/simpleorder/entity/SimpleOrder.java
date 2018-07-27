@@ -33,9 +33,8 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String articleno;		// 货号
 	@ExcelField(title="数量", align=1, sort=40)
 
-	private String num;		// 数量
+	private int num;		// 数量
 	@ExcelField(title="金额", align=1, sort=44)
-
 	private Double money;		// 金额
 	private Double price;		// 市场价
 	@ExcelField(title="状态", align=1, sort=43, dictType="a_simple_order_state")
@@ -158,11 +157,11 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 		this.articleno = articleno;
 	}
 	
-	public String getNum() {
+	public int getNum() {
 		return num;
 	}
 
-	public void setNum(String num) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 	

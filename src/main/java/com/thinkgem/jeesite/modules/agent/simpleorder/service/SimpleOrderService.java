@@ -163,7 +163,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                     simpleOrder.setCourier(p.getDelivery());
                     simpleOrder.setDelivernumber(p.getExpressno());
                     simpleOrder.setDelivermoney(p.getPostage());
-                    simpleOrder.setTotalmoney(simpleOrder.getMoney() + p.getPostage());
+                    simpleOrder.setTotalmoney(simpleOrder.getMoney()*simpleOrder.getNum() + p.getPostage());
                     simpleOrder.preUpdate();
                     dao.Tmdeliver(simpleOrder);
                     transactionManager.commit(status);

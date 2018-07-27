@@ -5,12 +5,22 @@
 	<title>下单管理管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
+
 		$(document).ready(function() {
+            jQuery.validator.addMethod("totalmoney", function(value, element) {
+                var num=$("#num").val();
+                var money=$("#money").val();
+                var delivermoney=$("#delivermoney").val();
+
+
+                return this.optional(element) || (money*num+delivermoney==value);
+            }, "总金额不对，请先更正。");
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
+                        loading('正在提交，请稍等...');
+						form.submit();
+
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
@@ -30,7 +40,7 @@
 		<li><a href="${ctx}/simpleorder/simpleOrder/">下单管理列表</a></li>
 		<li class="active"> 发货</li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/simpleorder/simpleOrder/deliver" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/simpleorder/simpleOrder/deliver" method="post" class="form-horizontal" >
 		<form:hidden path="id"/>
 		<form:hidden path="agentid"/>
 
@@ -141,7 +151,7 @@
 		<div class="control-group">
 			<label class="control-label">总价：</label>
 			<div class="controls">
-				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge " readonly="true"/>
 			</div>
 		</div>
 

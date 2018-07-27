@@ -262,6 +262,7 @@
 		SELECT
 		 a.id AS "id",
 		 a.agentid,
+		 a.num AS "num",
 		a.money AS "money",
 		a.courier AS "courier",
 		a.delivernumber AS "delivernumber",
