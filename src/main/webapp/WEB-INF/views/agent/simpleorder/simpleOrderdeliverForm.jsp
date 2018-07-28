@@ -11,12 +11,13 @@
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
-                    var num=Number($("#num").val());
-                    var money=Number($("#money").val());
-                    var delivermoney=Number($("#delivermoney").val());
-                    var totalmoney=Number($("#totalmoney").val());
-                    if(money*num+delivermoney!=totalmoney){
-                        top.$.jBox.alert((money*num+delivermoney)+"总价输入有误，请先更正。");
+                    var num=parseFloat($("#num").val());
+                    var money=parseFloat($("#money").val());
+                    var delivermoney=parseFloat($("#delivermoney").val());
+                    var totalmoney=parseFloat($("#totalmoney").val()).toFixed(2);
+                    var a=parseFloat(money*num+delivermoney).toFixed(2);
+                    if(a!=totalmoney){
+                        top.$.jBox.alert((a)+"总价输入有误，请先更正。");
 					}
                        else {
                         loading('正在提交，请稍等...');
