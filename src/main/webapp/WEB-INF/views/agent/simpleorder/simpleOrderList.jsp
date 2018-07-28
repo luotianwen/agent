@@ -17,8 +17,10 @@
             $("#btnExport").click(function(){
                 top.$.jBox.confirm("确认要导出数据吗？","系统提示",function(v,h,f){
                     if(v=="ok"){
+                        var oldAction=$("#searchForm").attr("action");
                         $("#searchForm").attr("action","${ctx}/simpleorder/simpleOrder/export");
                         $("#searchForm").submit();
+                        $("#searchForm").attr("action",oldAction);
                     }
                 },{buttonsFocus:1});
                 top.$('.jbox-body .jbox-icon').css('top','55px');
@@ -54,8 +56,10 @@
                 ids.push($(this).val());
             });
             var delIds=ids.join(",");
+            var oldAction=$("#searchForm").attr("action");
             $("#searchForm").attr("action","${ctx}/simpleorder/simpleOrder/account?ids="+delIds);
             $("#searchForm").submit();
+            $("#searchForm").attr("action",oldAction);
         }
 
 
@@ -93,11 +97,11 @@
 			</li>
 			<li><label>创建时间：</label>
 				<input name="beginCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${simpleOrder.beginCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${simpleOrder.beginCreateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> -
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${simpleOrder.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${simpleOrder.endCreateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label>收件人：</label>
 				<form:input path="consignee" htmlEscape="false" maxlength="32" class="input-medium"/>
@@ -239,7 +243,7 @@
 						${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					<fmt:formatDate value="${simpleOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
