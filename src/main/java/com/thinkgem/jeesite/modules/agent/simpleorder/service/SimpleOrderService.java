@@ -127,6 +127,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     @Value("#{APP_PROP['tm.pwd']}")
     String pwd;
 
+
     private void data(SimpleOrder simpleOrder) {
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
@@ -149,7 +150,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
             }
             if (null != p && p.getStatus() == 1) {
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-                def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+                def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);// 事物隔离级别，开启新事务
                 TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
                 try {
                     double moneys = p.getPostage();
@@ -166,7 +167,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                     simpleOrder.setTotalmoney(simpleOrder.getMoney()*simpleOrder.getNum() + p.getPostage());
                     simpleOrder.preUpdate();
                     dao.Tmdeliver(simpleOrder);
-                    logger.error(JSON.toJSONString(simpleOrder));
+
                     transactionManager.commit(status);
                 } catch (Exception e) {
                     logger.error(e.getMessage());
@@ -180,7 +181,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 
     @Autowired
     private DataSourceTransactionManager transactionManager;
-
+    @Transactional(readOnly = false)
     public void saveOrUpdate() {
 
         List<SimpleOrder> simpleOrders = dao.getOrderIdDeliver();

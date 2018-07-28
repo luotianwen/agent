@@ -93,7 +93,7 @@ public class AgentService extends CrudService<AgentDao, Agent> {
     public void addMoney(Agent agent) {
 		   dao.addMoney(agent);
     }
-
+	@Transactional(readOnly = false)
 	public void reduceMoney(Agent agent) {
 		dao.reduceMoney(agent);
 	}
