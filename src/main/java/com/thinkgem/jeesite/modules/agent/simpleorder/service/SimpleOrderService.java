@@ -134,7 +134,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         map.put("name", name);
         map.put("pwd", pwd);
         String str = Cont.post(Cont.DELIVER, map);
-        logger.error(str);
+        logger.error(simpleOrder.getOrderId()+"  orderid "+str);
         BackData j = JSON.parseObject(str, BackData.class);
 
         if (j.getRows() != null && j.getRows().size() > 0) {
@@ -166,6 +166,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                     simpleOrder.setTotalmoney(simpleOrder.getMoney()*simpleOrder.getNum() + p.getPostage());
                     simpleOrder.preUpdate();
                     dao.Tmdeliver(simpleOrder);
+                    logger.error(JSON.toJSONString(simpleOrder));
                     transactionManager.commit(status);
                 } catch (Exception e) {
                     logger.error(e.getMessage());
