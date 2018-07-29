@@ -243,7 +243,7 @@
 						${fns:getDictLabel(simpleOrder.isaccount, 'yes_no', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${simpleOrder.createDate}" pattern="yyyy-MM-dd HH:mm"/>
 				</td>
 				<td>
 					<fmt:formatDate value="${simpleOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
