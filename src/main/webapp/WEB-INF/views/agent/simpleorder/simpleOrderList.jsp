@@ -20,14 +20,14 @@
                 console.info('Action:', e.action);
                 console.info('Text:', e.text);
                 console.info('Trigger:', e.trigger);
-                top.$.jBox.alert("复制"+e.text+"成功");
+                top.$.jBox.tip("复制"+e.text+"成功");
                 e.clearSelection();
             });
 
             clipboard.on('error', function(e) {
                 console.error('Action:', e.action);
                 console.error('Trigger:', e.trigger);
-                top.$.jBox.alert("复制"+e.text+"失败");
+                top.$.jBox.tip("复制"+e.text+"失败");
             });
 
 

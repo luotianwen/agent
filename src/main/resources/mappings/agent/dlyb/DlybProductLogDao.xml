@@ -54,8 +54,11 @@
 			<if test="name != null and name != ''">
 				AND a.name LIKE  concat('%',#{name},'%')
 			</if>
-			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
-				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			<if test="beginCreateDate != null  and beginCreateDate != '' ">
+				<![CDATA[ AND date(a.create_date)  >= #{beginCreateDate}  ]]>
+			</if>
+			<if test="  endCreateDate != null   and endCreateDate != ''">
+				<![CDATA[   AND date(a.create_date)  <= #{endCreateDate}  ]]>
 			</if>
 			<if test="brandname != null and brandname != ''">
 				AND a.brandname = #{brandname}
