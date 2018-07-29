@@ -14,6 +14,23 @@
 	<script type="text/javascript">
 
 		$(document).ready(function() {
+            var clipboard = new ClipboardJS('.copy');
+
+            clipboard.on('success', function(e) {
+                console.info('Action:', e.action);
+                console.info('Text:', e.text);
+                console.info('Trigger:', e.trigger);
+                top.$.jBox.alert("复制"+e.text+"成功");
+                e.clearSelection();
+            });
+
+            clipboard.on('error', function(e) {
+                console.error('Action:', e.action);
+                console.error('Trigger:', e.trigger);
+                top.$.jBox.alert("复制"+e.text+"失败");
+            });
+
+
             $("#btnExport").click(function(){
                 top.$.jBox.confirm("确认要导出数据吗？","系统提示",function(v,h,f){
                     if(v=="ok"){
@@ -195,9 +212,7 @@
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
 				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   /></td>
-				<td>
-						${simpleOrder.orderId}
-				</td>
+				<td class="copy" data-clipboard-text="${simpleOrder.orderId}" title="点击复制">${simpleOrder.orderId}</td>
 				<td>
 						${simpleOrder.agentName}
 				</td>
@@ -231,7 +246,7 @@
 						${simpleOrder.courier}
 						${simpleOrder.delivernumber}
 				</td>
-				<td>
+				<td class="copy" data-clipboard-text="${simpleOrder.consignee}，${simpleOrder.phone}，${simpleOrder.address}，" title="点击复制">
 				<c:if test="${empty simpleOrder.deliverinfo}">
 					${simpleOrder.consignee}，${simpleOrder.phone}，${simpleOrder.address}，
 				</c:if>
