@@ -62,6 +62,9 @@ public class SimpleOrderIntegerController extends BaseController {
 		if(null==aSimpleOrder){
 			aSimpleOrder=new SimpleOrder();
 		}
+		if(null==aSimpleOrder.getBeginCreateDate()){
+			aSimpleOrder.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),5));
+		}
 		model.addAttribute("agent", agent);
 		aSimpleOrder.setAgentid(agent.getId());
 		Page<SimpleOrder> page = aSimpleOrderService.findPage(new Page<SimpleOrder>(request, response), aSimpleOrder);

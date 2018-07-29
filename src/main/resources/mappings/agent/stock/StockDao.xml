@@ -88,7 +88,12 @@
 			<if test="warehousename != null and warehousename != ''">
 				AND a.warehousename  LIKE concat('%',#{warehousename},'%')
 			</if>
-
+			<if test="beginCreateDate != null  and beginCreateDate != '' ">
+				<![CDATA[ AND date(a.update_date)  >= #{beginCreateDate}  ]]>
+			</if>
+			<if test="  endCreateDate != null   and endCreateDate != ''">
+				<![CDATA[   AND date(a.update_date)  <= #{endCreateDate}  ]]>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

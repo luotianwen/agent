@@ -60,6 +60,9 @@ public class SimpleOrderController extends BaseController {
 	@RequiresPermissions("simpleorder:simpleOrder:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(SimpleOrder simpleOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(null==simpleOrder.getBeginCreateDate()){
+			simpleOrder.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),5));
+		}
 		model.addAttribute("simpleOrder2", simpleOrderService.sum(simpleOrder));
 		Page<SimpleOrder> page = simpleOrderService.findPage(new Page<SimpleOrder>(request, response), simpleOrder); 
 		model.addAttribute("page", page);

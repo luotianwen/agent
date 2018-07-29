@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -30,6 +31,7 @@ import com.thinkgem.jeesite.modules.agent.stock.service.StockService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,7 +62,10 @@ public class StockController extends BaseController {
 	@RequiresPermissions("stock:stock:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Stock stock, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Stock> page = stockService.findPage(new Page<Stock>(request, response), stock); 
+		if(null==stock.getBeginCreateDate()){
+			stock.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),1));
+		}
+		Page<Stock> page = stockService.findPage(new Page<Stock>(request, response), stock);
 		model.addAttribute("page", page);
 		return "agent/stock/stockList";
 	}

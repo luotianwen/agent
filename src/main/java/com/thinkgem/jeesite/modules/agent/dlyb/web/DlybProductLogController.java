@@ -26,6 +26,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.dlyb.entity.DlybProductLog;
 import com.thinkgem.jeesite.modules.agent.dlyb.service.DlybProductLogService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,7 +56,10 @@ public class DlybProductLogController extends BaseController {
 	@RequiresPermissions("dlyb:dlybProductLog:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(DlybProductLog dlybProductLog, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<DlybProductLog> page = dlybProductLogService.findPage(new Page<DlybProductLog>(request, response), dlybProductLog); 
+		if(null==dlybProductLog.getBeginCreateDate()){
+			dlybProductLog.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),0));
+		}
+		Page<DlybProductLog> page = dlybProductLogService.findPage(new Page<DlybProductLog>(request, response), dlybProductLog);
 		model.addAttribute("page", page);
 		return "agent/dlyb/dlybProductLogList";
 	}
