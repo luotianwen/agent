@@ -6,6 +6,7 @@
 
 		g.name AS "agentName",
 		a.id AS "id",
+		a.tradeId AS "tradeId",
 		a.agentid AS "agentid",
 		a.articleno AS "articleno",
 		a.num AS "num",
@@ -262,7 +263,7 @@
 			colour = #{colour},
 			spec = #{spec},
 			address = #{address},
-
+			tradeId=#{tradeId},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
@@ -276,6 +277,7 @@
 		a.courier AS "courier",
 		a.delivernumber AS "delivernumber",
 		a.delivermoney AS "delivermoney",
+		a.tradeId AS "tradeId",
 		a.orderId AS "orderId"
 
 		from a_simple_order a
@@ -296,7 +298,7 @@
 		deliverinfo = #{deliverinfo},
 		delivermoney = #{delivermoney},
 		totalmoney = #{totalmoney},
-
+		tradeId=#{tradeId},
 		update_by = #{updateBy.id},
 		update_date = #{updateDate}
 		WHERE id = #{id}

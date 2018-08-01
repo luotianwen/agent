@@ -40,6 +40,7 @@
 				<form:input path="agentName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
+
 		<div class="control-group">
 			<label class="control-label">订单号：</label>
 			<div class="controls">
@@ -52,18 +53,7 @@
 				<form:input path="articleno" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">数量：</label>
-			<div class="controls">
-				<form:input path="num" htmlEscape="false" maxlength="11" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">金额：</label>
-			<div class="controls">
-				<form:input path="money" htmlEscape="false" class="input-xlarge "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">市场价：</label>
 			<div class="controls">
@@ -80,18 +70,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">快递公司：</label>
-			<div class="controls">
-				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">快递单号：</label>
-			<div class="controls">
-				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">收件人：</label>
 			<div class="controls">
@@ -122,12 +101,36 @@
 				<form:textarea path="address" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
-		<%--<div class="control-group">
-			<label class="control-label">快递信息：</label>
+		<div class="control-group">
+			<label class="control-label">数量：</label>
 			<div class="controls">
-				<form:textarea path="deliverinfo" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+				<form:input path="num" htmlEscape="false" maxlength="11" class="input-xlarge "/>
 			</div>
-		</div>--%>
+		</div>
+		<div class="control-group">
+			<label class="control-label">金额：</label>
+			<div class="controls">
+				<form:input path="money" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">交易号：</label>
+			<div class="controls">
+				<form:input path="tradeId" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">快递公司：</label>
+			<div class="controls">
+				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">快递单号：</label>
+			<div class="controls">
+				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">快递费：</label>
 			<div class="controls">

@@ -115,7 +115,12 @@
 				<form:input path="orderId" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
-
+		<div class="control-group">
+			<label class="control-label">交易号：</label>
+			<div class="controls">
+				<form:input path="tradeId" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">快递公司：</label>
 			<div class="controls">
