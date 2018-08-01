@@ -46,7 +46,7 @@
                 $("#checkId").attr('checked', $(":checkbox[name='orderIds']").length==$(":checkbox[name='orderIds']:checked").length);
             });
             $(":checkbox[name='checkId']").click(function(){
-                checkAll(this, 'orderId');
+                checkAll(this, 'orderIds');
             });
 		});
 		function page(n,s){
