@@ -75,6 +75,16 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	@ExcelField(title="订单号", align=1, sort=0)
 	private String orderId;
 
+	private String tradeId;
+
+	public String getTradeId() {
+		return tradeId;
+	}
+
+	public void setTradeId(String tradeId) {
+		this.tradeId = tradeId;
+	}
+
 	public String getOrderId() {
 		return orderId;
 	}

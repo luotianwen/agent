@@ -145,7 +145,7 @@
 		<thead>
 			<tr>
 				<th><input type=checkbox name="checkId" id="checkId"  ></th>
-				<th>订单号</th>
+				<th>订单号/交易号</th>
 				<th>客户名称</th>
 				<th>货号</th>
 				<th>颜色|尺码</th>
@@ -166,6 +166,7 @@
 		</thead>
 		<tbody>
 		<tr>
+			<td> </td>
 			<td> </td>
 			<td>
 			</td>
@@ -212,7 +213,7 @@
 		<c:forEach items="${page.list}" var="simpleOrder">
 			<tr>
 				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   /></td>
-				<td class="copy" data-clipboard-text="${simpleOrder.orderId}" title="点击复制">${simpleOrder.orderId}</td>
+				<td class="copy" data-clipboard-text="${simpleOrder.orderId}" title="点击复制">${simpleOrder.orderId}/${simpleOrder.tradeId}</td>
 				<td>
 						${simpleOrder.agentName}
 				</td>

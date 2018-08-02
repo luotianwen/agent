@@ -129,13 +129,17 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 
 
     private void data(SimpleOrder simpleOrder) {
+        String tradeId=simpleOrder.getTradeId();
+        if(StringUtils.isEmpty(tradeId)){
+            tradeId=simpleOrder.getOrderId();
+        }
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
-        map.put("order_sn", simpleOrder.getOrderId());
+        map.put("order_sn", tradeId);
         map.put("name", name);
         map.put("pwd", pwd);
         String str = Cont.post(Cont.DELIVER, map);
-        logger.error(simpleOrder.getOrderId()+"  orderid "+str);
+        logger.error(tradeId+"  orderid "+str);
         BackData j = JSON.parseObject(str, BackData.class);
 
         if (j.getRows() != null && j.getRows().size() > 0) {

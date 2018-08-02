@@ -32,6 +32,7 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="simpleOrder" action="${ctx}/msimpleorder/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<form:hidden path="tradeId"/>
 		<sys:message content="${message}"/>		
 
 		<div class="control-group">
