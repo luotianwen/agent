@@ -6,12 +6,15 @@ package com.thinkgem.jeesite.modules.agent.simpleorder.web;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.DateUtils;
+import com.thinkgem.jeesite.common.utils.MyBeanUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
+import com.thinkgem.jeesite.modules.agent.simpleorder.entity.ASimpleOrderAfter;
 import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
+import com.thinkgem.jeesite.modules.agent.simpleorder.service.ASimpleOrderAfterService;
 import com.thinkgem.jeesite.modules.agent.simpleorder.service.SimpleOrderService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -37,7 +40,8 @@ import java.util.List;
 @RequestMapping(value = "${adminPath}/msimpleorder")
 public class SimpleOrderIntegerController extends BaseController {
 
-
+	@Autowired
+	private ASimpleOrderAfterService aSimpleOrderAfterService;
 	@Autowired
 	private SimpleOrderService aSimpleOrderService;
 	@Autowired
@@ -79,6 +83,29 @@ public class SimpleOrderIntegerController extends BaseController {
 		return "agent/simpleorder/aSimpleOrderForm";
 	}
 
+	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequestMapping(value = "after")
+	public String after(SimpleOrder aSimpleOrder, Model model) throws Exception {
+		aSimpleOrder=aSimpleOrderService.get(aSimpleOrder.getId());
+		ASimpleOrderAfter aSimpleOrderAfter=new ASimpleOrderAfter();
+		MyBeanUtils.copyBean2Bean(aSimpleOrderAfter, aSimpleOrder);
+		aSimpleOrderAfter.setOrderid(aSimpleOrder.getOrderId());
+		aSimpleOrderAfter.setId(null);
+		model.addAttribute("aSimpleOrderAfter", aSimpleOrderAfter);
+		return "agent/simpleorder/afterSimpleOrderForm";
+	}
+
+	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequestMapping(value = "aftersave")
+	@ResponseBody
+	public String aftersave(ASimpleOrderAfter aSimpleOrderAfter, Model model) {
+		try {
+			aSimpleOrderAfterService.save(aSimpleOrderAfter);
+		}catch (Exception e){
+			return "error";
+		}
+		 return "ok";
+	}
 	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
 	@RequestMapping(value = "save")
 	public String save(SimpleOrder aSimpleOrder, Model model, RedirectAttributes redirectAttributes) throws Exception {

@@ -18,6 +18,41 @@
                 top.$('.jbox-body .jbox-icon').css('top','55px');
             });
 		});
+
+        // 确认对话框
+        function after(mess, href, closed){
+            top.$.jBox.confirm(mess,'系统提示',function(v,h,f){
+                if(v=='ok'){
+                        resetTip();
+
+                    top.$.jBox("iframe:"+href, {
+                        title: "售后",
+                        width: 620,
+                        height: 520,
+                        buttons:  {"确定": "ok", "关闭": true},
+                        submit:function (v, h, f) {
+                            if (v == "ok") {
+
+                                return false;
+                            }
+                        },
+                        closed: function(){  //关闭时发生，为了刷新父级页面
+                            page();
+                        },
+                        loaded : function(h) {   //隐藏滚动条
+                            $(".jbox-content", top.document).css( "overflow-y", "hidden");
+                        }
+                    });
+                }
+
+            },{buttonsFocus:1, closed:function(){
+                    if (typeof closed == 'function') {
+                        closed();
+                    }
+                }});
+            top.$('.jbox-body .jbox-icon').css('top','55px');
+            return false;
+        }
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -171,6 +206,9 @@
 					<c:if test="${simpleOrder.state==1}">
     				<a href="${ctx}/msimpleorder/form?id=${simpleOrder.id}">修改</a>
 					<a href="${ctx}/msimpleorder/delete?id=${simpleOrder.id}" onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
+					</c:if>
+					<c:if test="${simpleOrder.state==3}">
+						<a href="${ctx}/msimpleorder/after?id=${simpleOrder.id}" onclick="return after('确认要售后吗？', this.href)">售后</a>
 					</c:if>
 				</td>
 			</tr>

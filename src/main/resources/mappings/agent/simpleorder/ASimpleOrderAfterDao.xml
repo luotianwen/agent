@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.agent.simpleorder.dao.ASimpleOrderAfterDao">
+    
+	<sql id="aSimpleOrderAfterColumns">
+		a.id AS "id",
+		a.orderid AS "orderid",
+		a.articleno AS "articleno",
+		a.address AS "address",
+		a.consignee AS "consignee",
+		a.phone AS "phone",
+		a.state AS "state",
+		a.backaddress AS "backaddress",
+		a.backcourier AS "backcourier",
+		a.backnumber AS "backnumber",
+		a.courier AS "courier",
+		a.delivernumber AS "delivernumber",
+		a.backmoney AS "backmoney",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="aSimpleOrderAfterJoins">
+	</sql>
+    
+	<select id="get" resultType="ASimpleOrderAfter">
+		SELECT 
+			<include refid="aSimpleOrderAfterColumns"/>
+		FROM a_simple_order_after a
+		<include refid="aSimpleOrderAfterJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ASimpleOrderAfter">
+		SELECT 
+			<include refid="aSimpleOrderAfterColumns"/>
+		FROM a_simple_order_after a
+		<include refid="aSimpleOrderAfterJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ASimpleOrderAfter">
+		SELECT 
+			<include refid="aSimpleOrderAfterColumns"/>
+		FROM a_simple_order_after a
+		<include refid="aSimpleOrderAfterJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_simple_order_after(
+			id,
+			orderid,
+			articleno,
+			address,
+			consignee,
+			phone,
+			state,
+			backaddress,
+			backcourier,
+			backnumber,
+			courier,
+			delivernumber,
+			backmoney,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{orderid},
+			#{articleno},
+			#{address},
+			#{consignee},
+			#{phone},
+			#{state},
+			#{backaddress},
+			#{backcourier},
+			#{backnumber},
+			#{courier},
+			#{delivernumber},
+			#{backmoney},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE a_simple_order_after SET 	
+			orderid = #{orderid},
+			articleno = #{articleno},
+			address = #{address},
+			consignee = #{consignee},
+			phone = #{phone},
+			state = #{state},
+			backaddress = #{backaddress},
+			backcourier = #{backcourier},
+			backnumber = #{backnumber},
+			courier = #{courier},
+			delivernumber = #{delivernumber},
+			backmoney = #{backmoney},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE a_simple_order_after SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
