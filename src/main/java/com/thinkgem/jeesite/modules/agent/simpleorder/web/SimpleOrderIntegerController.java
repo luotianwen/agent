@@ -102,6 +102,7 @@ public class SimpleOrderIntegerController extends BaseController {
 		try {
 			aSimpleOrderAfterService.save(aSimpleOrderAfter);
 		}catch (Exception e){
+			e.printStackTrace();
 			return "error";
 		}
 		 return "ok";

@@ -21,19 +21,32 @@
 
         // 确认对话框
         function after(mess, href, closed){
-            top.$.jBox.confirm(mess,'系统提示',function(v,h,f){
-                if(v=='ok'){
-                        resetTip();
+            top.$.jBox.confirm(mess,'系统提示',function(v1,h1,f1){
+                if(v1=='ok'){
+                        //resetTip();
+                    top.$.jBox.open("iframe:"+href,
+                        "售后",500,540,{
+                            buttons: {"确定": "ok", "关闭": true},submit:function(v, h, f){
+                                if (v == "ok") {
+                                    console.log( h.find("iframe")[0].contentWindow.orderid.value);
+                                    h.find("iframe")[0].contentWindow.saveOrUpdate();
+                                }
+                                //var projectId = h.find("iframe")[0].contentWindow.projectId.value;
+                                //var hangupReason = h.find("iframe")[0].contentWindow.hangupReason.value;
 
-                    top.$.jBox("iframe:"+href, {
+                            }, loaded:function(h){
+                                $("#jbox-content").css("overflow","hidden");
+                            }
+                        });
+                  /*  top.$.jBox("iframe:"+href, {
                         title: "售后",
-                        width: 620,
-                        height: 520,
+                        width: 520,
+                        height: 420,
                         buttons:  {"确定": "ok", "关闭": true},
                         submit:function (v, h, f) {
                             if (v == "ok") {
-
-                                return false;
+                                h.find("iframe")[0].contentWindow.saveOrUpdate();
+                               // return false;
                             }
                         },
                         closed: function(){  //关闭时发生，为了刷新父级页面
@@ -42,7 +55,7 @@
                         loaded : function(h) {   //隐藏滚动条
                             $(".jbox-content", top.document).css( "overflow-y", "hidden");
                         }
-                    });
+                    });*/
                 }
 
             },{buttonsFocus:1, closed:function(){
