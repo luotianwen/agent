@@ -29,4 +29,10 @@ public interface SimpleOrderDao extends CrudDao<SimpleOrder> {
     void Tmdeliver(SimpleOrder simpleOrder);
 
     SimpleOrder sum(SimpleOrder simpleOrder);
+
+    void aftersave(SimpleOrder simpleOrder);
+
+    void aftersaveok(SimpleOrder simpleOrder);
+
+    void aftersavepass(SimpleOrder simpleOrder);
 }

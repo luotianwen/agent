@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.agent.simpleorder.entity;
 
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
@@ -10,39 +11,62 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 订单售后Entity
  * @author 罗天文
- * @version 2018-08-02
+ * @version 2018-08-03
  */
-public class ASimpleOrderAfter extends DataEntity<ASimpleOrderAfter> {
+public class SimpleOrderAfter extends DataEntity<SimpleOrderAfter> {
 	
 	private static final long serialVersionUID = 1L;
-	private String orderid;		// 订单号
+	@ExcelField(title="订单号", align=1, sort=1)
+	private String orderId;		// 订单号
+	@ExcelField(title="货号", align=1, sort=2)
 	private String articleno;		// 货号
+	@ExcelField(title="地址", align=1, sort=3)
 	private String address;		// 地址
+	@ExcelField(title="收件人", align=1, sort=4)
 	private String consignee;		// 收件人
+	@ExcelField(title="手机", align=1, sort=5)
 	private String phone;		// 手机
-	private String state;		// 0退货1换货
+	@ExcelField(title="售后方式", align=1, sort=6, dictType="a_after_order_state")
+	private String state;		// 售后方式
+	@ExcelField(title="退货地址", align=1, sort=7)
 	private String backaddress;		// 退货地址
+	@ExcelField(title="退货快递公司", align=1, sort=8)
 	private String backcourier;		// 退货快递公司
+	@ExcelField(title="退货单号", align=1, sort=10)
 	private String backnumber;		// 退货单号
+	@ExcelField(title="快递公司", align=1, sort=11)
 	private String courier;		// 快递公司
+	@ExcelField(title="快递单号", align=1, sort=12)
 	private String delivernumber;		// 快递单号
+	@ExcelField(title="金额", align=1, sort=9)
 	private String backmoney;		// 金额
-	
-	public ASimpleOrderAfter() {
+	@ExcelField(title="原因", align=1, sort=13)
+	protected String remarks;	// 备注
+	private String agent;
+
+	public String getAgent() {
+		return agent;
+	}
+
+	public void setAgent(String agent) {
+		this.agent = agent;
+	}
+
+	public SimpleOrderAfter() {
 		super();
 	}
 
-	public ASimpleOrderAfter(String id){
+	public SimpleOrderAfter(String id){
 		super(id);
 	}
 
 	@Length(min=0, max=32, message="订单号长度必须介于 0 和 32 之间")
-	public String getOrderid() {
-		return orderid;
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setOrderid(String orderid) {
-		this.orderid = orderid;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 	
 	@Length(min=0, max=200, message="货号长度必须介于 0 和 200 之间")
@@ -81,7 +105,7 @@ public class ASimpleOrderAfter extends DataEntity<ASimpleOrderAfter> {
 		this.phone = phone;
 	}
 	
-	@Length(min=1, max=1, message="0退货1换货长度必须介于 1 和 1 之间")
+	@Length(min=1, max=1, message="售后方式长度必须介于 1 和 1 之间")
 	public String getState() {
 		return state;
 	}

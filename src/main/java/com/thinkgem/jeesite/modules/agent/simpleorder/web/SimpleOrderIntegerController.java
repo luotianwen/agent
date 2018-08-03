@@ -12,9 +12,9 @@ import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
-import com.thinkgem.jeesite.modules.agent.simpleorder.entity.ASimpleOrderAfter;
 import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
-import com.thinkgem.jeesite.modules.agent.simpleorder.service.ASimpleOrderAfterService;
+import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrderAfter;
+import com.thinkgem.jeesite.modules.agent.simpleorder.service.SimpleOrderAfterService;
 import com.thinkgem.jeesite.modules.agent.simpleorder.service.SimpleOrderService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -39,9 +39,10 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "${adminPath}/msimpleorder")
 public class SimpleOrderIntegerController extends BaseController {
-
 	@Autowired
-	private ASimpleOrderAfterService aSimpleOrderAfterService;
+	private SimpleOrderAfterService simpleOrderAfterService;
+	@Autowired
+	private SimpleOrderAfterService aSimpleOrderAfterService;
 	@Autowired
 	private SimpleOrderService aSimpleOrderService;
 	@Autowired
@@ -87,25 +88,21 @@ public class SimpleOrderIntegerController extends BaseController {
 	@RequestMapping(value = "after")
 	public String after(SimpleOrder aSimpleOrder, Model model) throws Exception {
 		aSimpleOrder=aSimpleOrderService.get(aSimpleOrder.getId());
-		ASimpleOrderAfter aSimpleOrderAfter=new ASimpleOrderAfter();
+		SimpleOrderAfter aSimpleOrderAfter=new SimpleOrderAfter();
 		MyBeanUtils.copyBean2Bean(aSimpleOrderAfter, aSimpleOrder);
-		aSimpleOrderAfter.setOrderid(aSimpleOrder.getOrderId());
 		aSimpleOrderAfter.setId(null);
-		model.addAttribute("aSimpleOrderAfter", aSimpleOrderAfter);
+		aSimpleOrderAfter.setRemarks(null);
+		model.addAttribute("simpleOrderAfter", aSimpleOrderAfter);
 		return "agent/simpleorder/afterSimpleOrderForm";
 	}
 
 	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
 	@RequestMapping(value = "aftersave")
-	@ResponseBody
-	public String aftersave(ASimpleOrderAfter aSimpleOrderAfter, Model model) {
-		try {
-			aSimpleOrderAfterService.save(aSimpleOrderAfter);
-		}catch (Exception e){
-			e.printStackTrace();
-			return "error";
-		}
-		 return "ok";
+
+	public String aftersave(SimpleOrderAfter aSimpleOrderAfter, Model model)  throws Exception{
+			aSimpleOrderAfterService.aftersave(aSimpleOrderAfter);
+
+		return "redirect:"+ Global.getAdminPath()+"/msimpleorder/?repage";
 	}
 	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
 	@RequestMapping(value = "save")
@@ -133,6 +130,59 @@ public class SimpleOrderIntegerController extends BaseController {
 		addMessage(redirectAttributes, "删除下单管理成功");
 		return "redirect:"+Global.getAdminPath()+"/msimpleorder/?repage";
 	}
+
+
+	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequestMapping(value = "listSimpleOrderAfter")
+	public String list(SimpleOrderAfter simpleOrderAfter, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		Agent agent=agentService.getUserId(user.getId());
+		if(null==simpleOrderAfter){
+			simpleOrderAfter=new SimpleOrderAfter();
+		}
+		simpleOrderAfter.setAgent(agent.getId());
+		Page<SimpleOrderAfter> page = simpleOrderAfterService.findPage(new Page<SimpleOrderAfter>(request, response), simpleOrderAfter);
+		model.addAttribute("page", page);
+		return "agent/simpleorder/asimpleOrderAfterList";
+	}
+	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequestMapping(value = "deleteSimpleOrderAfter")
+	public String delete(SimpleOrderAfter simpleOrderAfter, RedirectAttributes redirectAttributes) {
+		simpleOrderAfterService.delete(simpleOrderAfter);
+		addMessage(redirectAttributes, "删除订单售后成功");
+		return "redirect:"+Global.getAdminPath()+"/msimpleorder/listSimpleOrderAfter";
+	}
+
+
+	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequestMapping(value = "exportSimpleOrderAfter", method= RequestMethod.POST)
+	public String exportSimpleOrderAfter(SimpleOrderAfter aSimpleOrder, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+			String fileName = "售后数据"+ DateUtils.getDate("yyyyMMddHHmmss")+".xlsx";
+
+			 User user = UserUtils.getUser();
+			Agent agent=agentService.getUserId(user.getId());
+			if(null==aSimpleOrder){
+				aSimpleOrder=new SimpleOrderAfter();
+			}
+			aSimpleOrder.setAgent(agent.getId());
+			List<SimpleOrderAfter> list=simpleOrderAfterService.findList(aSimpleOrder);
+			new ExportExcel("售后数据", SimpleOrderAfter.class).setDataList(list).write(response, fileName).dispose();
+			return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/msimpleorder/listSimpleOrderAfter?repage";
+	}
+
+	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequestMapping(value = "courier")
+	public String courier(SimpleOrderAfter simpleOrderAfter, RedirectAttributes redirectAttributes) {
+		simpleOrderAfterService.courier(simpleOrderAfter);
+		addMessage(redirectAttributes, "订单售后成功");
+		return "redirect:"+Global.getAdminPath()+"/msimpleorder/listSimpleOrderAfter";
+	}
+
 	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
 	@RequestMapping(value = "export", method= RequestMethod.POST)
 	public String exportFile(SimpleOrder aSimpleOrder, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {

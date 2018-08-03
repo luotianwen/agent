@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.modules.agent.simpleorder.dao.ASimpleOrderAfterDao">
+<mapper namespace="com.thinkgem.jeesite.modules.agent.simpleorder.dao.SimpleOrderAfterDao">
     
-	<sql id="aSimpleOrderAfterColumns">
+	<sql id="simpleOrderAfterColumns">
 		a.id AS "id",
-		a.orderid AS "orderid",
+		a.orderid AS "orderId",
 		a.articleno AS "articleno",
 		a.address AS "address",
 		a.consignee AS "consignee",
@@ -24,24 +24,44 @@
 		a.del_flag AS "delFlag"
 	</sql>
 	
-	<sql id="aSimpleOrderAfterJoins">
+	<sql id="simpleOrderAfterJoins">
+		left join a_simple_order o on o.orderid=a.orderid
 	</sql>
     
-	<select id="get" resultType="ASimpleOrderAfter">
+	<select id="get" resultType="SimpleOrderAfter">
 		SELECT 
-			<include refid="aSimpleOrderAfterColumns"/>
+			<include refid="simpleOrderAfterColumns"/>
 		FROM a_simple_order_after a
-		<include refid="aSimpleOrderAfterJoins"/>
+		<include refid="simpleOrderAfterJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="ASimpleOrderAfter">
+	<select id="findList" resultType="SimpleOrderAfter">
 		SELECT 
-			<include refid="aSimpleOrderAfterColumns"/>
+			<include refid="simpleOrderAfterColumns"/>
 		FROM a_simple_order_after a
-		<include refid="aSimpleOrderAfterJoins"/>
+		<include refid="simpleOrderAfterJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="orderId != null and orderId != ''">
+				AND a.orderid = #{orderId}
+			</if>
+			<if test="consignee != null and consignee != ''">
+				AND a.consignee = #{consignee}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+			<if test="backnumber != null and backnumber != ''">
+				AND a.backnumber = #{backnumber}
+			</if>
+			<if test="delivernumber != null and delivernumber != ''">
+				AND a.delivernumber = #{delivernumber}
+			</if>
+			<if test="agent != null and agent != ''">
+				AND o.agentid = #{agent}
+			</if>
+
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -53,11 +73,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="ASimpleOrderAfter">
+	<select id="findAllList" resultType="SimpleOrderAfter">
 		SELECT 
-			<include refid="aSimpleOrderAfterColumns"/>
+			<include refid="simpleOrderAfterColumns"/>
 		FROM a_simple_order_after a
-		<include refid="aSimpleOrderAfterJoins"/>
+		<include refid="simpleOrderAfterJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
@@ -66,7 +86,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -94,7 +114,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{orderid},
+			#{orderId},
 			#{articleno},
 			#{address},
 			#{consignee},
@@ -117,7 +137,7 @@
 	
 	<update id="update">
 		UPDATE a_simple_order_after SET 	
-			orderid = #{orderid},
+			orderid = #{orderId},
 			articleno = #{articleno},
 			address = #{address},
 			consignee = #{consignee},
@@ -140,5 +160,25 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+	<update id="backaddress">
+		UPDATE a_simple_order_after SET
+			backaddress = #{backaddress}
+		WHERE id = #{id}
+	</update>
+	<update id="backcourier">
+		UPDATE a_simple_order_after SET
+			backcourier = #{backcourier},
+			backnumber = #{backnumber},
+			backmoney = #{backmoney},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	<update id="courier">
+		UPDATE a_simple_order_after SET
+			 courier = #{courier},
+			delivernumber = #{delivernumber},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
 </mapper>

@@ -198,4 +198,16 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     public SimpleOrder sum(SimpleOrder simpleOrder) {
         return dao.sum(simpleOrder);
     }
+    @Transactional(readOnly = false)
+    public void aftersave(SimpleOrder simpleOrder) {
+              dao.aftersave(simpleOrder);
+    }
+    @Transactional(readOnly = false)
+    public void aftersaveok(SimpleOrder simpleOrder) {
+        dao.aftersaveok(simpleOrder);
+    }
+    @Transactional(readOnly = false)
+    public void aftersavepass(SimpleOrder simpleOrder) {
+        dao.aftersavepass(simpleOrder);
+    }
 }

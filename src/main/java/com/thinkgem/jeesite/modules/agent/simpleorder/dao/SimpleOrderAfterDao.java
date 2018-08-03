@@ -5,14 +5,19 @@ package com.thinkgem.jeesite.modules.agent.simpleorder.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.agent.simpleorder.entity.ASimpleOrderAfter;
+import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrderAfter;
 
 /**
  * 订单售后DAO接口
  * @author 罗天文
- * @version 2018-08-02
+ * @version 2018-08-03
  */
 @MyBatisDao
-public interface ASimpleOrderAfterDao extends CrudDao<ASimpleOrderAfter> {
-	
+public interface SimpleOrderAfterDao extends CrudDao<SimpleOrderAfter> {
+
+    void backaddress(SimpleOrderAfter simpleOrderAfter);
+
+    void backcourier(SimpleOrderAfter simpleOrderAfter);
+
+    void courier(SimpleOrderAfter simpleOrderAfter);
 }

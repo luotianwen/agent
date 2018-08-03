@@ -328,6 +328,24 @@
 		WHERE id = #{id}
 		and isaccount = '0'
 	</update>
+	<update id="aftersave">
+		UPDATE a_simple_order SET
+		state = '4'
+		WHERE orderId = #{orderId}
+		and state = '3'
+	</update>
+	<update id="aftersaveok">
+		UPDATE a_simple_order SET
+		state = '5'
+		WHERE orderId = #{orderId}
+		and state = '4'
+	</update>
+	<update id="aftersavepass">
+		UPDATE a_simple_order SET
+		state = '7'
+		WHERE orderId = #{orderId}
+		and state = '5'
+	</update>
 	<update id="account">
 		UPDATE a_simple_order SET
 		isaccount = '1'
