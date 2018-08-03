@@ -5,43 +5,38 @@
 	<title>订单售后管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-        function saveOrUpdate(){
-            console.log("saveOrUpdate");
-           // loading('正在提交，请稍等...');
-            var url="${ctx}/msimpleorder/aftersave";
-            $.ajax({
-                type: 'POST',
-                url : url,
-                data: $('#inputForm').serialize(),             //获取表单数据
-                success : function(data) {
-                   //debugger;
-                    //closeLoading();
-                   // console.log(data);
-                    //console.log(data=='ok');
-
-                    if (data=='ok') {
-                        top.$.jBox.alert("保存成功");
-                        window.parent.page();                                     //调用父窗体方法，当关闭子窗体刷新父窗体
-                        window.parent.window.jBox.close();            //关闭子窗体
+        $(document).ready(function() {
+            //$("#name").focus();
+            $("#inputForm").validate({
+                submitHandler: function(form){
+                    loading('正在提交，请稍等...');
+                    form.submit();
+                },
+                errorContainer: "#messageBox",
+                errorPlacement: function(error, element) {
+                    $("#messageBox").text("输入有误，请先更正。");
+                    if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+                        error.appendTo(element.parent().parent());
                     } else {
-                        top.$.jBox.alert("保存失败");
-                        window.parent.page();
-                        window.parent.window.jBox.close();
+                        error.insertAfter(element);
                     }
                 }
             });
-		}
+        });
 	</script>
 </head>
 <body>
-	<form:form id="inputForm" modelAttribute="aSimpleOrderAfter"     class="form-horizontal">
+<ul class="nav nav-tabs">
+	<li class="active"> 售后</li>
+</ul><br/>
+	<form:form id="inputForm" modelAttribute="simpleOrderAfter"   action="${ctx}/msimpleorder/aftersave"  class="form-horizontal">
 		<form:hidden path="id"/>
 
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">订单号：</label>
 			<div class="controls">
-				<form:input path="orderid" readonly="true" htmlEscape="false" maxlength="32" class="input-xlarge "/>
+				<form:input path="orderId" readonly="true" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -53,7 +48,7 @@
 		<div class="control-group">
 			<label class="control-label">地址：</label>
 			<div class="controls">
-				<form:input path=""  readonly="true" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+				<form:input path="address"  readonly="true" htmlEscape="false" maxlength="200" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -71,7 +66,7 @@
 		<div class="control-group">
 			<label class="control-label">售后方式：</label>
 			<div class="controls">
-				<form:radiobuttons path="state" items="${fns:getDictList('yes_no')}" itemLabel="label"
+				<form:radiobuttons path="state" items="${fns:getDictList('a_after_order_state')}" itemLabel="label"
 								   itemValue="value"
 								   htmlEscape="false" class="required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -84,7 +79,10 @@
 				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="50" class="input-large "/>
 			</div>
 		</div>
-
+		<div class="form-actions">
+			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+		</div>
 	</form:form>
 </body>
 </html>

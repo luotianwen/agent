@@ -19,53 +19,7 @@
             });
 		});
 
-        // 确认对话框
-        function after(mess, href, closed){
-            top.$.jBox.confirm(mess,'系统提示',function(v1,h1,f1){
-                if(v1=='ok'){
-                        //resetTip();
-                    top.$.jBox.open("iframe:"+href,
-                        "售后",500,540,{
-                            buttons: {"确定": "ok", "关闭": true},submit:function(v, h, f){
-                                if (v == "ok") {
-                                    console.log( h.find("iframe")[0].contentWindow.orderid.value);
-                                    h.find("iframe")[0].contentWindow.saveOrUpdate();
-                                }
-                                //var projectId = h.find("iframe")[0].contentWindow.projectId.value;
-                                //var hangupReason = h.find("iframe")[0].contentWindow.hangupReason.value;
 
-                            }, loaded:function(h){
-                                $("#jbox-content").css("overflow","hidden");
-                            }
-                        });
-                  /*  top.$.jBox("iframe:"+href, {
-                        title: "售后",
-                        width: 520,
-                        height: 420,
-                        buttons:  {"确定": "ok", "关闭": true},
-                        submit:function (v, h, f) {
-                            if (v == "ok") {
-                                h.find("iframe")[0].contentWindow.saveOrUpdate();
-                               // return false;
-                            }
-                        },
-                        closed: function(){  //关闭时发生，为了刷新父级页面
-                            page();
-                        },
-                        loaded : function(h) {   //隐藏滚动条
-                            $(".jbox-content", top.document).css( "overflow-y", "hidden");
-                        }
-                    });*/
-                }
-
-            },{buttonsFocus:1, closed:function(){
-                    if (typeof closed == 'function') {
-                        closed();
-                    }
-                }});
-            top.$('.jbox-body .jbox-icon').css('top','55px');
-            return false;
-        }
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -221,7 +175,10 @@
 					<a href="${ctx}/msimpleorder/delete?id=${simpleOrder.id}" onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
 					</c:if>
 					<c:if test="${simpleOrder.state==3}">
-						<a href="${ctx}/msimpleorder/after?id=${simpleOrder.id}" onclick="return after('确认要售后吗？', this.href)">售后</a>
+						<a href="${ctx}/msimpleorder/after?id=${simpleOrder.id}" onclick="return confirmx('确认要售后吗？', this.href)">售后</a>
+					</c:if>
+					<c:if test="${simpleOrder.state==4||simpleOrder.state==5||simpleOrder.state==7}">
+						<a href="${ctx}/msimpleorder/listSimpleOrderAfter?orderId=${simpleOrder.orderId}">售后信息</a>
 					</c:if>
 				</td>
 			</tr>

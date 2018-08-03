@@ -274,6 +274,9 @@
 					<c:if test="${(empty simpleOrder.isaccount||simpleOrder.isaccount==0) && simpleOrder.state==3}">
 					<a href="${ctx}/simpleorder/simpleOrder/isaccount?id=${simpleOrder.id}" onclick="return confirmx('确认要对账吗？', this.href)">对账</a>
 					</c:if>
+					<c:if test="${simpleOrder.state==4||simpleOrder.state==5||simpleOrder.state==7}">
+						<a href="${ctx}/simpleorder/simpleOrderAfter?orderId=${simpleOrder.orderId}">售后信息</a>
+					</c:if>
 					<a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}" onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
