@@ -308,8 +308,6 @@
 		UPDATE a_simple_order SET
 		courier = #{courier},
 		delivernumber = #{delivernumber},
-		delivermoney = #{delivermoney},
-		totalmoney = #{totalmoney},
 		state='3',
 		update_date = now()
 		WHERE id = #{id}

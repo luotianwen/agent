@@ -157,18 +157,18 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                 def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);// 事物隔离级别，开启新事务
                 TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
                 try {
-                    double moneys = p.getPostage();
+                  /*  double moneys = p.getPostage();
                     Agent agent = new Agent();
                     agent.setId(simpleOrder.getAgentid());
                     agent.setMoney(moneys);
                     Double money = agentService.get(agent).getMoney();
                     if (money >= moneys) {
                         agentService.reduceMoney(agent);
-                    }
+                    }*/
                     simpleOrder.setCourier(p.getDelivery());
                     simpleOrder.setDelivernumber(p.getExpressno());
-                    simpleOrder.setDelivermoney(p.getPostage());
-                    simpleOrder.setTotalmoney(simpleOrder.getMoney()*simpleOrder.getNum() + p.getPostage());
+                  /*  simpleOrder.setDelivermoney(p.getPostage());
+                    simpleOrder.setTotalmoney(simpleOrder.getMoney()*simpleOrder.getNum() + p.getPostage());*/
                     simpleOrder.preUpdate();
                     dao.Tmdeliver(simpleOrder);
 
