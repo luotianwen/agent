@@ -16,8 +16,15 @@
                     var delivermoney=parseFloat($("#delivermoney").val());
                     var totalmoney=parseFloat($("#totalmoney").val()).toFixed(2);
                     var a=parseFloat(money*num+delivermoney).toFixed(2);
+                    var address =$("#address").val().split(",");
+                    if(address.length!=4){
+                        top.$.jBox.alert("地址信息请填详细 注意逗号是英文输入法下的");
+                        return false;
+                    }
+
                     if(a!=totalmoney){
                         top.$.jBox.alert((a)+"总价输入有误，请先更正。");
+                        return false;
 					}
                        else {
                         loading('正在提交，请稍等...');
@@ -72,9 +79,6 @@
 				<form:input path="spec" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
-
-
-
 		<div class="control-group">
 			<label class="control-label">市场价：</label>
 			<div class="controls">
@@ -124,7 +128,7 @@
 		<div class="control-group">
 			<label class="control-label">快递公司：</label>
 			<div class="controls">
-				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge required "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -133,34 +137,47 @@
 				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
-		<%--<div class="control-group">
-			<label class="control-label">快递信息：</label>
-			<div class="controls">
-				<form:textarea path="deliverinfo" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
-			</div>
-		</div>--%>
 		<div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
-				<form:input path="num" htmlEscape="false"    maxlength="11" class="input-xlarge "/>
+				<form:input path="num" htmlEscape="false"    maxlength="11" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">金额：</label>
 			<div class="controls">
-				<form:input path="money" htmlEscape="false" readonly="true"  class="input-xlarge "/>
+				<form:input path="money" htmlEscape="false" readonly="true"  class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">快递费：</label>
 			<div class="controls">
-				<form:input path="delivermoney" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="delivermoney" htmlEscape="false" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">总价：</label>
 			<div class="controls">
-				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge "  />
+				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge required"  />
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">天马仓库：</label>
+			<div class="controls">
+				<form:input path="warehouse" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">天马货号：</label>
+			<div class="controls">
+				<form:input path="tmarticleno" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">天马规格：</label>
+			<div class="controls">
+				<form:input path="tmspec" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
 

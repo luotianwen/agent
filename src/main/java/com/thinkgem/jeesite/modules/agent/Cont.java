@@ -33,6 +33,9 @@ public class Cont {
     public static String STOCK="http://open.xingyunyezi.com/api/openapi/getInventoryList.do";
     //快递
     public static String DELIVER="http://open.xingyunyezi.com/api/openapi/getOrderFeedBackList.do";
+    //下单
+    public static String ORDER="http://open.xingyunyezi.com/api/openapi/setOrderInfos.do";
+
     public static int SECONDS=500;
     public static void ThreadSleep(){
         try {

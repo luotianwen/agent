@@ -75,7 +75,45 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	@ExcelField(title="订单号", align=1, sort=0)
 	private String orderId;
 
-	private String tradeId;
+
+	private String warehouse;//仓库
+	private String tmarticleno;//货号
+	private String tmspec;//规格
+	private String tmstate;//状态
+
+	public String getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
+	}
+
+	public String getTmarticleno() {
+		return tmarticleno;
+	}
+
+	public void setTmarticleno(String tmarticleno) {
+		this.tmarticleno = tmarticleno;
+	}
+
+	public String getTmspec() {
+		return tmspec;
+	}
+
+	public void setTmspec(String tmspec) {
+		this.tmspec = tmspec;
+	}
+
+	public String getTmstate() {
+		return tmstate;
+	}
+
+	public void setTmstate(String tmstate) {
+		this.tmstate = tmstate;
+	}
+
+	private String tradeId;//交易号
 
 	public String getTradeId() {
 		return tradeId;

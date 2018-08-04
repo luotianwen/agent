@@ -4,18 +4,21 @@
 package com.thinkgem.jeesite.modules.agent.simpleorder.service;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.TmOrder;
+import com.thinkgem.jeesite.modules.agent.TmOrderInfo;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.job.OrderJob;
 import com.thinkgem.jeesite.modules.agent.simpleorder.dao.SimpleOrderDao;
 import com.thinkgem.jeesite.modules.agent.simpleorder.entity.SimpleOrder;
+import org.apache.batik.transcoder.keys.StringKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 下单管理Service
@@ -129,9 +133,9 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 
 
     private void data(SimpleOrder simpleOrder) {
-        String tradeId=simpleOrder.getTradeId();
-        if(StringUtils.isEmpty(tradeId)){
-            tradeId=simpleOrder.getOrderId();
+        String tradeId = simpleOrder.getTradeId();
+        if (StringUtils.isEmpty(tradeId)) {
+            tradeId = simpleOrder.getOrderId();
         }
         Map map = new HashMap();
         map.put("sign", Cont.SIGN);
@@ -139,7 +143,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         map.put("name", name);
         map.put("pwd", pwd);
         String str = Cont.post(Cont.DELIVER, map);
-        logger.error(tradeId+"  orderid "+str);
+        logger.error(tradeId + "  orderid " + str);
         BackData j = JSON.parseObject(str, BackData.class);
 
         if (j.getRows() != null && j.getRows().size() > 0) {
@@ -185,6 +189,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 
     @Autowired
     private DataSourceTransactionManager transactionManager;
+
     @Transactional(readOnly = false)
     public void saveOrUpdate() {
 
@@ -198,16 +203,103 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     public SimpleOrder sum(SimpleOrder simpleOrder) {
         return dao.sum(simpleOrder);
     }
+
     @Transactional(readOnly = false)
     public void aftersave(SimpleOrder simpleOrder) {
-              dao.aftersave(simpleOrder);
+        dao.aftersave(simpleOrder);
     }
+
     @Transactional(readOnly = false)
     public void aftersaveok(SimpleOrder simpleOrder) {
         dao.aftersaveok(simpleOrder);
     }
+
     @Transactional(readOnly = false)
     public void aftersavepass(SimpleOrder simpleOrder) {
         dao.aftersavepass(simpleOrder);
+    }
+
+    @Transactional(readOnly = false)
+    public String tmOrder(String ids) {
+
+        List<SimpleOrder> simpleOrders = dao.tmOrder(ids.split(","));
+        if (null != simpleOrders && simpleOrders.size() == 0) {
+            return "没有数据可下单";
+        }
+        StringBuffer sb = new StringBuffer();
+        Map<String, List<SimpleOrder>> map = new HashMap<>();
+        List<SimpleOrder> as = null;
+        String key;
+        for (SimpleOrder s : simpleOrders
+                ) {
+
+            if (StringUtils.isEmpty(s.getWarehouse())) {
+                sb.append(s.getArticleno()).append("没有配置仓库");
+            } else {
+                key = s.getWarehouse() + "-" + s.getPhone() + "-" + s.getConsignee();
+                as = map.get(key);
+                if (null == as) {
+                    as = Lists.newArrayList();
+                    as.add(s);
+                } else {
+                    as.add(s);
+                }
+                map.put(s.getWarehouse(), as);
+            }
+        }
+        Set<Map.Entry<String, List<SimpleOrder>>> entrySet = map.entrySet();
+        SimpleOrder so = null;
+        String address[];
+        List<TmOrderInfo.GoodsInfoBean> goodsInfoBeans;
+        for (Map.Entry<String, List<SimpleOrder>> entry : entrySet) {
+            List<SimpleOrder> value = entry.getValue();
+            so = value.get(0);
+            address = so.getAddress().split(",");
+            TmOrderInfo tmOrderInfo = new TmOrderInfo();
+            tmOrderInfo.setOrder_sn(so.getOrderId());
+            tmOrderInfo.setName(so.getConsignee());
+            tmOrderInfo.setMobile(so.getPhone());
+            tmOrderInfo.setAddress(so.getAddress());
+            tmOrderInfo.setProvince(address[0]);
+            tmOrderInfo.setCity(address[1]);
+            tmOrderInfo.setArea(address[2]);
+            tmOrderInfo.setDelivery(so.getCourier());
+            tmOrderInfo.setWarehouse_name(so.getWarehouse());
+            goodsInfoBeans = Lists.newArrayList();
+            for (SimpleOrder s : value
+                    ) {
+                TmOrderInfo.GoodsInfoBean goodsInfoBean = new TmOrderInfo.GoodsInfoBean();
+                goodsInfoBean.setAmount(s.getNum());
+                goodsInfoBean.setGoods_no(so.getOrderId());
+                goodsInfoBean.setOrder_sn_sub(s.getOrderId());
+                goodsInfoBean.setSize(s.getTmspec());
+                goodsInfoBeans.add(goodsInfoBean);
+            }
+            tmOrderInfo.setGoods_info(goodsInfoBeans);
+
+            Map map2 = new HashMap();
+            map2.put("sign", Cont.SIGN);
+            map2.put("orders_info", JSON.toJSONString(tmOrderInfo));
+            map2.put("name", name);
+            map2.put("pwd", pwd);
+            String str = Cont.post(Cont.ORDER, map2);
+            try {
+                TmOrderInfo.Result j = JSON.parseObject(str, TmOrderInfo.Result.class);
+                if (j.getStatus().equals("0")) {
+                    for (SimpleOrder s : value
+                            ) {
+                        s.setTradeId(j.getTrade_id());
+                        dao.updateTradeId(s);
+                    }
+                } else {
+                    sb.append(j.getInfo());
+                }
+            }catch (Exception e){
+                logger.error(e.getMessage());
+                sb.append(str);
+            }
+        }
+
+        return sb.toString();
     }
 }

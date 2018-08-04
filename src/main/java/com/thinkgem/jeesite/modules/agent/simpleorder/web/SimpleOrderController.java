@@ -80,6 +80,8 @@ public class SimpleOrderController extends BaseController {
 	@RequestMapping(value = "deliverform")
 	public String deliverform(SimpleOrder simpleOrder, Model model) {
 		simpleOrder.setState("3");
+		simpleOrder.setTmarticleno(simpleOrder.getArticleno());
+		simpleOrder.setTmspec(simpleOrder.getSpec());
 		model.addAttribute("simpleOrder", simpleOrder);
 		return "agent/simpleorder/simpleOrderdeliverForm";
 	}
@@ -121,6 +123,20 @@ public class SimpleOrderController extends BaseController {
 		addMessage(redirectAttributes, "对账成功");
 		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
 	}
+	@RequiresPermissions("simpleorder:simpleOrder:edit")
+	@RequestMapping(value = "tmOrder")
+	public String tmOrder(String ids, RedirectAttributes redirectAttributes) {
+		String re=simpleOrderService.tmOrder(ids);
+		if(StringUtils.isNotBlank(re)){
+			addMessage(redirectAttributes, re);
+		}
+		else{
+			addMessage(redirectAttributes, "下单成功");
+		}
+
+		return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
+	}
+
 	@RequiresPermissions("simpleorder:simpleOrder:edit")
 	@RequestMapping(value = "account")
 	public String account(String ids, RedirectAttributes redirectAttributes) {

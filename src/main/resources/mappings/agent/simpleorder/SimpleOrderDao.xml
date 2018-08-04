@@ -30,6 +30,10 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.orderId AS "orderId",
+		a.warehouse AS "warehouse",
+		a.tmarticleno AS "tmarticleno",
+		a.tmspec AS "tmspec",
+		a.tmstate AS "tmstate",
 		a.update_by AS "updateBy.id"
 	</sql>
 	
@@ -293,6 +297,9 @@
 	<update id="deliver">
 		UPDATE a_simple_order SET
 		state = #{state},
+		warehouse = #{warehouse},
+		tmarticleno = #{tmarticleno},
+		tmspec = #{tmspec},
 		courier = #{courier},
 		delivernumber = #{delivernumber},
 		deliverinfo = #{deliverinfo},
@@ -346,6 +353,13 @@
 		WHERE orderId = #{orderId}
 		and state = '5'
 	</update>
+	<update id="updateTradeId">
+		UPDATE a_simple_order SET
+		 tradeId=#{tradeId}
+		WHERE id = #{id}
+		and state = '3'
+	</update>
+
 	<update id="account">
 		UPDATE a_simple_order SET
 		isaccount = '1'
@@ -356,5 +370,15 @@
 		and isaccount = '0'
 		and state=3
 	</update>
-
+	<select id="tmOrder" resultType="SimpleOrder">
+		SELECT
+		<include refid="simpleOrderColumns"/>
+		FROM a_simple_order a
+		<include refid="simpleOrderJoins"/>
+		WHERE a.id in
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and  a.state=3
+	</select>
 </mapper>

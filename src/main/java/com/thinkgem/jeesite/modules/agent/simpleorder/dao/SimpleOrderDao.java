@@ -35,4 +35,8 @@ public interface SimpleOrderDao extends CrudDao<SimpleOrder> {
     void aftersaveok(SimpleOrder simpleOrder);
 
     void aftersavepass(SimpleOrder simpleOrder);
+
+    List<SimpleOrder> tmOrder(@Param("ids")String[] split);
+
+    void updateTradeId(SimpleOrder s);
 }

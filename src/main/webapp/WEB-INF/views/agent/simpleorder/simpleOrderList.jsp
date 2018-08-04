@@ -66,6 +66,26 @@
             }
 
         }
+        function checkOrder(){
+            var num = $("input[type='checkbox']:checked").length;
+            if(num == 0){
+                top.$.jBox.alert("请选择你要下单的数据");
+            }else{
+                confirmx('确定要下单已选中的数据吗？',repairOrder);
+            }
+
+        }
+        function repairOrder(){
+            var ids=[];
+            $("input[name='orderIds']:checked").each(function(){
+                ids.push($(this).val());
+            });
+            var delIds=ids.join(",");
+            var oldAction=$("#searchForm").attr("action");
+            $("#searchForm").attr("action","${ctx}/simpleorder/simpleOrder/tmOrder?ids="+delIds);
+            $("#searchForm").submit();
+            $("#searchForm").attr("action",oldAction);
+        }
 
         function repairDel(){
             var ids=[];
@@ -135,7 +155,9 @@
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
-				<a href="#" onclick="checkdel()" class="btn btn-primary">批量对账</a></li>
+				<a href="#" onclick="checkdel()" class="btn btn-primary">批量对账</a>
+				<a href="#" onclick="checkOrder()" class="btn btn-primary">批量下单</a>
+			</li>
 			</li>
 			<li class="clearfix"></li>
 		</ul>
@@ -145,6 +167,7 @@
 		<thead>
 			<tr>
 				<th><input type=checkbox name="checkId" id="checkId"  ></th>
+				<th>仓库信息</th>
 				<th>订单号/交易号</th>
 				<th>客户名称</th>
 				<th>货号</th>
@@ -166,6 +189,7 @@
 		</thead>
 		<tbody>
 		<tr>
+			<td> </td>
 			<td> </td>
 			<td>
 			</td>
@@ -209,10 +233,14 @@
 			<td>
 			</td>
 		</tr>
-		<c:forEach items="${page.list}" var="simpleOrder">
+		<c:forEach items="${page.list}" var="simpleOrder" varStatus="status">
 			<tr>
-				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   /></td>
+				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   />${status.index+1}</td>
+				<td>
+						${simpleOrder.warehouse},${simpleOrder.tmarticleno},${simpleOrder.tmspec},${fns:getDictLabel(simpleOrder.tmstate, 'yes_no', '')}
+				</td>
 				<td class="copy" data-clipboard-text="${simpleOrder.orderId}" title="点击复制">${simpleOrder.orderId}/${simpleOrder.tradeId}</td>
+
 				<td>
 						${simpleOrder.agentName}
 				</td>
