@@ -49,6 +49,12 @@
 					<form:options items="${fns:getDictList('a_simple_order_state')}"  itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
+			<li><label>售后状态：</label>
+				<form:select path="afterstate" class="input-medium">
+					<form:option value="" label="全部"/>
+					<form:options items="${fns:getDictList('a_simple_order_afterstate')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
 			<li><label>是否有单号：</label>
 				<form:select path="isdelivernumber" class="input-medium">
 					<form:option value="" label="全部"/>
@@ -97,6 +103,7 @@
 				<th>颜色|尺码</th>
 				<th>数量</th>
 				<th>状态</th>
+				<th>售后状态</th>
 				<th>售价</th>
 				<th>快递费用</th>
 				<th>总计</th>
@@ -130,8 +137,12 @@
 				<td>
 					${simpleOrder.num}
 				</td>
+
 				<td>
 					${fns:getDictLabel(simpleOrder.state, 'a_simple_order_state', '')}
+				</td>
+				<td>
+						${fns:getDictLabel(simpleOrder.afterstate, 'a_simple_order_afterstate', '')}
 				</td>
 				<td>
 						${simpleOrder.money}
@@ -177,7 +188,7 @@
 					<c:if test="${simpleOrder.state==3}">
 						<a href="${ctx}/msimpleorder/after?id=${simpleOrder.id}" onclick="return confirmx('确认要售后吗？', this.href)">售后</a>
 					</c:if>
-					<c:if test="${simpleOrder.state==4||simpleOrder.state==5||simpleOrder.state==7}">
+					<c:if test="${simpleOrder.afterstate==4||simpleOrder.afterstate==5||simpleOrder.afterstate==7}">
 						<a href="${ctx}/msimpleorder/listSimpleOrderAfter?orderId=${simpleOrder.orderId}">售后信息</a>
 					</c:if>
 				</td>

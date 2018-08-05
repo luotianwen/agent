@@ -163,9 +163,9 @@
 					</c:if>
 					<a href="${ctx}/simpleorder/simpleOrderAfter/delete?id=${simpleOrderAfter.id}" onclick="return confirmx('确认要删除该订单售后吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
-			</tr>
-		</c:forEach>
-		</tbody>
+			</tr></c:forEach>
+		</
+		tbody>
 	</table>
 	<div class="pagination">${page}</div>
 </body>

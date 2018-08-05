@@ -12,6 +12,7 @@
 		a.num AS "num",
 		a.money AS "money",
 		a.price AS "price",
+		a.afterstate AS "afterstate",
 		a.state AS "state",
 		a.courier AS "courier",
 		a.delivernumber AS "delivernumber",
@@ -62,6 +63,9 @@
 
 			<if test="orderId != null and orderId != ''">
 				AND a.orderId = #{orderId}
+			</if>
+			<if test="afterstate != null and afterstate != ''">
+				AND a.afterstate = #{afterstate}
 			</if>
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
@@ -117,7 +121,9 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
-
+			<if test="afterstate != null and afterstate != ''">
+				AND a.afterstate = #{afterstate}
+			</if>
 			<if test="consignee != null and consignee != ''">
 				AND (a.consignee = #{consignee}
 				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
@@ -255,6 +261,7 @@
 			money = #{money},
 			price = #{price},
 			state = #{state},
+			afterstate = #{afterstate},
 			courier = #{courier},
 			delivernumber = #{delivernumber},
 			deliverinfo = #{deliverinfo},
@@ -338,21 +345,21 @@
 	</update>
 	<update id="aftersave">
 		UPDATE a_simple_order SET
-		state = '4'
+		afterstate = '4'
 		WHERE orderId = #{orderId}
 		and state = '3'
 	</update>
 	<update id="aftersaveok">
 		UPDATE a_simple_order SET
-		state = '5'
+		afterstate = '5'
 		WHERE orderId = #{orderId}
-		and state = '4'
+		and afterstate = '4'
 	</update>
 	<update id="aftersavepass">
 		UPDATE a_simple_order SET
-		state = '7'
+		afterstate = '7'
 		WHERE orderId = #{orderId}
-		and state = '5'
+		and afterstate = '5'
 	</update>
 	<update id="updateTradeId">
 		UPDATE a_simple_order SET

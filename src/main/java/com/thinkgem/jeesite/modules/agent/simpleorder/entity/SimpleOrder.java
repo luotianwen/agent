@@ -90,6 +90,15 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String tmarticleno;//货号
 	private String tmspec;//规格
 	private String tmstate;//状态
+	private String afterstate;
+
+	public String getAfterstate() {
+		return afterstate;
+	}
+
+	public void setAfterstate(String afterstate) {
+		this.afterstate = afterstate;
+	}
 
 	public String getWarehouse() {
 		return warehouse;

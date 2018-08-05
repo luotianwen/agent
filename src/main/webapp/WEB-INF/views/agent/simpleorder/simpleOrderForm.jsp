@@ -70,7 +70,16 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-
+		<div class="control-group">
+			<label class="control-label">售后状态：</label>
+			<div class="controls">
+				<form:select path="afterstate" class="input-xlarge">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('a_simple_order_afterstate')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">收件人：</label>
 			<div class="controls">

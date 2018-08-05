@@ -123,6 +123,12 @@
 					<form:options items="${fns:getDictList('a_simple_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
+			<li><label>售后状态：</label>
+				<form:select path="afterstate" class="input-medium">
+					<form:option value="" label="全部"/>
+					<form:options items="${fns:getDictList('a_simple_order_afterstate')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
 			<li><label>是否有单号：</label>
 				<form:select path="isdelivernumber" class="input-medium">
 					<form:option value="" label="全部"/>
@@ -174,6 +180,7 @@
 				<th>颜色|尺码</th>
 				<th>数量</th>
 				<th>状态</th>
+				<th>售后状态</th>
 				<th>售价</th>
 				<th>快递费用</th>
 				<th>总计</th>
@@ -202,7 +209,9 @@
 			<td>
 			</td>
 			<td>
-			</td>
+			</td><td>
+
+		</td>
 			<td>
 				${simpleOrder2.money}
 			</td>
@@ -214,7 +223,7 @@
 			</td>
 			<td>
 
-			</td>
+		</td>
 			<td>
 
 			</td>
@@ -262,6 +271,9 @@
 						${fns:getDictLabel(simpleOrder.state, 'a_simple_order_state', '')}
 				</td>
 				<td>
+						${fns:getDictLabel(simpleOrder.afterstate, 'a_simple_order_afterstate', '')}
+				</td>
+				<td>
 						${simpleOrder.money}
 				</td>
 				<td>
@@ -302,7 +314,7 @@
 					<c:if test="${(empty simpleOrder.isaccount||simpleOrder.isaccount==0) && simpleOrder.state==3}">
 					<a href="${ctx}/simpleorder/simpleOrder/isaccount?id=${simpleOrder.id}" onclick="return confirmx('确认要对账吗？', this.href)">对账</a>
 					</c:if>
-					<c:if test="${simpleOrder.state==4||simpleOrder.state==5||simpleOrder.state==7}">
+					<c:if test="${simpleOrder.afterstate==4||simpleOrder.afterstate==5||simpleOrder.afterstate==7}">
 						<a href="${ctx}/simpleorder/simpleOrderAfter?orderId=${simpleOrder.orderId}">售后信息</a>
 					</c:if>
 					<a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}" onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
