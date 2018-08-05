@@ -135,29 +135,18 @@ public class TmOrderInfo {
     public static class Result{
 
         /**
-         * status : 6
-         * order_sn : 123456
-         * info : 库存不足
-         * supply_count : 0
-         * goods_no : 818097-404
-         * size : 7
+         * status : 0
+         * trade_id : 30006092
+         * orders : [{"order_id":36812455,"goods_no":"11400792","size1":"MISC","size2":"MISC","price":54.45,"post_fee":12}]
+         * order_sn : 20180805120429472
+         * info : 下单成功
          */
 
         private String status;
+        private String trade_id;
         private String order_sn;
         private String info;
-        private String supply_count;
-        private String goods_no;
-        private String size;
-        private String  trade_id;
-
-        public String getTrade_id() {
-            return trade_id;
-        }
-
-        public void setTrade_id(String trade_id) {
-            this.trade_id = trade_id;
-        }
+        private List<OrdersBean> orders;
 
         public String getStatus() {
             return status;
@@ -165,6 +154,14 @@ public class TmOrderInfo {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+
+        public String getTrade_id() {
+            return trade_id;
+        }
+
+        public void setTrade_id(String trade_id) {
+            this.trade_id = trade_id;
         }
 
         public String getOrder_sn() {
@@ -183,28 +180,78 @@ public class TmOrderInfo {
             this.info = info;
         }
 
-        public String getSupply_count() {
-            return supply_count;
+        public List<OrdersBean> getOrders() {
+            return orders;
         }
 
-        public void setSupply_count(String supply_count) {
-            this.supply_count = supply_count;
+        public void setOrders(List<OrdersBean> orders) {
+            this.orders = orders;
         }
 
-        public String getGoods_no() {
-            return goods_no;
-        }
+        public static class OrdersBean {
+            /**
+             * order_id : 36812455
+             * goods_no : 11400792
+             * size1 : MISC
+             * size2 : MISC
+             * price : 54.45
+             * post_fee : 12.0
+             */
 
-        public void setGoods_no(String goods_no) {
-            this.goods_no = goods_no;
-        }
+            private int order_id;
+            private String goods_no;
+            private String size1;
+            private String size2;
+            private double price;
+            private double post_fee;
 
-        public String getSize() {
-            return size;
-        }
+            public int getOrder_id() {
+                return order_id;
+            }
 
-        public void setSize(String size) {
-            this.size = size;
+            public void setOrder_id(int order_id) {
+                this.order_id = order_id;
+            }
+
+            public String getGoods_no() {
+                return goods_no;
+            }
+
+            public void setGoods_no(String goods_no) {
+                this.goods_no = goods_no;
+            }
+
+            public String getSize1() {
+                return size1;
+            }
+
+            public void setSize1(String size1) {
+                this.size1 = size1;
+            }
+
+            public String getSize2() {
+                return size2;
+            }
+
+            public void setSize2(String size2) {
+                this.size2 = size2;
+            }
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
+            }
+
+            public double getPost_fee() {
+                return post_fee;
+            }
+
+            public void setPost_fee(double post_fee) {
+                this.post_fee = post_fee;
+            }
         }
     }
 

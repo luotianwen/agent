@@ -126,8 +126,8 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         dao.account(ids.split(","));
     }
 
-    @Value("#{APP_PROP['tm.name']}")
-    String name;
+
+    String name="悠氧户外商城";
     @Value("#{APP_PROP['tm.pwd']}")
     String pwd;
 
@@ -251,10 +251,11 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         SimpleOrder so = null;
         String address[];
         List<TmOrderInfo.GoodsInfoBean> goodsInfoBeans;
+        List<TmOrderInfo> os=Lists.newArrayList();
         for (Map.Entry<String, List<SimpleOrder>> entry : entrySet) {
             List<SimpleOrder> value = entry.getValue();
             so = value.get(0);
-            address = so.getAddress().split(",");
+            address = so.getAddress().replace(" ", "").split(",");
             TmOrderInfo tmOrderInfo = new TmOrderInfo();
             tmOrderInfo.setOrder_sn(so.getOrderId());
             tmOrderInfo.setName(so.getConsignee());
@@ -270,36 +271,66 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                     ) {
                 TmOrderInfo.GoodsInfoBean goodsInfoBean = new TmOrderInfo.GoodsInfoBean();
                 goodsInfoBean.setAmount(s.getNum());
-                goodsInfoBean.setGoods_no(so.getOrderId());
+                goodsInfoBean.setGoods_no(s.getArticleno());
                 goodsInfoBean.setOrder_sn_sub(s.getOrderId());
                 goodsInfoBean.setSize(s.getTmspec());
                 goodsInfoBeans.add(goodsInfoBean);
             }
             tmOrderInfo.setGoods_info(goodsInfoBeans);
+            os.add(tmOrderInfo);
+        }
+        if(null==os||os.size()==0){
+            return "没有数据可下单";
+        }
+        Map map2 = new HashMap();
+        map2.put("sign", Cont.SIGN);
+        map2.put("orders_info", JSON.toJSONString(os));
+        map2.put("name", name);
+        map2.put("pwd", pwd);
+        // System.out.println(map2.toString());
 
-            Map map2 = new HashMap();
-            map2.put("sign", Cont.SIGN);
-            map2.put("orders_info", JSON.toJSONString(tmOrderInfo));
-            map2.put("name", name);
-            map2.put("pwd", pwd);
-            String str = Cont.post(Cont.ORDER, map2);
-            try {
-                TmOrderInfo.Result j = JSON.parseObject(str, TmOrderInfo.Result.class);
-                if (j.getStatus().equals("0")) {
-                    for (SimpleOrder s : value
-                            ) {
-                        s.setTradeId(j.getTrade_id());
-                        dao.updateTradeId(s);
+        String str = Cont.post(Cont.ORDER, map2);
+        logger.error("data:"+str);
+        try {
+            List<TmOrderInfo.Result> js = JSON.parseArray(str, TmOrderInfo.Result.class);
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);// 事物隔离级别，开启新事务
+            TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
+            List<TmOrderInfo.GoodsInfoBean> goodsInfoBeans2= Lists.newArrayList();
+            SimpleOrder s;
+            try{
+                for (TmOrderInfo.Result j:js
+                     ) {
+                    if (j.getStatus().equals("0")) {
+                        for ( TmOrderInfo o:os
+                             ) {
+                            if(o.getOrder_sn().equals(j.getOrder_sn())){
+                                goodsInfoBeans2=o.getGoods_info();
+                                for(TmOrderInfo.GoodsInfoBean go:goodsInfoBeans2){
+                                     s=new SimpleOrder();
+                                     s.setOrderId(go.getOrder_sn_sub());
+                                     s.setTradeId(j.getOrder_sn());
+                                    logger.error("s:"+JSON.toJSONString(s));
+                                    dao.updateTradeId(s);
+
+                                }
+                            }
+                        }
+
+                    } else {
+                        sb.append(j.getOrder_sn()+","+j.getInfo());
                     }
-                } else {
-                    sb.append(j.getInfo());
                 }
-            }catch (Exception e){
-                logger.error(e.getMessage());
-                sb.append(str);
-            }
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            transactionManager.rollback(status);
         }
 
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            sb.append(str);
+        }
         return sb.toString();
     }
 }

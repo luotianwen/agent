@@ -356,7 +356,7 @@
 	<update id="updateTradeId">
 		UPDATE a_simple_order SET
 		 tradeId=#{tradeId}
-		WHERE id = #{id}
+		WHERE orderId = #{orderId}
 		and state = '3'
 	</update>
 
