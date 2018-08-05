@@ -61,24 +61,7 @@
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label">货号：</label>
-			<div class="controls">
-				<form:input path="articleno" htmlEscape="false" maxlength="200" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">颜色：</label>
-			<div class="controls">
-				<form:input path="colour" htmlEscape="false" maxlength="200" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">规格尺码：</label>
-			<div class="controls">
-				<form:input path="spec" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">市场价：</label>
 			<div class="controls">
@@ -125,12 +108,7 @@
 				<form:input path="tradeId" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">快递公司：</label>
-			<div class="controls">
-				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge required "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">快递单号：</label>
 			<div class="controls">
@@ -144,9 +122,34 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">颜色：</label>
+			<div class="controls">
+				<form:input path="colour" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">货号：</label>
+			<div class="controls">
+				<form:input path="articleno" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">规格尺码：</label>
+			<div class="controls">
+				<form:input path="spec" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">金额：</label>
 			<div class="controls">
 				<form:input path="money" htmlEscape="false" readonly="true"  class="input-xlarge required"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">快递公司：</label>
+			<div class="controls">
+				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge required "/>
 			</div>
 		</div>
 		<div class="control-group">

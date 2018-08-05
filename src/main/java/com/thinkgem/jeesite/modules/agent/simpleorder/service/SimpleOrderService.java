@@ -236,7 +236,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
             if (StringUtils.isEmpty(s.getWarehouse())) {
                 sb.append(s.getArticleno()).append("没有配置仓库");
             } else {
-                key = s.getWarehouse() + "-" + s.getPhone() + "-" + s.getConsignee();
+                key = s.getWarehouse() + "-" + s.getPhone() + "-" + s.getAddress();
                 as = map.get(key);
                 if (null == as) {
                     as = Lists.newArrayList();
@@ -244,7 +244,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                 } else {
                     as.add(s);
                 }
-                map.put(s.getWarehouse(), as);
+                map.put(key, as);
             }
         }
         Set<Map.Entry<String, List<SimpleOrder>>> entrySet = map.entrySet();
@@ -288,9 +288,9 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         map2.put("name", name);
         map2.put("pwd", pwd);
         // System.out.println(map2.toString());
-
+        logger.error("idata:"+map2.toString());
         String str = Cont.post(Cont.ORDER, map2);
-        logger.error("data:"+str);
+        logger.error("rdata:"+str);
         try {
             List<TmOrderInfo.Result> js = JSON.parseArray(str, TmOrderInfo.Result.class);
             DefaultTransactionDefinition def = new DefaultTransactionDefinition();
