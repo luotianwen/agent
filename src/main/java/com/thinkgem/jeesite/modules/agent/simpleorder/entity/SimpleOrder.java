@@ -21,6 +21,9 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String agentid;		// 代理
 	private String agentName;		// 代理
 
+
+
+
 	public String getAgentName() {
 		return agentName;
 	}
@@ -74,7 +77,14 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	protected String remarks;	// 备注
 	@ExcelField(title="订单号", align=1, sort=0)
 	private String orderId;
+	//@ExcelField(title="序号", align=1, sort=0)
+	private String no;
 
+	public String getNo() {
+		return no;
+	}public void setNo(String no) {
+		this.no = no;
+	}
 
 	private String warehouse;//仓库
 	private String tmarticleno;//货号

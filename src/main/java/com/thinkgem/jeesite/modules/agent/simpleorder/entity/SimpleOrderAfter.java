@@ -43,7 +43,14 @@ public class SimpleOrderAfter extends DataEntity<SimpleOrderAfter> {
 	@ExcelField(title="原因", align=1, sort=13)
 	protected String remarks;	// 备注
 	private String agent;
+	@ExcelField(title="序号", align=1, sort=0)
+	private String no;
 
+	public String getNo() {
+		return no;
+	}public void setNo(String no) {
+		this.no = no;
+	}
 	public String getAgent() {
 		return agent;
 	}

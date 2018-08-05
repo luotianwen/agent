@@ -3,7 +3,7 @@
 <mapper namespace="com.thinkgem.jeesite.modules.agent.simpleorder.dao.SimpleOrderDao">
     
 	<sql id="simpleOrderColumns">
-
+        a.no AS "no",
 		g.name AS "agentName",
 		a.id AS "id",
 		a.tradeId AS "tradeId",

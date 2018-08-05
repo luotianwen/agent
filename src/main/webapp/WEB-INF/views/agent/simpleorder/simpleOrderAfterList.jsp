@@ -94,7 +94,7 @@
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
-			<tr>
+			<tr><th>序号</th>
 				<th>订单号</th>
 				<th>货号</th>
 				<th>地址</th>
@@ -113,6 +113,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrderAfter">
 			<tr>
+				<td>
+						${simpleOrderAfter.no}
+				</td>
 				<td><a href="${ctx}/simpleorder/simpleOrderAfter/form?id=${simpleOrderAfter.id}">
 					${simpleOrderAfter.orderId}
 				</a></td>

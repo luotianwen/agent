@@ -88,6 +88,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>序号</th>
 				<th>订单号</th>
 				<th>货号</th>
 				<th>地址</th>
@@ -105,9 +106,11 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="simpleOrderAfter">
 			<tr>
-				<td><a href="${ctx}/simpleorder/simpleOrderAfter/form?id=${simpleOrderAfter.id}">
-					${simpleOrderAfter.orderId}
-				</a></td>
+				<td>
+						${simpleOrderAfter.no}
+				</td>
+				<td> ${simpleOrderAfter.orderId}
+				 </td>
 				<td>
 						${simpleOrderAfter.articleno}
 				</td>

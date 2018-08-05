@@ -3,6 +3,7 @@
 <mapper namespace="com.thinkgem.jeesite.modules.agent.simpleorder.dao.SimpleOrderAfterDao">
     
 	<sql id="simpleOrderAfterColumns">
+ 		a.no AS "no",
 		a.id AS "id",
 		a.orderid AS "orderId",
 		a.articleno AS "articleno",

@@ -235,7 +235,7 @@
 		</tr>
 		<c:forEach items="${page.list}" var="simpleOrder" varStatus="status">
 			<tr>
-				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   />${status.index+1}</td>
+				<td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"   />${simpleOrder.no}</td>
 				<td>
 						${simpleOrder.warehouse},${simpleOrder.tmarticleno},${simpleOrder.tmspec},${fns:getDictLabel(simpleOrder.tmstate, 'yes_no', '')}
 				</td>
