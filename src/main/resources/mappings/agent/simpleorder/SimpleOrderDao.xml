@@ -301,6 +301,7 @@
 		tmarticleno = #{tmarticleno},
 		tmspec = #{tmspec},
 		courier = #{courier},
+		address = #{address},
 		delivernumber = #{delivernumber},
 		deliverinfo = #{deliverinfo},
 		delivermoney = #{delivermoney},
@@ -379,6 +380,7 @@
 		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
 			#{item}
 		</foreach>
+		AND ( tradeId is null or  tradeId='')
 		and  a.state=3
 	</select>
 </mapper>

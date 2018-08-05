@@ -271,7 +271,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                     ) {
                 TmOrderInfo.GoodsInfoBean goodsInfoBean = new TmOrderInfo.GoodsInfoBean();
                 goodsInfoBean.setAmount(s.getNum());
-                goodsInfoBean.setGoods_no(s.getArticleno());
+                goodsInfoBean.setGoods_no(s.getTmarticleno());
                 goodsInfoBean.setOrder_sn_sub(s.getOrderId());
                 goodsInfoBean.setSize(s.getTmspec());
                 goodsInfoBeans.add(goodsInfoBean);
@@ -297,7 +297,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
             def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);// 事物隔离级别，开启新事务
             TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
             List<TmOrderInfo.GoodsInfoBean> goodsInfoBeans2= Lists.newArrayList();
-            SimpleOrder s;
+            SimpleOrder s1;
             try{
                 for (TmOrderInfo.Result j:js
                      ) {
@@ -307,11 +307,10 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
                             if(o.getOrder_sn().equals(j.getOrder_sn())){
                                 goodsInfoBeans2=o.getGoods_info();
                                 for(TmOrderInfo.GoodsInfoBean go:goodsInfoBeans2){
-                                     s=new SimpleOrder();
-                                     s.setOrderId(go.getOrder_sn_sub());
-                                     s.setTradeId(j.getOrder_sn());
-                                    logger.error("s:"+JSON.toJSONString(s));
-                                    dao.updateTradeId(s);
+                                     s1=new SimpleOrder();
+                                     s1.setOrderId(go.getOrder_sn_sub());
+                                     s1.setTradeId(j.getOrder_sn());
+                                    dao.updateTradeId(s1);
 
                                 }
                             }
