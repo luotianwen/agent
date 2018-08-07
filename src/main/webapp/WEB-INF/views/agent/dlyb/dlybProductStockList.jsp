@@ -25,16 +25,20 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+
+			<li><label>商品货号：</label>
+				<form:input path="articleno" htmlEscape="false" maxlength="100" class="input-medium"/>
+			</li>
 			<li><label>名称：</label>
 				<form:input path="name" htmlEscape="false" maxlength="2000" class="input-medium"/>
 			</li>
 			<li><label>创建时间：</label>
 				<input name="beginCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${dlybProductStock.beginCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${dlybProductStock.beginCreateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> - 
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${dlybProductStock.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${dlybProductStock.endCreateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -74,10 +78,10 @@
 					${dlybProductStock.num}
 				</td>
 				<td>
-					<fmt:formatDate value="${dlybProductStock.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${dlybProductStock.createDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${dlybProductStock.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${dlybProductStock.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${dlybProductStock.remarks}

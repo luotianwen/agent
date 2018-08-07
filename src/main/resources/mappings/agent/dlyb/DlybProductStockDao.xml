@@ -43,7 +43,9 @@
 		<include refid="dlybProductStockJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="name != null and name != ''">
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno = #{articleno}
+			</if><if test="name != null and name != ''">
 				AND a.name LIKE 
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>

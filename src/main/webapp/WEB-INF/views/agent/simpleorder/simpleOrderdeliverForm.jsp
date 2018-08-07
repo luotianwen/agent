@@ -149,13 +149,13 @@
 		<div class="control-group">
 			<label class="control-label">快递公司：</label>
 			<div class="controls">
-				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge required "/>
+				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge  "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">快递费：</label>
 			<div class="controls">
-				<form:input path="delivermoney" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="delivermoney" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
