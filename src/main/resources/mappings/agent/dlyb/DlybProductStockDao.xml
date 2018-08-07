@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.agent.dlyb.dao.DlybProductStockDao">
+    
+	<sql id="dlybProductStockColumns">
+		a.id AS "id",
+		a.articleno AS "articleno",
+		a.name AS "name",
+		a.brandname AS "brandname",
+		a.spec AS "spec",
+		a.num AS "num",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="dlybProductStockJoins">
+	</sql>
+
+	<select id="getByNo" resultType="DlybProductStock">
+		SELECT
+		<include refid="dlybProductStockColumns"/>
+		FROM a_dlyb_product_stock a
+		<include refid="dlybProductStockJoins"/>
+		WHERE a.articleno = #{articleno}
+		and a.spec = #{spec}
+	</select>
+	<select id="get" resultType="DlybProductStock">
+		SELECT 
+			<include refid="dlybProductStockColumns"/>
+		FROM a_dlyb_product_stock a
+		<include refid="dlybProductStockJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="DlybProductStock">
+		SELECT 
+			<include refid="dlybProductStockColumns"/>
+		FROM a_dlyb_product_stock a
+		<include refid="dlybProductStockJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
+				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="DlybProductStock">
+		SELECT 
+			<include refid="dlybProductStockColumns"/>
+		FROM a_dlyb_product_stock a
+		<include refid="dlybProductStockJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_dlyb_product_stock(
+			id,
+			articleno,
+			name,
+			brandname,
+			spec,
+			num,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{articleno},
+			#{name},
+			#{brandname},
+			#{spec},
+			#{num},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE a_dlyb_product_stock SET 	
+			articleno = #{articleno},
+			name = #{name},
+			brandname = #{brandname},
+			spec = #{spec},
+			num = #{num},
+			create_date = #{createDate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE a_dlyb_product_stock SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

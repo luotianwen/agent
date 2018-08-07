@@ -10,10 +10,16 @@ import com.alibaba.druid.sql.dialect.oracle.ast.stmt.OracleSelectRestriction;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.utils.IdGen;
+import com.thinkgem.jeesite.common.utils.MyBeanUtils;
 import com.thinkgem.jeesite.modules.agent.BackData;
 import com.thinkgem.jeesite.modules.agent.Cont;
 import com.thinkgem.jeesite.modules.agent.brand.entity.Brand;
 import com.thinkgem.jeesite.modules.agent.brand.service.BrandService;
+import com.thinkgem.jeesite.modules.agent.dlyb.entity.DlybProductLog;
+import com.thinkgem.jeesite.modules.agent.dlyb.entity.DlybProductStock;
+import com.thinkgem.jeesite.modules.agent.dlyb.entity.DlybProductStockLog;
+import com.thinkgem.jeesite.modules.agent.dlyb.service.DlybProductStockLogService;
+import com.thinkgem.jeesite.modules.agent.dlyb.service.DlybProductStockService;
 import com.thinkgem.jeesite.modules.agent.job.StockJob;
 import com.thinkgem.jeesite.modules.agent.product.entity.Product;
 import org.slf4j.Logger;
@@ -79,6 +85,11 @@ public class StockService extends CrudService<StockDao, Stock> {
     @Autowired
     private DataSourceTransactionManager transactionManager;
 
+    @Autowired
+    private DlybProductStockService dlybProductStockService;
+    @Autowired
+    private DlybProductStockLogService dlybProductStockLogService;
+
     private void data(int page, Brand b) {
 
 
@@ -87,14 +98,47 @@ public class StockService extends CrudService<StockDao, Stock> {
         map.put("page", page + "");
         map.put("rows", "300");
         map.put("wareHouseName", b.getWarehousename());
-       //String str ="{\"total\":1,\"rows\":[  {\"wareHouseName\":\"成都特供仓\",\"sex\":\"男\",\"division\":\"服\",\"marketprice\":348.0,\"ukSize\":\"S\",\"articleno\":\"288254-010\",\"brandName\":\"耐克\",\"discount\":2.3,\"quarter\":\"\",\"innerNum\":500,\"size\":\"S\"}, {\"wareHouseName\":\"成都特供仓\",\"sex\":\"男\",\"division\":\"服\",\"marketprice\":1399.0,\"ukSize\":\"10\",\"articleno\":\"304775-125\",\"brandName\":\"耐克\",\"discount\":10.1,\"quarter\":\"15Q2\",\"innerNum\":500,\"size\":\"10\"}]} " ;
-        String str =Cont.post(Cont.STOCK, map);
+        //String str ="{\"total\":1,\"rows\":[  {\"wareHouseName\":\"成都特供仓\",\"sex\":\"男\",\"division\":\"服\",\"marketprice\":348.0,\"ukSize\":\"S\",\"articleno\":\"288254-010\",\"brandName\":\"耐克\",\"discount\":2.3,\"quarter\":\"\",\"innerNum\":500,\"size\":\"S\"}, {\"wareHouseName\":\"成都特供仓\",\"sex\":\"男\",\"division\":\"服\",\"marketprice\":1399.0,\"ukSize\":\"10\",\"articleno\":\"304775-125\",\"brandName\":\"耐克\",\"discount\":10.1,\"quarter\":\"15Q2\",\"innerNum\":500,\"size\":\"10\"}]} " ;
+        String str = Cont.post(Cont.STOCK, map);
         BackData j = JSON.parseObject(str, BackData.class);
         if (j.getRows() != null && j.getRows().size() > 0) {
+
             List<Stock> list = Lists.newArrayList();
+            List<DlybProductStock> dlybProductStocks = Lists.newArrayList();
+            List<DlybProductStockLog> dlybProductStockLogs = Lists.newArrayList();
+            DlybProductStockLog dlybProductStockLog;
+            int jj=0;
             for (Object p1 : j.getRows()) {
+                DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+                def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
+                TransactionStatus status = transactionManager.getTransaction(def); // 获得事务状态
                 Stock p = JSON.parseObject(p1.toString(), Stock.class);
                 p.setId(IdGen.uuid());
+                DlybProductStock dlybProductStock = new DlybProductStock();
+                dlybProductStock.setArticleno(p.getArticleno());
+                dlybProductStock.setSpec(p.getUksize());
+                dlybProductStock = dlybProductStockService.getByNo(dlybProductStock);
+                if (dlybProductStock != null) {
+                    try {
+                        jj=p.getInnernum()-dlybProductStock.getNum();
+                        if ( jj!=0) {
+                            dlybProductStockLog = new DlybProductStockLog();
+                            MyBeanUtils.copyBean2Bean(dlybProductStockLog, dlybProductStock);
+                            dlybProductStockLog.setBeforenum(dlybProductStock.getNum());
+                            dlybProductStockLog.setChangenum(jj);
+                            dlybProductStock.setNum(p.getInnernum());
+                            dlybProductStockLog.setState(jj>0?"1":"0");
+                            dlybProductStockLog.setId(IdGen.uuid());
+                            dlybProductStockLogService.save(dlybProductStockLog);
+                            dlybProductStock.setNum(p.getInnernum());
+                            dlybProductStockService.save(dlybProductStock);
+                        }
+                        transactionManager.commit(status);
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
+                        transactionManager.rollback(status);
+                    }
+                }
                 list.add(p);
             }
             if (null != list && list.size() > 0) {

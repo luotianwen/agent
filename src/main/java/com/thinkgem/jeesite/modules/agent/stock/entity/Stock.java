@@ -22,7 +22,7 @@ public class Stock extends DataEntity<Stock> {
 	private String brandname;		// 品牌
 	private String uksize;		// 尺码2
 	private String size;		// 尺码1
-	private String innernum;		// 库存数量
+	private int innernum;		// 库存数量
 	private String sex;		// 性别
 	private double marketprice;		// 市场价
 	private double price;		// 销售价
@@ -101,12 +101,11 @@ public class Stock extends DataEntity<Stock> {
 		this.size = size;
 	}
 	
-	@Length(min=0, max=11, message="库存数量长度必须介于 0 和 11 之间")
-	public String getInnernum() {
+	public int getInnernum() {
 		return innernum;
 	}
 
-	public void setInnernum(String innernum) {
+	public void setInnernum(int innernum) {
 		this.innernum = innernum;
 	}
 	

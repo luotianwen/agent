@@ -57,7 +57,7 @@ public class DlybProductLogController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(DlybProductLog dlybProductLog, HttpServletRequest request, HttpServletResponse response, Model model) {
 		if(null==dlybProductLog.getBeginCreateDate()){
-			dlybProductLog.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),0));
+			dlybProductLog.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),1));
 		}
 		Page<DlybProductLog> page = dlybProductLogService.findPage(new Page<DlybProductLog>(request, response), dlybProductLog);
 		model.addAttribute("page", page);
