@@ -78,10 +78,10 @@
 					${dlybProductStock.num}
 				</td>
 				<td>
-					<fmt:formatDate value="${dlybProductStock.createDate}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${dlybProductStock.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${dlybProductStock.updateDate}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${dlybProductStock.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${dlybProductStock.remarks}

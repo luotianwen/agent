@@ -88,7 +88,7 @@
 					${dlybProductStockLog.changenum}
 				</td>
 				<td>
-					<fmt:formatDate value="${dlybProductStockLog.createDate}" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${dlybProductStockLog.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${dlybProductStockLog.remarks}
