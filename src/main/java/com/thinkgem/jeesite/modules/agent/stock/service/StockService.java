@@ -98,7 +98,7 @@ public class StockService extends CrudService<StockDao, Stock> {
         map.put("page", page + "");
         map.put("rows", "300");
         map.put("wareHouseName", b.getWarehousename());
-        //String str ="{\"total\":1,\"rows\":[  {\"wareHouseName\":\"成都特供仓\",\"sex\":\"男\",\"division\":\"服\",\"marketprice\":348.0,\"ukSize\":\"S\",\"articleno\":\"288254-010\",\"brandName\":\"耐克\",\"discount\":2.3,\"quarter\":\"\",\"innerNum\":500,\"size\":\"S\"}, {\"wareHouseName\":\"成都特供仓\",\"sex\":\"男\",\"division\":\"服\",\"marketprice\":1399.0,\"ukSize\":\"10\",\"articleno\":\"304775-125\",\"brandName\":\"耐克\",\"discount\":10.1,\"quarter\":\"15Q2\",\"innerNum\":500,\"size\":\"10\"}]} " ;
+        //String str ="{\"total\":1,\"rows\":[  {\"wareHouseName\":\"天马总仓1仓\",\"sex\":\"男\",\"division\":\"鞋\",\"marketprice\":1399.0,\"ukSize\":\"40\",\"articleno\":\"AH2122\",\"brandName\":\"阿迪达斯\",\"discount\":5.4,\"quarter\":\"\",\"innerNum\":10,\"size\":\"40\"}]} " ;
         String str = Cont.post(Cont.STOCK, map);
         BackData j = JSON.parseObject(str, BackData.class);
         if (j.getRows() != null && j.getRows().size() > 0) {
@@ -128,9 +128,10 @@ public class StockService extends CrudService<StockDao, Stock> {
                             MyBeanUtils.copyBean2Bean(dlybProductStockLog, dlybProductStock);
                             dlybProductStockLog.setBeforenum(dlybProductStock.getNum());
                             dlybProductStockLog.setChangenum(jj);
+                            dlybProductStockLog.setNum(p.getInnernum());
                             dlybProductStock.setNum(p.getInnernum());
                             dlybProductStockLog.setState(jj > 0 ? "1" : "0");
-                            dlybProductStockLog.setId(IdGen.uuid());
+                            dlybProductStockLog.setId(null);
                             dlybProductStockLogService.save(dlybProductStockLog);
                             dlybProductStock.setNum(p.getInnernum());
                             dlybProductStockService.save(dlybProductStock);
