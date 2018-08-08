@@ -107,7 +107,7 @@ public class StockService extends CrudService<StockDao, Stock> {
             List<DlybProductStock> dlybProductStocks = Lists.newArrayList();
             List<DlybProductStockLog> dlybProductStockLogs = Lists.newArrayList();
             DlybProductStockLog dlybProductStockLog;
-            int jj=0;
+            int jj = 0;
             for (Object p1 : j.getRows()) {
                 DefaultTransactionDefinition def = new DefaultTransactionDefinition();
                 def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);// 事物隔离级别，开启新事务
@@ -117,27 +117,29 @@ public class StockService extends CrudService<StockDao, Stock> {
                 DlybProductStock dlybProductStock = new DlybProductStock();
                 dlybProductStock.setArticleno(p.getArticleno());
                 dlybProductStock.setSpec(p.getUksize());
-                dlybProductStock = dlybProductStockService.getByNo(dlybProductStock);
-                if (dlybProductStock != null) {
-                    try {
-                        jj=p.getInnernum()-dlybProductStock.getNum();
-                        if ( jj!=0) {
+
+                try {
+                    dlybProductStock = dlybProductStockService.getByNo(dlybProductStock);
+                    if (dlybProductStock != null) {
+                        //logger.error(dlybProductStock.toString());
+                        jj = p.getInnernum() - dlybProductStock.getNum();
+                        if (jj != 0) {
                             dlybProductStockLog = new DlybProductStockLog();
                             MyBeanUtils.copyBean2Bean(dlybProductStockLog, dlybProductStock);
                             dlybProductStockLog.setBeforenum(dlybProductStock.getNum());
                             dlybProductStockLog.setChangenum(jj);
                             dlybProductStock.setNum(p.getInnernum());
-                            dlybProductStockLog.setState(jj>0?"1":"0");
+                            dlybProductStockLog.setState(jj > 0 ? "1" : "0");
                             dlybProductStockLog.setId(IdGen.uuid());
                             dlybProductStockLogService.save(dlybProductStockLog);
                             dlybProductStock.setNum(p.getInnernum());
                             dlybProductStockService.save(dlybProductStock);
                         }
-                        transactionManager.commit(status);
-                    } catch (Exception e) {
-                        logger.error(e.getMessage());
-                        transactionManager.rollback(status);
                     }
+                    transactionManager.commit(status);
+                } catch (Exception e) {
+                    logger.error(dlybProductStock.toString() + e.getMessage());
+                    transactionManager.rollback(status);
                 }
                 list.add(p);
             }

@@ -16,9 +16,9 @@ public class StockJob {
     @Autowired
     private StockService stockService;
     public void execute(){
-        logger.info("库存更新开始");
+        logger.error("库存更新开始");
         stockService.saveOrUpdate();
-        logger.info("库存更新结束");
+        logger.error("库存更新结束");
     }
 
 }
