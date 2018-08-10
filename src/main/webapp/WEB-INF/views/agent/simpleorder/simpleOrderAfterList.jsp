@@ -4,6 +4,12 @@
 <head>
 	<title>订单售后管理</title>
 	<meta name="decorator" content="default"/>
+	<style>
+		.table-striped tbody tr:nth-child(odd) td {
+			background-color: #8DBE5A;
+		}
+
+	</style>
 	<script type="text/javascript">
 
         // 提示输入对话框
