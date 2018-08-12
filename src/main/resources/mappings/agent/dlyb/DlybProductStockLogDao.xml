@@ -41,11 +41,8 @@
 			<if test="articleno != null and articleno != ''">
 				AND a.articleno = #{articleno}
 			</if>
-			<if test="name != null and name != ''">
-				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			<if test="changenum != null and changenum != ''">
+				AND a.changenum >= #{changenum}
 			</if>
 			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
 				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}

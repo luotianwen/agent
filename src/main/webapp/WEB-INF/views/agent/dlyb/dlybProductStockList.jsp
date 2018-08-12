@@ -62,7 +62,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="dlybProductStock">
 			<tr>
-				<td><a href="${ctx}/dlyb/dlybProductStock/form?id=${dlybProductStock.id}">
+				<td><a href="${ctx}/dlyb/dlybProductStockLog/list?articleno=${dlybProductStock.articleno}">
 					${dlybProductStock.articleno}
 				</a></td>
 				<td>

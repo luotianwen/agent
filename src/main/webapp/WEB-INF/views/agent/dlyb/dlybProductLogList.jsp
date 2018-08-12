@@ -42,6 +42,11 @@
 			<li><label>品牌：</label>
 				<form:input path="brandname" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
+
+			<li><label>变化量>=：</label>
+				<form:input path="changediscount" htmlEscape="false" maxlength="100" class="input-medium"/>
+			</li>
+
 			<li><label>是否增加：</label>
 				<form:select path="state" class="input-medium">
 					<form:option value="" label=""/>

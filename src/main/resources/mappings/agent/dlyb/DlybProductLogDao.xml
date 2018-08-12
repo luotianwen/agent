@@ -51,6 +51,10 @@
 			<if test="articleno != null and articleno != ''">
 				AND a.articleno = #{articleno}
 			</if>
+			<if test="changediscount != null and changediscount != ''">
+				AND ABS(a.changediscount) >= #{changediscount}
+			</if>
+
 			<if test="name != null and name != ''">
 				AND a.name LIKE  concat('%',#{name},'%')
 			</if>

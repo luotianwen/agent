@@ -31,6 +31,9 @@
 			<li><label>名称：</label>
 				<form:input path="name" htmlEscape="false" maxlength="2000" class="input-medium"/>
 			</li>
+			<li><label>变化量>=:</label>
+				<form:input path="changenum" htmlEscape="false" maxlength="2000" class="input-medium"/>
+			</li>
 			<li><label>创建时间：</label>
 				<input name="beginCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${dlybProductStockLog.beginCreateDate}" pattern="yyyy-MM-dd"/>"
