@@ -64,7 +64,7 @@
 			<label class="control-label">状态：</label>
 			<div class="controls">
 				<form:select path="state" class="input-xlarge required">
-					<form:option value="" label=""/>
+					<form:option value="" label="默认"/>
 					<form:options items="${fns:getDictList('a_simple_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -74,7 +74,7 @@
 			<label class="control-label">售后状态：</label>
 			<div class="controls">
 				<form:select path="afterstate" class="input-xlarge">
-					<form:option value="" label=""/>
+					<form:option value="" label="默认"/>
 					<form:options items="${fns:getDictList('a_simple_order_afterstate')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>

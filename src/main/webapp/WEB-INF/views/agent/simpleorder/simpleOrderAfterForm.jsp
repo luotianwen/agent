@@ -74,6 +74,16 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">三方售后：</label>
+			<div class="controls">
+				<form:select path="afterstate" class="input-xlarge required">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">退货地址：</label>
 			<div class="controls">
 				<form:input path="backaddress" htmlEscape="false" maxlength="200" class="input-xlarge "/>

@@ -72,7 +72,7 @@
 			<label class="control-label">状态：</label>
 			<div class="controls">
 				<form:select path="state" class="input-xlarge required"  >
-					<form:option value="" label=""/>
+					<form:option value="" label="默认"/>
 					<form:options items="${fns:getDictList('a_simple_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -109,12 +109,7 @@
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label">快递单号：</label>
-			<div class="controls">
-				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
@@ -146,10 +141,17 @@
 				<form:input path="money" htmlEscape="false" readonly="true"  class="input-xlarge required"/>
 			</div>
 		</div>
+
 		<div class="control-group">
 			<label class="control-label">快递公司：</label>
 			<div class="controls">
 				<form:input path="courier" htmlEscape="false" maxlength="100" class="input-xlarge  "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">快递单号：</label>
+			<div class="controls">
+				<form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

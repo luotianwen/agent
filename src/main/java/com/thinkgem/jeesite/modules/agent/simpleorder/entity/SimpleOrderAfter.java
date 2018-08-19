@@ -45,6 +45,15 @@ public class SimpleOrderAfter extends DataEntity<SimpleOrderAfter> {
 	private String agent;
 	@ExcelField(title="序号", align=1, sort=0)
 	private String no;
+	private String afterstate;
+
+	public String getAfterstate() {
+		return afterstate;
+	}
+
+	public void setAfterstate(String afterstate) {
+		this.afterstate = afterstate;
+	}
 
 	public String getNo() {
 		return no;

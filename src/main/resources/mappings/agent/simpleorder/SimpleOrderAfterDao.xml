@@ -22,6 +22,7 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
+		a.afterstate AS "afterstate",
 		a.del_flag AS "delFlag"
 	</sql>
 	
@@ -50,6 +51,9 @@
 			<if test="consignee != null and consignee != ''">
 				AND a.consignee = #{consignee}
 			</if>
+			<if test="afterstate != null and afterstate != ''">
+				AND a.afterstate = #{afterstate}
+			</if>
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
@@ -69,7 +73,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -148,6 +152,7 @@
 			backcourier = #{backcourier},
 			backnumber = #{backnumber},
 			courier = #{courier},
+			afterstate=#{afterstate},
 			delivernumber = #{delivernumber},
 			backmoney = #{backmoney},
 			update_by = #{updateBy.id},

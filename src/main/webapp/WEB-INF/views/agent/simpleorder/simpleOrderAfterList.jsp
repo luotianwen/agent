@@ -85,6 +85,12 @@
 					<form:options items="${fns:getDictList('a_after_order_state')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
+			<li><label>三方售后：</label>
+				<form:select path="afterstate" class="input-medium">
+					<form:option value="" label="全部"/>
+					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
 			<li><label>退货单号：</label>
 				<form:input path="backnumber" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
@@ -111,6 +117,7 @@
 				<th>退货地址</th>
 				<th>退货信息</th>
 				<th>快递信息</th>
+				<th>三方售后</th>
 				<th>创建时间</th>
 
 				<shiro:hasPermission name="simpleorder:simpleOrderAfter:edit"><th>操作</th></shiro:hasPermission>
@@ -154,7 +161,9 @@
 					${simpleOrderAfter.courier}
 					${simpleOrderAfter.delivernumber}
 				</td>
-
+				<td>
+						${fns:getDictLabel(simpleOrderAfter.afterstate, 'yes_no', '')}
+				</td>
 				<td>
 					<fmt:formatDate value="${simpleOrderAfter.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
