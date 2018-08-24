@@ -116,6 +116,7 @@
                     if (typeof closed == 'function') {
                         closed();
                     }
+                    $("#searchForm").submit();
                 }
             });
             return false;
