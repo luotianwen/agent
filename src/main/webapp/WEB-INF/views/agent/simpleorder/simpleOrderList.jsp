@@ -67,6 +67,59 @@
             }
 
         }
+        // 提示输入对话框
+        function promptxcourier(title, href, closed) {
+            top.$.jBox("<div class='form-search' style='padding:20px;text-align:center;'>快递公司：<input type='text' id='backcourier' name='backcourier'/> </br>快递单号：<input type='text' id='backnumber' name='backnumber'/>" +
+                "</br>快递费用：<input type='text' id='backmoney' name='backmoney'/></div>", {
+                title: title, submit: function (v, h, f) {
+                    if (f.backcourier == '') {
+                        top.$.jBox.tip("请输入快递公司。", 'error');
+                        return false;
+                    }
+                    if (f.backnumber == '') {
+                        top.$.jBox.tip("请输入快递单号。", 'error');
+                        return false;
+                    }
+                    if (f.backmoney == '') {
+                        top.$.jBox.tip("请输入快递费用。", 'error');
+                        return false;
+                    }
+                    if (typeof href == 'function') {
+                        href();
+                    } else {
+                        resetTip(); //loading();
+                        //console.log(href + "&backcourier=" + encodeURIComponent(f.backcourier) + "&backnumber=" + encodeURIComponent(f.backnumber) + "&backmoney=" + encodeURIComponent(f.backmoney))
+                       var url = href + "&courier=" + encodeURIComponent(f.backcourier) + "&delivernumber=" + encodeURIComponent(f.backnumber) + "&delivermoney=" + encodeURIComponent(f.backmoney);
+                        $.ajax({
+                            type : "post",
+                            async : false,
+                            url : url,
+                            success : function(msg) {
+                             if(msg=='ok')
+                             {
+                                 top.$.jBox.tip("发货成功。", 'success');
+                                 return true;
+                             }
+                             else{
+                                 top.$.jBox.tip("发货失败。", 'error');
+
+                                 return false;
+                             }
+                            },
+                            error : function(json) {
+                                top.$.jBox.tip("网络异常。", 'error');
+                                return false;
+                            }
+                        });
+                    }
+                }, closed: function () {
+                    if (typeof closed == 'function') {
+                        closed();
+                    }
+                }
+            });
+            return false;
+        }
 
         function checkOrder() {
             var num = $("input[type='checkbox']:checked").length;
@@ -328,6 +381,11 @@
             </td>
             <shiro:hasPermission name="simpleorder:simpleOrder:edit">
                 <td>
+                    <c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
+                        <a href="${ctx}/simpleorder/simpleOrder/fast?id=${simpleOrder.id}"
+                           onclick="return promptxcourier('填写快递信息',   this.href)">快发</a>
+
+                    </c:if>
                     <c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
                         <a href="${ctx}/simpleorder/simpleOrder/deliverform?id=${simpleOrder.id}">发货</a>
                     </c:if>

@@ -301,6 +301,17 @@
 
 	</select>
 
+	<update id="fast">
+		UPDATE a_simple_order SET
+		state = '3',
+		courier = #{courier},
+		delivernumber = #{delivernumber},
+		delivermoney = #{delivermoney},
+		totalmoney = #{totalmoney},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+		and state='1'
+	</update>
 	<update id="deliver">
 		UPDATE a_simple_order SET
 		state = #{state},

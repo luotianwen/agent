@@ -5,7 +5,13 @@
 	<title>下单管理管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-
+		function sumtotalmoney(){
+            var num=parseFloat($("#num").val());
+            var money=parseFloat($("#money").val());
+            var delivermoney=parseFloat($("#delivermoney").val());
+            var a=parseFloat(money*num+delivermoney).toFixed(2);
+            $("#totalmoney").val(a);
+		}
 		$(document).ready(function() {
 
 			//$("#name").focus();
@@ -157,7 +163,7 @@
 		<div class="control-group">
 			<label class="control-label">快递费：</label>
 			<div class="controls">
-				<form:input path="delivermoney" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="delivermoney" htmlEscape="false" class="input-xlarge " onblur="sumtotalmoney()"/>
 			</div>
 		</div>
 		<div class="control-group">

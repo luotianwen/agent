@@ -70,16 +70,16 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
 
     @Transactional(readOnly = false)
     public void delete(SimpleOrder simpleOrder) {
-        Agent agent = new Agent();
+       /* Agent agent = new Agent();
         agent.setId(simpleOrder.getAgentid());
         agent.setMoney(simpleOrder.getMoney());
-        agentService.addMoney(agent);
+        agentService.addMoney(agent);*/
         super.delete(simpleOrder);
     }
 
     @Transactional(readOnly = false)
     public void deliver(SimpleOrder simpleOrder) throws Exception {
-        if (simpleOrder.getState().equals("3")) {
+       /* if (simpleOrder.getState().equals("3")) {
             double moneys = simpleOrder.getTotalmoney() - simpleOrder.getMoney();
             Agent agent = new Agent();
             agent.setId(simpleOrder.getAgentid());
@@ -90,15 +90,23 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
             } else {
                 throw new Exception("金额不够");
             }
-        }
+        }*/
         simpleOrder.preUpdate();
         dao.deliver(simpleOrder);
+    }
+    @Transactional(readOnly = false)
+    public void fast(SimpleOrder simpleOrder) throws Exception {
+        double totlamoney=simpleOrder.getNum()*simpleOrder.getMoney();
+        totlamoney=totlamoney+simpleOrder.getDelivermoney();
+        simpleOrder.setTotalmoney(totlamoney);
+        simpleOrder.preUpdate();
+        dao.fast(simpleOrder);
     }
 
     @Transactional(readOnly = false)
     public void asave(SimpleOrder simpleOrder) throws Exception {
         double f = 0d;
-        if (StringUtils.isEmpty(simpleOrder.getId())) {
+       /* if (StringUtils.isEmpty(simpleOrder.getId())) {
             f = simpleOrder.getMoney();
         } else {
             SimpleOrder a = this.get(simpleOrder.getId());
@@ -112,7 +120,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
             agentService.reduceMoney(agent);
         } else {
             throw new Exception("金额不够");
-        }
+        }*/
         super.save(simpleOrder);
     }
 
@@ -332,4 +340,6 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         }
         return sb.toString();
     }
+
+
 }
