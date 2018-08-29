@@ -57,6 +57,10 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
+			<if test="backstate != null and backstate != ''">
+				AND (a.delivernumber is null or a.delivernumber='')
+			</if>
+
 			<if test="backnumber != null and backnumber != ''">
 				AND a.backnumber = #{backnumber}
 			</if>
