@@ -58,10 +58,21 @@
 				AND a.state = #{state}
 			</if>
 			<if test="changestate != null and changestate != ''">
-				AND (a.delivernumber is null or a.delivernumber='')
+				<if test="changestate == 0 ">
+					AND (a.delivernumber is null or a.delivernumber='')
+				</if>
+				<if test="changestate == 1 ">
+					AND (a.delivernumber is not  null and a.delivernumber !='')
+				</if>
 			</if>
             <if test="backstate != null and backstate != ''">
-                AND (a.backnumber is null or a.backnumber='')
+				<if test="backstate == 0 ">
+					AND (a.backnumber is null or a.backnumber='')
+				</if>
+				<if test="backstate == 1 ">
+					AND (a.backnumber is not  null and a.backnumber !='')
+				</if>
+
             </if>
 
 			<if test="backnumber != null and backnumber != ''">
