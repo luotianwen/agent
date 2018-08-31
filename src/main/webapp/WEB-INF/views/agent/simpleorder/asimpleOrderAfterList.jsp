@@ -78,14 +78,14 @@
                               htmlEscape="false"/>
             </form:select>
         </li>
-        <li><label>是否有退货单号：</label>
+        <li><label>退货单号：</label>
             <form:select path="backstate" class="input-medium">
                 <form:option value="" label="全部"/>
                 <form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value"
                               htmlEscape="false"/>
             </form:select>
         </li>
-        <li><label>是否有换货单号：</label>
+        <li><label>换货单号：</label>
             <form:select path="changestate" class="input-medium">
                 <form:option value="" label="全部"/>
                 <form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value"
