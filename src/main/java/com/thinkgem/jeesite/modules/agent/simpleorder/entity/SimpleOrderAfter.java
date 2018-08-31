@@ -47,8 +47,17 @@ public class SimpleOrderAfter extends DataEntity<SimpleOrderAfter> {
 	private String no;
 	private String afterstate;
 	private String backstate;
+    private String changestate;
 
-	public String getBackstate() {
+    public String getChangestate() {
+        return changestate;
+    }
+
+    public void setChangestate(String changestate) {
+        this.changestate = changestate;
+    }
+
+    public String getBackstate() {
 		return backstate;
 	}
 

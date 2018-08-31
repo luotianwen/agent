@@ -106,6 +106,13 @@
                               htmlEscape="false"/>
             </form:select>
         </li>
+        <li><label>是否有换货单号：</label>
+            <form:select path="changestate" class="input-medium">
+                <form:option value="" label="全部"/>
+                <form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value"
+                              htmlEscape="false"/>
+            </form:select>
+        </li>
         <li><label>退货单号：</label>
             <form:input path="backnumber" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
