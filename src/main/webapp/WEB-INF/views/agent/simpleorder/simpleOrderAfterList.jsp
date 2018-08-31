@@ -113,10 +113,10 @@
                               htmlEscape="false"/>
             </form:select>
         </li>
-        <li><label>退货单号：</label>
+        <li><label>换货单号：</label>
             <form:input path="backnumber" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
-        <li><label>快递单号：</label>
+        <li><label>退货单号：</label>
             <form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
         <li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
@@ -138,8 +138,8 @@
         <th>售后原因</th>
         <th>售后方式</th>
         <th>退货地址</th>
-        <th>退货信息</th>
-        <th>快递信息</th>
+        <th>换货快递</th>
+        <th>退货快递</th>
         <th>三方售后</th>
         <th>创建时间</th>
 
