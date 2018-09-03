@@ -176,7 +176,7 @@
 			delivernumber = #{delivernumber},
 			backmoney = #{backmoney},
 			update_by = #{updateBy.id},
-			update_date = #{updateDate},
+
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
@@ -195,8 +195,7 @@
 		UPDATE a_simple_order_after SET
 			backcourier = #{backcourier},
 			backnumber = #{backnumber},
-			backmoney = #{backmoney},
-			update_date = #{updateDate}
+			backmoney = #{backmoney}
 		WHERE id = #{id}
 	</update>
 	<update id="courier">

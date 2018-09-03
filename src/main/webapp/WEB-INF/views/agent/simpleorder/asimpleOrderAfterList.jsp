@@ -119,6 +119,7 @@
         <th>换货快递</th>
         <th>退货快递</th>
         <th>创建时间</th>
+        <th>更新时间</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -170,6 +171,9 @@
 
             <td>
                 <fmt:formatDate value="${simpleOrderAfter.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+            </td>
+            <td>
+                <fmt:formatDate value="${simpleOrderAfter.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
             <td>
 

@@ -142,8 +142,8 @@
         <th>退货快递</th>
         <th>三方售后</th>
         <th>创建时间</th>
-
-        <shiro:hasPermission name="simpleorder:simpleOrderAfter:edit">
+        <th>更新时间</th>
+        <shiro:hasPermission name="simpleorder:simpleOrderAf ter:edit">
             <th>操作</th>
         </shiro:hasPermission>
     </tr>
@@ -200,7 +200,9 @@
             <td>
                 <fmt:formatDate value="${simpleOrderAfter.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
-
+            <td>
+                <fmt:formatDate value="${simpleOrderAfter.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+            </td>
             <shiro:hasPermission name="simpleorder:simpleOrderAfter:edit">
                 <td>
                     <a href="${ctx}/simpleorder/simpleOrderAfter/form?id=${simpleOrderAfter.id}">修改</a>
