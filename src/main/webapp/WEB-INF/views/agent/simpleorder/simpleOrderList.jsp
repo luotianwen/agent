@@ -384,7 +384,7 @@
                 <td>
                     <c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
                         <a href="${ctx}/simpleorder/simpleOrder/fast?id=${simpleOrder.id}"
-                           onclick="return promptxcourier('填写快递信息',   this.href)">快发</a>
+                           onclick="return promptxcourier('填写${simpleOrder.consignee}的${simpleOrder.articleno}快递信息',   this.href)">快发</a>
 
                     </c:if>
                     <c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
