@@ -151,7 +151,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         map.put("name", name);
         map.put("pwd", pwd);
         String str = Cont.post(Cont.DELIVER, map);
-        logger.error(tradeId + "  orderid " + str);
+        //logger.error(tradeId + "  orderid " + str);
         BackData j = JSON.parseObject(str, BackData.class);
 
         if (j.getRows() != null && j.getRows().size() > 0) {

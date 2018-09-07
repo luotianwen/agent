@@ -75,7 +75,7 @@ public class ProductService extends CrudService<ProductDao, Product> {
         map.put("page", page + "");
         map.put("rows", "300");
         String str = Cont.post(Cont.PRODUCT, map);
-        System.out.println(str);
+        //System.out.println(str);
         BackData j = JSON.parseObject(str, BackData.class);
         if (j.getRows() != null && j.getRows().size() > 0) {
             DefaultTransactionDefinition def = new DefaultTransactionDefinition();
