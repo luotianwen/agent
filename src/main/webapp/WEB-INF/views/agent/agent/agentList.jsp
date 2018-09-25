@@ -40,12 +40,12 @@
 			<li><label>联系电话：</label>
 				<form:input path="phone" htmlEscape="false" maxlength="12" class="input-medium"/>
 			</li>
-			<li><label>邮箱：</label>
+			<%--<li><label>邮箱：</label>
 				<form:input path="email" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
 			<li><label>微信：</label>
 				<form:input path="weixin" htmlEscape="false" maxlength="100" class="input-medium"/>
-			</li>
+			</li>--%>
 			<li><label>联系手机：</label>
 				<form:input path="mobile" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
@@ -57,9 +57,9 @@
 					value="<fmt:formatDate value="${agent.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
-			<li><label>登录名：</label>
+			<%--<li><label>登录名：</label>
 				<form:input path="loginName" htmlEscape="false" maxlength="100" class="input-medium"/>
-			</li>
+			</li>--%>
 			<li><label>状态：</label>
 				<form:radiobuttons path="state" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</li>
