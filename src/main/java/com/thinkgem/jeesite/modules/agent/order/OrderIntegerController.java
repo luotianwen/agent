@@ -93,7 +93,7 @@ public class OrderIntegerController extends BaseController {
 					return renderString(response, map);
 				}
 
-				double dd = (agent.getDiscount());
+			 	/*double dd = (agent.getDiscount());
 				Stock stock = new Stock();
 				stock.setArticleno(order.getArticleno());
 				stock.setSize(order.getSize());
@@ -109,7 +109,7 @@ public class OrderIntegerController extends BaseController {
 					}
 				}
 				Stock s = slist.get(0);
-				int num = order.getNum();
+
 				double sd = (s.getDiscount());
 				double m = (s.getMarketprice());
 				double zd=sd+dd;
@@ -124,22 +124,24 @@ public class OrderIntegerController extends BaseController {
 				zd=new BigDecimal(zd).setScale(2,RoundingMode.HALF_UP).doubleValue();
 				double p = num * m * zd / 10;
 				BigDecimal b = new BigDecimal(p);
-				int f1 = b.setScale(0, RoundingMode.HALF_UP).intValue();
+				int f1 = b.setScale(0, RoundingMode.HALF_UP).intValue();*/
+
+				int num = order.getNum();
 				order.setAgentid(agent.getId());
-				order.setMoney(num * m);
+				//order.setMoney(num * m);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
 				String onumber = sdf.format(new Date());
 				order.setOnumber(onumber);
-				order.setDiscount(zd);
+				//order.setDiscount(zd);
 				String remarks = order.getRemarks();
-				if (order.getCourier().contains("顺丰")) {
+				/*if (order.getCourier().contains("顺丰")) {
 					order.setRemarks(remarks + "售价:" + f1 + ",顺丰快递+15元");
 					f1 = f1 + 15;
 				} else {
 					order.setRemarks(remarks + "售价:" + f1 + ",其他快递+13元");
 					f1 = f1 + 13;
 				}
-				order.setDiscountmoney(f1);
+				order.setDiscountmoney(f1);*/
 				order.setState("1");
 				order.setPaystate("0");
 				orderService.save(order);

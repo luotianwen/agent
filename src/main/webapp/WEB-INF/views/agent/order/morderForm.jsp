@@ -53,12 +53,12 @@
             else if ($('#size').val() == ''){
                 showToast('请填写尺码', 'info');
             }
-            else if ($('#sex').val() == ''){
+           /* else if ($('#sex').val() == ''){
                 showToast('请填写性别', 'info');
-            }
-            else if ($('#courier').val() == ''){
+            }*/
+           /* else if ($('#courier').val() == ''){
                 showToast('请填写快递', 'info');
-            }else if ($('#phone').val() == ''){
+            }*/else if ($('#phone').val() == ''){
                 showToast('请填写联系电话', 'info');
             }
             else if ($('#address').val() == ''){

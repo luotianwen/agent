@@ -32,20 +32,21 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="order" action="${ctx}/order/order/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<form:hidden path="agentid"/>
+
 		<sys:message content="${message}"/>
+			<div class="control-group">
+			<label class="control-label">代理：</label>
+			<div class="controls">
+				<sys:tableSelect id="user" name="agentid" value="${order.agentid}" labelName="agentName" labelValue="${order.agentName}" title="选择用户" url="${ctx}/agent/agent/list?1=1" checked="1"   />
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">订单号：</label>
 			<div class="controls">
 				<form:input path="onumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">代理：</label>
-			<div class="controls">
-				<form:input path="agentName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">货号：</label>
 			<div class="controls">

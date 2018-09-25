@@ -45,10 +45,10 @@ public class OrderService extends CrudService<OrderDao, Order> {
 	@Transactional(readOnly = false)
 	public void save(Order order) {
 		super.save(order);
-		if(StringUtils.isNotEmpty(order.getDelivernumber())) {
+		/*if(StringUtils.isNotEmpty(order.getDelivernumber())) {
 			Agent agent = agentService.get(order.getAgentid());
 			sms(agent,order);
-		}
+		}*/
 
 	}
 	private void sms(Agent agent,Order order){

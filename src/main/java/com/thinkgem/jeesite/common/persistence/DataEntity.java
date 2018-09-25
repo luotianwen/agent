@@ -22,7 +22,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 public abstract class DataEntity<T> extends BaseEntity<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+	protected String checked;//0查看 1单选框 2多选
 	protected String remarks;	// 备注
 	protected User createBy;	// 创建者
 	protected Date createDate;	// 创建日期
@@ -56,7 +56,15 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 		this.updateDate = new Date();
 		this.createDate = this.updateDate;
 	}
-	
+
+	public String getChecked() {
+		return checked;
+	}
+
+	public void setChecked(String checked) {
+		this.checked = checked;
+	}
+
 	/**
 	 * 更新之前执行方法，需要手动调用
 	 */

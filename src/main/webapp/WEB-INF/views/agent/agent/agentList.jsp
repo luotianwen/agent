@@ -14,13 +14,22 @@
 			$("#searchForm").submit();
         	return false;
         }
+        function getIds() {
+            var ids = [];
+            $("input[name='ids']:checked").each(function () {
+                ids.push({id:$(this).val(),name:$(this).attr("label")});
+            });
+            return ids;
+        }
 	</script>
 </head>
 <body>
+<c:if test="${empty agent.checked}">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/agent/agent/">代理列表</a></li>
 		<shiro:hasPermission name="agent:agent:edit"><li><a href="${ctx}/agent/agent/form">代理添加</a></li></shiro:hasPermission>
 	</ul>
+</c:if>
 	<form:form id="searchForm" modelAttribute="agent" action="${ctx}/agent/agent/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -63,6 +72,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<c:if test="${not empty agent.checked}">
+					<th>选择</th>
+				</c:if>
 				<th>名称</th>
 				<th>余额</th>
 				<th>性别</th>
@@ -80,29 +92,36 @@
 				<th>支付宝</th>
 				<th>创建时间</th>
 			<%--<th>联系地址</th>--%>
+				<c:if test="${  empty agent.checked}">
 				<shiro:hasPermission name="agent:agent:edit"><th>操作</th></shiro:hasPermission>
+				</c:if>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="agent">
+		<c:forEach items="${page.list}" var="agent2">
 			<tr>
-				<td><a href="${ctx}/agent/agent/form?id=${agent.id}">
-					${agent.name}
+				<c:if test="${not empty agent.checked}">
+					<td>
+						<input type="checkbox" name="ids" value="${agent2.id}" label="${agent2.name}">
+					</td>
+				</c:if>
+				<td><a href="${ctx}/agent/agent/form?id=${agent2.id}">
+					${agent2.name}
 				</a></td>
 				<td>
-						${agent.money}
+						${agent2.money}
 				</td>
 				<td>
-					${fns:getDictLabel(agent.sex, 'sex', '')}
+					${fns:getDictLabel(agent2.sex, 'sex', '')}
 				</td>
 				<td>
-					${agent.phone}
+					${agent2.phone}
 				</td>
 				<td>
-					${agent.email}
+					${agent2.email}
 				</td>
 				<td>
-					${agent.weixin}
+					${agent2.weixin}
 				</td>
 
 
@@ -111,31 +130,33 @@
 				</td>--%>
 
 				<td>
-					${agent.loginName}
+					${agent2.loginName}
 				</td>
 				<td>
-					${fns:getDictLabel(agent.state, 'yes_no', '')}
+					${fns:getDictLabel(agent2.state, 'yes_no', '')}
 				</td>
 				<td>
-					${agent.discount}
+					${agent2.discount}
 				</td>
 				<td>
-					${agent.discountName}
+					${agent2.discountName}
 				</td>
 				<td>
-					${agent.apay}
+					${agent2.apay}
 				</td>
 				<td>
-					<fmt:formatDate value="${agent.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${agent2.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<%--<td>
 					${agent.address}
 				</td>--%>
+				<c:if test="${ empty agent.checked}">
 				<shiro:hasPermission name="agent:agent:edit"><td>
-    				<a href="${ctx}/agent/agent/form?id=${agent.id}">审核</a>
-					<a href="${ctx}/agent/recharge/form?agentid=${agent.id}&agentName=${agent.name}">充值</a>
-					<a href="${ctx}/agent/agent/delete?id=${agent.id}" onclick="return confirmx('确认要删除该代理吗？', this.href)">删除</a>
+    				<a href="${ctx}/agent/agent/form?id=${agent2.id}">审核</a>
+					<a href="${ctx}/agent/recharge/form?agentid=${agent2.id}&agentName=${agent.name}">充值</a>
+					<a href="${ctx}/agent/agent/delete?id=${agent2.id}" onclick="return confirmx('确认要删除该代理吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
+				</c:if>
 			</tr>
 		</c:forEach>
 		</tbody>
