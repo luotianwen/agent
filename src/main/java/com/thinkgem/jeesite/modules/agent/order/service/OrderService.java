@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.agent.order.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
@@ -44,12 +46,17 @@ public class OrderService extends CrudService<OrderDao, Order> {
 	
 	@Transactional(readOnly = false)
 	public void save(Order order) {
-		super.save(order);
+
 		/*if(StringUtils.isNotEmpty(order.getDelivernumber())) {
 			Agent agent = agentService.get(order.getAgentid());
 			sms(agent,order);
 		}*/
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+		String onumber2 = sdf.format(new Date());
+		if(StringUtils.isEmpty(order.getOnumber())){
+			order.setOnumber(onumber2);
+		}
+		super.save(order);
 	}
 	private void sms(Agent agent,Order order){
 		JSONObject j=new JSONObject();

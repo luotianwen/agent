@@ -3,7 +3,10 @@
  */
 package com.thinkgem.jeesite.modules.agent.order.entity;
 
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import org.hibernate.validator.constraints.Length;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
@@ -37,6 +40,7 @@ public class Order extends DataEntity<Order> {
     private  String onumber;
 
 	public String getOnumber() {
+
 		return onumber;
 	}
 
