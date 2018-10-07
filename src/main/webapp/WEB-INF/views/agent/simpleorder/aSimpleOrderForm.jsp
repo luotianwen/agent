@@ -64,6 +64,16 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">类别：</label>
+			<div class="controls">
+				<form:select path="type" class="input-xlarge required">
+					<form:option value="" label=" "/>
+					<form:options items="${fns:getDictList('a_simple_order_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
 				<form:select path="num" class="input-medium required">

@@ -34,6 +34,7 @@
 		a.warehouse AS "warehouse",
 		a.tmarticleno AS "tmarticleno",
 		a.tmspec AS "tmspec",
+		a.type as "type",
 		a.tmstate AS "tmstate",
 		a.update_by AS "updateBy.id"
 	</sql>
@@ -73,7 +74,9 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
-
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
 			<if test="consignee != null and consignee != ''">
 				AND (a.consignee = #{consignee}
 				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
@@ -120,6 +123,9 @@
 			</if>
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
+			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
 			</if>
 			<if test="afterstate != null and afterstate != ''">
 				AND a.afterstate = #{afterstate}
@@ -175,6 +181,10 @@
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
 			</if>
+
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
 			<if test="state != null and state != ''">
 				AND a.state = #{state}
 			</if>
@@ -224,7 +234,8 @@
 			address,
 			remarks,
 			del_flag,
-			orderId
+			orderId,
+			type
 		) VALUES (
 			#{id},
 			#{agentid},
@@ -249,7 +260,8 @@
 			#{address},
 			#{remarks},
 			#{delFlag},
-			#{orderId}
+			#{orderId},
+			#{type}
 		)
 	</insert>
 	
@@ -275,7 +287,8 @@
 			spec = #{spec},
 			address = #{address},
 			tradeId=#{tradeId},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			type=#{type}
 		WHERE id = #{id}
 	</update>
 	<select id="getOrderIdDeliver" resultType="SimpleOrder">

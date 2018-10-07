@@ -184,6 +184,13 @@
                               htmlEscape="false"/>
             </form:select>
         </li>
+        <li><label>类别：</label>
+            <form:select path="type" class="input-medium">
+                <form:option value="" label="全部"/>
+                <form:options items="${fns:getDictList('a_simple_order_type')}" itemLabel="label" itemValue="value"
+                              htmlEscape="false"/>
+            </form:select>
+        </li>
         <li><label>售后状态：</label>
             <form:select path="afterstate" class="input-medium">
                 <form:option value="" label="全部"/>
@@ -245,6 +252,7 @@
         <th>数量</th>
         <th>状态</th>
         <th>售后状态</th>
+        <th>类别</th>
         <th>售价</th>
         <th>快递费用</th>
         <th>总计</th>
@@ -275,6 +283,9 @@
         <td>
         </td>
         <td>
+        </td>
+        <td>
+
         </td>
         <td>
 
@@ -340,6 +351,9 @@
             </td>
             <td>
                     ${fns:getDictLabel(simpleOrder.afterstate, 'a_simple_order_afterstate', '')}
+            </td>
+            <td>
+                    ${fns:getDictLabel(simpleOrder.type, 'a_simple_order_type', '')}
             </td>
             <td>
                     ${simpleOrder.money}

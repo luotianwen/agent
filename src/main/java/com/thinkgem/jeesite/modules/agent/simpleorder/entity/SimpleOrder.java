@@ -79,11 +79,20 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String orderId;
 	//@ExcelField(title="序号", align=1, sort=0)
 	private String no;
-
+	@ExcelField(title="类别", align=1, sort=140, dictType="a_simple_order_type")
+	protected String type;	// 类别
 	public String getNo() {
 		return no;
 	}public void setNo(String no) {
 		this.no = no;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	private String warehouse;//仓库
