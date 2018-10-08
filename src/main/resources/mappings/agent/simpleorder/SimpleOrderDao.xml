@@ -78,7 +78,7 @@
 				AND a.type = #{type}
 			</if>
 			<if test="consignee != null and consignee != ''">
-				AND (a.consignee = #{consignee}
+				AND (a.consignee LIKE concat('%',#{consignee},'%')
 				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
 			</if>
 			<if test="delivernumber != null and delivernumber != ''">
@@ -131,7 +131,7 @@
 				AND a.afterstate = #{afterstate}
 			</if>
 			<if test="consignee != null and consignee != ''">
-				AND (a.consignee = #{consignee}
+				AND (a.consignee   LIKE concat('%',#{consignee},'%')
 				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
 			</if>
 			<if test="delivernumber != null and delivernumber != ''">
