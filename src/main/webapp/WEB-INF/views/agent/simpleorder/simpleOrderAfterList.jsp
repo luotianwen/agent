@@ -78,6 +78,7 @@
            class="breadcrumb form-search">
     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+    <sys:tableSort id="orderBy" name="orderBy" value="${page.orderBy}" callback="page();"/>
     <ul class="ul-form">
         <li><label>订单号：</label>
             <form:input path="orderId" htmlEscape="false" maxlength="32" class="input-medium"/>
@@ -142,7 +143,7 @@
         <th>退货快递</th>
         <th>三方售后</th>
         <th>创建时间</th>
-        <th>更新时间</th>
+        <th class="sort-column updateDate">更新时间</th>
         <shiro:hasPermission name="simpleorder:simpleOrderAf ter:edit">
             <th>操作</th>
         </shiro:hasPermission>
