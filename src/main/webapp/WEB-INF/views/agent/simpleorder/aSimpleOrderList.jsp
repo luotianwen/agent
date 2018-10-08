@@ -196,8 +196,8 @@
             <td>
                 <c:if test="${simpleOrder.state==1}">
                     <a href="${ctx}/msimpleorder/form?id=${simpleOrder.id}">修改</a>
-                    <a href="${ctx}/msimpleorder/delete?id=${simpleOrder.id}"
-                       onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
+                    <%--<a href="${ctx}/msimpleorder/delete?id=${simpleOrder.id}"
+                       onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>--%>
                 </c:if>
                 <c:if test="${simpleOrder.state==3}">
                     <a href="${ctx}/msimpleorder/after?id=${simpleOrder.id}"
