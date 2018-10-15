@@ -35,6 +35,7 @@
 		a.tmarticleno AS "tmarticleno",
 		a.tmspec AS "tmspec",
 		a.type as "type",
+		a.three as "three",
 		a.tmstate AS "tmstate",
 		a.update_by AS "updateBy.id"
 	</sql>
@@ -235,7 +236,8 @@
 			remarks,
 			del_flag,
 			orderId,
-			type
+			type,
+			three
 		) VALUES (
 			#{id},
 			#{agentid},
@@ -261,7 +263,8 @@
 			#{remarks},
 			#{delFlag},
 			#{orderId},
-			#{type}
+			#{type},
+			#{three}
 		)
 	</insert>
 	
@@ -288,6 +291,7 @@
 			address = #{address},
 			tradeId=#{tradeId},
 			remarks = #{remarks},
+			three=#{three},
 			type=#{type}
 		WHERE id = #{id}
 	</update>

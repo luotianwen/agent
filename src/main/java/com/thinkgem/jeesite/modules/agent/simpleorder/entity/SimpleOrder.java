@@ -66,7 +66,7 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String spec;		// 规格尺码
 	@ExcelField(title="地址", align=1, sort=89)
 	private String address;		// 地址
-
+	private String three;		// 三方
 	private Date beginCreateDate;		// 开始 创建时间
 	private Date endCreateDate;		// 结束 创建时间
 	@ExcelField(title="创建时间", align=1, sort=110)
@@ -100,6 +100,14 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String tmspec;//规格
 	private String tmstate;//状态
 	private String afterstate;
+
+	public String getThree() {
+		return three;
+	}
+
+	public void setThree(String three) {
+		this.three = three;
+	}
 
 	public String getAfterstate() {
 		return afterstate;

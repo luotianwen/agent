@@ -263,6 +263,7 @@
         <th>创建时间</th>
         <th>发货时间</th>
         <th>备注信息</th>
+        <th>仓库</th>
         <shiro:hasPermission name="simpleorder:simpleOrder:edit">
             <th>操作</th>
         </shiro:hasPermission>
@@ -316,6 +317,8 @@
         </td>
         <td>
 
+        </td>
+        <td>
         </td>
         <td>
         </td>
@@ -393,6 +396,9 @@
             </td>
             <td>
                     ${simpleOrder.remarks}
+            </td>
+            <td>
+                    ${simpleOrder.three}
             </td>
             <shiro:hasPermission name="simpleorder:simpleOrder:edit">
                 <td>
