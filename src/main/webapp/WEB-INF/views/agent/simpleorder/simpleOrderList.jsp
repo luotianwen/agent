@@ -17,16 +17,16 @@
             var clipboard = new ClipboardJS('.copy');
 
             clipboard.on('success', function (e) {
-                console.info('Action:', e.action);
-                console.info('Text:', e.text);
-                console.info('Trigger:', e.trigger);
+                //console.info('Action:', e.action);
+                //console.info('Text:', e.text);
+                //console.info('Trigger:', e.trigger);
                 top.$.jBox.tip("复制" + e.text + "成功");
                 e.clearSelection();
             });
 
             clipboard.on('error', function (e) {
-                console.error('Action:', e.action);
-                console.error('Trigger:', e.trigger);
+                //console.error('Action:', e.action);
+                //console.error('Trigger:', e.trigger);
                 top.$.jBox.tip("复制" + e.text + "失败");
             });
 
@@ -121,7 +121,51 @@
             });
             return false;
         }
+        // 提示输入对话框
+        function promptxthree(title, href, closed) {
+            top.$.jBox("<div class='form-search' style='padding:20px;text-align:center;'>仓库信息：<input type='text' id='three' name='three'/>  </div>", {
+                title: title, submit: function (v, h, f) {
+                    if (f.three == '') {
+                        top.$.jBox.tip("请输入仓库信息。", 'error');
+                        return false;
+                    }
 
+                    if (typeof href == 'function') {
+                        href();
+                    } else {
+                        resetTip(); //loading();
+                        var url = href + "&three=" + encodeURIComponent(f.three);
+                        $.ajax({
+                            type : "post",
+                            async : false,
+                            url : url,
+                            success : function(msg) {
+                                if(msg=='ok')
+                                {
+                                    top.$.jBox.tip(" 成功。", 'success');
+                                    return true;
+                                }
+                                else{
+                                    top.$.jBox.tip(" 失败。", 'error');
+
+                                    return false;
+                                }
+                            },
+                            error : function(json) {
+                                top.$.jBox.tip("网络异常。", 'error');
+                                return false;
+                            }
+                        });
+                    }
+                }, closed: function () {
+                    if (typeof closed == 'function') {
+                        closed();
+                    }
+                    $("#searchForm").submit();
+                }
+            });
+            return false;
+        }
         function checkOrder() {
             var num = $("input[type='checkbox']:checked").length;
             if (num == 0) {
@@ -418,6 +462,9 @@
                     <c:if test="${simpleOrder.afterstate==4||simpleOrder.afterstate==5||simpleOrder.afterstate==7}">
                         <a href="${ctx}/simpleorder/simpleOrderAfter?orderId=${simpleOrder.orderId}">售后信息</a>
                     </c:if>
+                    <a href="${ctx}/simpleorder/simpleOrder/three?id=${simpleOrder.id}"
+                       onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">仓库信息</a>
+
                     <a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}"
                        onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
                 </td>

@@ -341,5 +341,8 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
         return sb.toString();
     }
 
-
+    @Transactional(readOnly = false)
+    public void three(SimpleOrder simpleOrder) {
+        dao.three(simpleOrder);
+    }
 }

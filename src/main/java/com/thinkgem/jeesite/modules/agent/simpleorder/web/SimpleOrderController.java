@@ -119,6 +119,19 @@ public class SimpleOrderController extends BaseController {
 		//addMessage(redirectAttributes, "保存下单管理成功");
 		//return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
 	}
+	@RequiresPermissions("simpleorder:simpleOrder:edit")
+	@RequestMapping(value = "three")
+	@ResponseBody
+	public String three(SimpleOrder simpleOrder, Model model, RedirectAttributes redirectAttributes) throws Exception {
+		if (!beanValidator(model, simpleOrder)){
+			return "error";
+		}
+		simpleOrderService.three(simpleOrder);
+
+		return "ok";
+		//addMessage(redirectAttributes, "保存下单管理成功");
+		//return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
+	}
 
 	@RequiresPermissions("simpleorder:simpleOrder:edit")
 	@RequestMapping(value = "delete")
