@@ -263,6 +263,9 @@
         <li><label>收件人：</label>
             <form:input path="consignee" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
+        <li><label>仓库：</label>
+            <form:input path="three" htmlEscape="false" maxlength="32" class="input-medium"/>
+        </li>
 
             <%--	<li><label>快递信息：</label>
                     <form:input path="deliverinfo" htmlEscape="false" maxlength="32" class="input-medium"/>

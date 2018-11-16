@@ -82,6 +82,11 @@
 				AND (a.consignee LIKE concat('%',#{consignee},'%')
 				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
 			</if>
+			<if test="three != null and three != ''">
+				AND  a.three LIKE concat('%',#{three},'%')
+
+			</if>
+
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
 			</if>
@@ -134,6 +139,9 @@
 			<if test="consignee != null and consignee != ''">
 				AND (a.consignee   LIKE concat('%',#{consignee},'%')
 				OR a.deliverinfo  LIKE concat('%',#{consignee},'%'))
+			</if>
+			<if test="three != null and three != ''">
+				AND  a.three LIKE concat('%',#{three},'%')
 			</if>
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
