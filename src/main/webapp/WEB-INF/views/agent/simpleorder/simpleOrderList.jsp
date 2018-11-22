@@ -67,8 +67,64 @@
             }
 
         }
-        // 提示输入对话框
         function promptxcourier(title, href, closed) {
+            layer.open({
+                type: 1,
+                shadeClose: true,
+                content: '<div class=\'form-search\' style=\'padding:20px;text-align:center;\'>快递公司：<input type=\'text\' id=\'backcourier2\' name=\'backcourier\'/> </br>快递单号：<input type=\'text\' id=\'backnumber2\' name=\'backnumber\'/></br>快递费用：<input type=\'text\' id=\'backmoney2\' name=\'backmoney\'/></div>',
+                btn: ['确定', '取消']
+                , yes: function (index, f) {
+                    var backcourier=$("#backcourier2").val();
+                    var backnumber=$("#backnumber2").val();
+                    var backmoney=$("#backmoney2").val();
+                    if (backcourier == '') {
+                        top.$.jBox.tip("请输入快递公司。", 'error');
+                        return false;
+                    }
+                    if (backnumber == '') {
+                        top.$.jBox.tip("请输入快递单号。", 'error');
+                        return false;
+                    }
+                    if (backmoney == '') {
+                        top.$.jBox.tip("请输入快递费用。", 'error');
+                        return false;
+                    }
+                    resetTip(); //loading();
+                    var url = href + "&courier=" + encodeURIComponent(backcourier) + "&delivernumber=" + encodeURIComponent(backnumber) + "&delivermoney=" + encodeURIComponent(backmoney);
+                    $.ajax({
+                        type : "post",
+                        async : false,
+                        url : url,
+                        success : function(msg) {
+                            if(msg=='ok')
+                            {
+                                top.$.jBox.tip("发货成功。", 'success');
+                                $("#searchForm").submit();
+                                return true;
+                            }
+                            else{
+                                top.$.jBox.tip("发货失败。", 'error');
+
+                                return false;
+                            }
+                        },
+                        error : function(json) {
+                            top.$.jBox.tip("网络异常。", 'error');
+                            return false;
+                        }
+                    });
+                }
+                , btn2: function (index, layero) {
+                    //按钮【按钮二】的回调
+                    layer.close(index);
+                    return false;
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+            return false;
+        }
+        // 提示输入对话框
+        function promptxcourier222(title, href, closed) {
             top.$.jBox("<div class='form-search' style='padding:20px;text-align:center;'>快递公司：<input type='text' id='backcourier' name='backcourier'/> </br>快递单号：<input type='text' id='backnumber' name='backnumber'/>" +
                 "</br>快递费用：<input type='text' id='backmoney' name='backmoney'/></div>", {
                 title: title, submit: function (v, h, f) {
@@ -121,8 +177,57 @@
             });
             return false;
         }
-        // 提示输入对话框
         function promptxthree(title, href, closed) {
+            layer.open({
+                type: 1,
+                shadeClose: true,
+                content: '<div class=\'form-search\' style=\'padding:20px;text-align:center;\'>仓库信息：<input type=\'text\' id=\'three2\' name=\'three2\'/>  </div>',
+                btn: ['确定', '取消']
+                , yes: function (index, f) {
+                    var three=$("#three2").val();
+                    console.log("ddd"+$("#three2").val());
+
+                    if (three == '') {
+                        top.$.jBox.tip("请输入仓库信息。", 'error');
+                        return false;
+                    }
+                    resetTip(); //loading();
+                    var url = href + "&three=" + encodeURIComponent(three);
+                    $.ajax({
+                        type : "post",
+                        async : false,
+                        url : url,
+                        success : function(msg) {
+
+                            if(msg=='ok')
+                            {
+                                top.$.jBox.tip(" 成功。", 'success');
+                                $("#searchForm").submit();
+                                return true;
+                            }
+                            else{
+                                top.$.jBox.tip(" 失败。", 'error');
+
+                                return false;
+                            }
+                        },
+                        error : function(json) {
+                            top.$.jBox.tip("网络异常。", 'error');
+                            return false;
+                        }
+                    });
+                }
+                , btn2: function (index, layero) {
+                    //按钮【按钮二】的回调
+                     layer.close(index);
+                    return false;
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+            return false;
+        }
+        // 提示输入对话框
+        function promptxthree1222(title, href, closed) {
             top.$.jBox("<div class='form-search' style='padding:20px;text-align:center;'>仓库信息：<input type='text' id='three' name='three'/>  </div>", {
                 title: title, submit: function (v, h, f) {
                     if (f.three == '') {
