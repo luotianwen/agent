@@ -98,6 +98,13 @@
         <li><label>退货单号：</label>
             <form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
+        <li><label>退款状态：</label>
+            <form:select path="afterstate" class="input-medium">
+                <form:option value="" label="全部"/>
+                <form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value"
+                              htmlEscape="false"/>
+            </form:select>
+        </li>
         <li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
             <input id="btnExport" class="btn btn-primary" type="button" value="导出"/></li>
         <li class="clearfix"></li>
@@ -118,6 +125,7 @@
         <th>退货地址</th>
         <th>换货快递</th>
         <th>退货快递</th>
+        <th>退款状态</th>
         <th>创建时间</th>
         <th>更新时间</th>
         <th>操作</th>
@@ -168,7 +176,9 @@
                        href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.delivernumber}">查看</a>
                 </c:if>
             </td>
-
+            <td>
+                    ${fns:getDictLabel(simpleOrderAfter.afterstate, 'yes_no', '')}
+            </td>
             <td>
                 <fmt:formatDate value="${simpleOrderAfter.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
