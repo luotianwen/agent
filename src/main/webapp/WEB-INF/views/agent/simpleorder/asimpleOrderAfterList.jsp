@@ -177,7 +177,9 @@
                 </c:if>
             </td>
             <td>
+                <c:if test="${simpleOrderAfter.state==2}" >
                     ${fns:getDictLabel(simpleOrderAfter.afterstate, 'yes_no', '')}
+                 </c:if>
             </td>
             <td>
                 <fmt:formatDate value="${simpleOrderAfter.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
