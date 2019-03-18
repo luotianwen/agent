@@ -11,7 +11,7 @@
 				submitHandler: function(form){
 				    var address =$("#address").val().split(" ");
 				    if(address.length!=4){
-                        top.$.jBox.alert("地址信息请填详细中间例如(北京市 北京市 通州区 光大新北京中心8BC 2302室)");
+                        top.$.jBox.alert("地址信息请填详细中间例如(北京 北京市 通州区 光大新北京中心8B2302室)");
                         return false;
 					}
                     else{
@@ -99,7 +99,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">地址:(北京市 北京市 通州区 光大新北京中心8BC 2302室)</label>
+			<label class="control-label">地址:(北京 北京市 通州区 光大新北京中心8B2302室)</label>
 			<div class="controls">
 				<form:textarea path="address" htmlEscape="false"    maxlength="200" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
