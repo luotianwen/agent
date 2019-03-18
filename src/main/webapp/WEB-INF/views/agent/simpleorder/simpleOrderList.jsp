@@ -528,10 +528,11 @@
                 </c:if>
 
             </td>
-            <td class="copy" data-clipboard-text="${simpleOrder.consignee}，${simpleOrder.phone}，${simpleOrder.address}，"
+            <td class="copy" data-clipboard-text="${simpleOrder.consignee}，${simpleOrder.phone}，，${simpleOrder.address}，"
                 title="点击复制">
+               <%-- 张三 ，13888888888 ，0518-88888888，江苏省 连云港市 新浦区 朝阳中路77号二楼 ，222000--%>
                 <c:if test="${empty simpleOrder.deliverinfo}">
-                    ${simpleOrder.consignee}，${simpleOrder.phone}，${simpleOrder.address}，
+                    ${simpleOrder.consignee}，${simpleOrder.phone}，，${simpleOrder.address}，
                 </c:if>
                 <c:if test="${not empty simpleOrder.deliverinfo}">
                     ${simpleOrder.deliverinfo}
