@@ -164,7 +164,7 @@
                     ${simpleOrderAfter.backcourier},${simpleOrderAfter.backnumber} ,
                     ${simpleOrderAfter.backmoney}
                 <c:if test="${not empty simpleOrderAfter.backnumber}">
-                    <a target="_blank" href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.backnumber}">查看</a>
+                    <a target="_blank" href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.backcourier} ${simpleOrderAfter.backnumber}">查看</a>
                 </c:if>
             </td>
             <td>
@@ -173,7 +173,7 @@
                 <c:if test="${not empty simpleOrderAfter.delivernumber}">
 
                     <a target="_blank"
-                       href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.delivernumber}">查看</a>
+                       href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.courier} ${simpleOrderAfter.delivernumber}">查看</a>
                 </c:if>
             </td>
             <td>
