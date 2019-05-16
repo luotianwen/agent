@@ -81,6 +81,18 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String no;
 	@ExcelField(title="类别", align=1, sort=140, dictType="a_simple_order_type")
 	protected String type;	// 类别
+
+	@ExcelField(title="所属系统", align=1, sort=140, dictType="a_simple_order_system")
+	protected String system;	// 类别
+
+	public String getSystem() {
+		return system;
+	}
+
+	public void setSystem(String system) {
+		this.system = system;
+	}
+
 	public String getNo() {
 		return no;
 	}public void setNo(String no) {

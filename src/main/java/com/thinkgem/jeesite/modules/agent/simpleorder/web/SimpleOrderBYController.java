@@ -22,7 +22,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +35,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 动力订单Controller
+ * 北京移动订单Controller
  * @author luotianwen
  * @version 2017-10-29
  */
 @Controller
-@RequestMapping(value = "${adminPath}/msimpleorder")
-public class SimpleOrderIntegerController extends BaseController {
+@RequestMapping(value = "${adminPath}/bsimpleorder")
+public class SimpleOrderBYController extends BaseController {
 	@Autowired
 	private SimpleOrderAfterService simpleOrderAfterService;
 	@Autowired
@@ -59,7 +62,7 @@ public class SimpleOrderIntegerController extends BaseController {
 		return entity;
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = {"list", ""})
 	public String list(SimpleOrder aSimpleOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
@@ -70,22 +73,22 @@ public class SimpleOrderIntegerController extends BaseController {
 		if(null==aSimpleOrder.getBeginCreateDate()){
 			aSimpleOrder.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),5));
 		}
-		aSimpleOrder.setSystem("1");
+		aSimpleOrder.setSystem("2");
 		model.addAttribute("agent", agent);
 		aSimpleOrder.setAgentid(agent.getId());
 		Page<SimpleOrder> page = aSimpleOrderService.findPage(new Page<SimpleOrder>(request, response), aSimpleOrder);
 		model.addAttribute("page", page);
-		return "agent/simpleorder/aSimpleOrderList";
+		return "agent/simpleorder/bSimpleOrderList";
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "form")
 	public String form(SimpleOrder aSimpleOrder, Model model) {
 		model.addAttribute("aSimpleOrder", aSimpleOrder);
-		return "agent/simpleorder/aSimpleOrderForm";
+		return "agent/simpleorder/bSimpleOrderForm";
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "after")
 	public String after(SimpleOrder aSimpleOrder, Model model) throws Exception {
 		aSimpleOrder=aSimpleOrderService.get(aSimpleOrder.getId());
@@ -97,21 +100,21 @@ public class SimpleOrderIntegerController extends BaseController {
 		return "agent/simpleorder/afterSimpleOrderForm";
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "aftersave")
 
 	public String aftersave(SimpleOrderAfter aSimpleOrderAfter, Model model)  throws Exception{
 			aSimpleOrderAfterService.aftersave(aSimpleOrderAfter);
 
-		return "redirect:"+ Global.getAdminPath()+"/msimpleorder/?repage";
+		return "redirect:"+ Global.getAdminPath()+"/bsimpleorder/?repage";
 	}
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "save")
 	public String save(SimpleOrder aSimpleOrder, Model model, RedirectAttributes redirectAttributes) throws Exception {
 		if (!beanValidator(model, aSimpleOrder)){
 			return form(aSimpleOrder, model);
 		}
-		aSimpleOrder.setSystem("1");
+		aSimpleOrder.setSystem("2");
 		aSimpleOrder.setIsaccount("0");
 		User user = UserUtils.getUser();
 		Agent agent=agentService.getUserId(user.getId());
@@ -122,19 +125,19 @@ public class SimpleOrderIntegerController extends BaseController {
 		aSimpleOrder.setOrderId(onumber);
 		aSimpleOrderService.asave(aSimpleOrder);
 		addMessage(redirectAttributes, "保存下单管理成功");
-		return "redirect:"+ Global.getAdminPath()+"/msimpleorder/?repage";
+		return "redirect:"+ Global.getAdminPath()+"/bsimpleorder/?repage";
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "delete")
 	public String delete(SimpleOrder aSimpleOrder, RedirectAttributes redirectAttributes) {
 		aSimpleOrderService.delete(aSimpleOrder);
 		addMessage(redirectAttributes, "删除下单管理成功");
-		return "redirect:"+Global.getAdminPath()+"/msimpleorder/?repage";
+		return "redirect:"+Global.getAdminPath()+"/bsimpleorder/?repage";
 	}
 
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "listSimpleOrderAfter")
 	public String list(SimpleOrderAfter simpleOrderAfter, HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
@@ -145,18 +148,18 @@ public class SimpleOrderIntegerController extends BaseController {
 		simpleOrderAfter.setAgent(agent.getId());
 		Page<SimpleOrderAfter> page = simpleOrderAfterService.findPage(new Page<SimpleOrderAfter>(request, response), simpleOrderAfter);
 		model.addAttribute("page", page);
-		return "agent/simpleorder/asimpleOrderAfterList";
+		return "agent/simpleorder/bSimpleOrderAfterList";
 	}
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "deleteSimpleOrderAfter")
 	public String delete(SimpleOrderAfter simpleOrderAfter, RedirectAttributes redirectAttributes) {
 		simpleOrderAfterService.delete(simpleOrderAfter);
 		addMessage(redirectAttributes, "删除订单售后成功");
-		return "redirect:"+Global.getAdminPath()+"/msimpleorder/listSimpleOrderAfter";
+		return "redirect:"+Global.getAdminPath()+"/bsimpleorder/listSimpleOrderAfter";
 	}
 
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "exportSimpleOrderAfter", method= RequestMethod.POST)
 	public String exportSimpleOrderAfter(SimpleOrderAfter aSimpleOrder, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
@@ -174,18 +177,18 @@ public class SimpleOrderIntegerController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/msimpleorder/listSimpleOrderAfter?repage";
+		return "redirect:" + adminPath + "/bsimpleorder/listSimpleOrderAfter?repage";
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "courier")
 	public String courier(SimpleOrderAfter simpleOrderAfter, RedirectAttributes redirectAttributes) {
 		simpleOrderAfterService.courier(simpleOrderAfter);
 		addMessage(redirectAttributes, "订单售后成功");
-		return "redirect:"+Global.getAdminPath()+"/msimpleorder/listSimpleOrderAfter";
+		return "redirect:"+Global.getAdminPath()+"/bsimpleorder/listSimpleOrderAfter";
 	}
 
-	@RequiresPermissions("simpleorder:aSimpleOrder:mview")
+	@RequiresPermissions("simpleorder:bSimpleOrder:mview")
 	@RequestMapping(value = "export", method= RequestMethod.POST)
 	public String exportFile(SimpleOrder aSimpleOrder, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
@@ -196,7 +199,7 @@ public class SimpleOrderIntegerController extends BaseController {
 			if(null==aSimpleOrder){
 				aSimpleOrder=new SimpleOrder();
 			}
-			aSimpleOrder.setSystem("1");
+			aSimpleOrder.setSystem("2");
 			aSimpleOrder.setAgentid(agent.getId());
             List<SimpleOrder> list=aSimpleOrderService.findList(aSimpleOrder);
 			new ExportExcel("订单数据", SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
@@ -204,7 +207,7 @@ public class SimpleOrderIntegerController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/msimpleorder/list?repage";
+		return "redirect:" + adminPath + "/bsimpleorder/list?repage";
 	}
 
 }

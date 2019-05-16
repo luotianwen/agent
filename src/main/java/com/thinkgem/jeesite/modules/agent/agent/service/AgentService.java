@@ -59,7 +59,7 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 	private void saveUser(Agent agent){
 		String phone=agent.getPhone();
 		User user=new User();
-		user.setPassword(SystemService.entryptPassword(phone.substring(phone.length()-6,phone.length())));
+		user.setPassword(SystemService.entryptPassword(agent.getPassword()));
 		user.setLoginName(agent.getLoginName());
 		user.setCompany(new Office("1"));
 		user.setOffice(new Office("2"));
@@ -75,11 +75,11 @@ public class AgentService extends CrudService<AgentDao, Agent> {
 		JSONObject j=new JSONObject();
 		j.put("name",agent.getName());
 		j.put("account",agent.getLoginName());
-		try {
+		/*try {
 			sms.sendSms(phone,j.toString(),"SMS_109505038");
 		} catch (ClientException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	@Transactional(readOnly = false)
 	public void delete(Agent agent) {

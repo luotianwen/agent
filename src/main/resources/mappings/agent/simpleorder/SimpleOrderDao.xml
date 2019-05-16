@@ -37,6 +37,7 @@
 		a.type as "type",
 		a.three as "three",
 		a.tmstate AS "tmstate",
+		a.system as "system",
 		a.update_by AS "updateBy.id"
 	</sql>
 	
@@ -121,6 +122,9 @@
 				AND a.articleno = #{articleno}
 			</if>
 
+			<if test="system != null and system != ''">
+				AND a.system = #{system}
+			</if>
 			<if test="orderId != null and orderId != ''">
 				AND a.orderId = #{orderId}
 			</if>
@@ -204,6 +208,9 @@
 				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
 			</if>
 
+			<if test="system != null and system != ''">
+				AND a.system = #{system}
+			</if>
 			<if test="isaccount != null and isaccount != ''">
 				AND a.isaccount = #{isaccount}
 			</if>
@@ -245,7 +252,8 @@
 			del_flag,
 			orderId,
 			type,
-			three
+			three,
+			system
 		) VALUES (
 			#{id},
 			#{agentid},
@@ -272,7 +280,8 @@
 			#{delFlag},
 			#{orderId},
 			#{type},
-			#{three}
+			#{three},
+			#{system}
 		)
 	</insert>
 	
@@ -300,7 +309,8 @@
 			tradeId=#{tradeId},
 			remarks = #{remarks},
 			three=#{three},
-			type=#{type}
+			type=#{type},
+			system=#{system}
 		WHERE id = #{id}
 	</update>
 	<select id="getOrderIdDeliver" resultType="SimpleOrder">
