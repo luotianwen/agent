@@ -70,7 +70,6 @@ public class SimpleOrderIntegerController extends BaseController {
 		if(null==aSimpleOrder.getBeginCreateDate()){
 			aSimpleOrder.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),5));
 		}
-		aSimpleOrder.setSystem("1");
 		model.addAttribute("agent", agent);
 		aSimpleOrder.setAgentid(agent.getId());
 		Page<SimpleOrder> page = aSimpleOrderService.findPage(new Page<SimpleOrder>(request, response), aSimpleOrder);
@@ -111,7 +110,6 @@ public class SimpleOrderIntegerController extends BaseController {
 		if (!beanValidator(model, aSimpleOrder)){
 			return form(aSimpleOrder, model);
 		}
-		aSimpleOrder.setSystem("1");
 		aSimpleOrder.setIsaccount("0");
 		User user = UserUtils.getUser();
 		Agent agent=agentService.getUserId(user.getId());
@@ -196,7 +194,6 @@ public class SimpleOrderIntegerController extends BaseController {
 			if(null==aSimpleOrder){
 				aSimpleOrder=new SimpleOrder();
 			}
-			aSimpleOrder.setSystem("1");
 			aSimpleOrder.setAgentid(agent.getId());
             List<SimpleOrder> list=aSimpleOrderService.findList(aSimpleOrder);
 			new ExportExcel("订单数据", SimpleOrder.class).setDataList(list).write(response, fileName).dispose();

@@ -371,6 +371,10 @@
         <li><label>仓库：</label>
             <form:input path="three" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
+        <li><label>代理商：</label>
+            <sys:treeselect id="agentid" name="agentid" value="${simpleOrder.agentid}" labelName="simpleOrder.agentName" labelValue="${simpleOrder.agentName}"
+                            title="用户" url="/sys/office/treeData?type=3" cssClass="input-medium" allowClear="true" notAllowSelectParent="true"/>
+        </li>
 
             <%--	<li><label>快递信息：</label>
                     <form:input path="deliverinfo" htmlEscape="false" maxlength="32" class="input-medium"/>

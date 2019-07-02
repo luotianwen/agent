@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
+import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -59,6 +60,13 @@ public class SimpleOrderController extends BaseController {
 	public String list(SimpleOrder simpleOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
 		if(null==simpleOrder.getBeginCreateDate()){
 			simpleOrder.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),5));
+		}
+		if(StringUtils.isNotBlank(simpleOrder.getAgentid())) {
+			Agent agent = agentService.getUserId(simpleOrder.getAgentid());
+			if(null!=agent) {
+				simpleOrder.setAgentid(agent.getId());
+				simpleOrder.setAgentName(agent.getName());
+			}
 		}
 		model.addAttribute("simpleOrder2", simpleOrderService.sum(simpleOrder));
 		Page<SimpleOrder> page = simpleOrderService.findPage(new Page<SimpleOrder>(request, response), simpleOrder); 
@@ -177,6 +185,10 @@ public class SimpleOrderController extends BaseController {
 			if(null==aSimpleOrder){
 				aSimpleOrder=new SimpleOrder();
 			}
+			if(StringUtils.isNotBlank(aSimpleOrder.getAgentid())) {
+				Agent agent = agentService.getUserId(aSimpleOrder.getAgentid());
+				aSimpleOrder.setAgentid(agent.getId());
+			}
 			List<SimpleOrder> list=simpleOrderService.findList(aSimpleOrder);
 			new ExportExcel(null, SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
 			return null;
@@ -185,4 +197,6 @@ public class SimpleOrderController extends BaseController {
 		}
 		return "redirect:" + adminPath + "/simpleorder/simpleOrder/list?repage";
 	}
+	@Autowired
+	private AgentService agentService;
 }
