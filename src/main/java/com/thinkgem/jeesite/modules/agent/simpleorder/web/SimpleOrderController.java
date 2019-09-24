@@ -61,10 +61,11 @@ public class SimpleOrderController extends BaseController {
 		if(null==simpleOrder.getBeginCreateDate()){
 			simpleOrder.setBeginCreateDate(DateUtils.getBeforeDate(new Date(),5));
 		}
-		if(StringUtils.isNotBlank(simpleOrder.getAgentid())) {
-			Agent agent = agentService.getUserId(simpleOrder.getAgentid());
+		if(StringUtils.isNotBlank(simpleOrder.getRemarks())) {
+			Agent agent = agentService.getUserId(simpleOrder.getRemarks());
 			if(null!=agent) {
 				simpleOrder.setAgentid(agent.getId());
+				simpleOrder.setRemarks(agent.getUserid());
 				simpleOrder.setAgentName(agent.getName());
 			}
 		}
@@ -185,10 +186,16 @@ public class SimpleOrderController extends BaseController {
 			if(null==aSimpleOrder){
 				aSimpleOrder=new SimpleOrder();
 			}
-			if(StringUtils.isNotBlank(aSimpleOrder.getAgentid())) {
-				Agent agent = agentService.getUserId(aSimpleOrder.getAgentid());
-				aSimpleOrder.setAgentid(agent.getId());
+
+			if(StringUtils.isNotBlank(aSimpleOrder.getRemarks())) {
+				Agent agent = agentService.getUserId(aSimpleOrder.getRemarks());
+				if(null!=agent) {
+					aSimpleOrder.setAgentid(agent.getId());
+					aSimpleOrder.setRemarks(agent.getUserid());
+					aSimpleOrder.setAgentName(agent.getName());
+				}
 			}
+
 			List<SimpleOrder> list=simpleOrderService.findList(aSimpleOrder);
 			new ExportExcel(null, SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
 			return null;

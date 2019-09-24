@@ -372,7 +372,7 @@
             <form:input path="three" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
         <li><label>代理商：</label>
-            <sys:treeselect id="agentid" name="agentid" value="${simpleOrder.agentid}" labelName="simpleOrder.agentName" labelValue="${simpleOrder.agentName}"
+            <sys:treeselect id="remarks" name="remarks" value="${simpleOrder.remarks}" labelName="simpleOrder.agentName" labelValue="${simpleOrder.agentName}"
                             title="用户" url="/sys/office/treeData?type=3" cssClass="input-medium" allowClear="true" notAllowSelectParent="true"/>
         </li>
 
