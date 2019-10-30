@@ -86,7 +86,9 @@
 				AND  a.three LIKE concat('%',#{three},'%')
 
 			</if>
-
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
+			</if>
 			<if test="delivernumber != null and delivernumber != ''">
 				AND a.delivernumber = #{delivernumber}
 			</if>
@@ -133,6 +135,9 @@
 			</if>
 			<if test="type != null and type != ''">
 				AND a.type = #{type}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
 			</if>
 			<if test="afterstate != null and afterstate != ''">
 				AND a.afterstate = #{afterstate}
@@ -187,6 +192,9 @@
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="articleno != null and articleno != ''">
 				AND a.articleno = #{articleno}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
 			</if>
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}

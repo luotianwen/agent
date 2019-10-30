@@ -51,6 +51,12 @@
 			<if test="consignee != null and consignee != ''">
 				AND a.consignee = #{consignee}
 			</if>
+			<if test="articleno != null and articleno != ''">
+				AND a.articleno = #{articleno}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
+			</if>
 			<if test="afterstate != null and afterstate != ''">
 				AND a.afterstate = #{afterstate}
 			</if>

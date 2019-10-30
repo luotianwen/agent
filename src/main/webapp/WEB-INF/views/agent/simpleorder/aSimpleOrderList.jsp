@@ -68,6 +68,9 @@
         <li><label>收件人：</label>
             <form:input path="consignee" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
+        <li><label>手机：</label>
+            <form:input path="phone" htmlEscape="false" maxlength="32" class="input-medium"/>
+        </li>
         <li><label>快递单号：</label>
             <form:input path="delivernumber" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>

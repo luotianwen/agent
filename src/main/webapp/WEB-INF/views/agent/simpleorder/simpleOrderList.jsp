@@ -323,6 +323,7 @@
         <li><label>订单号：</label>
             <form:input path="orderId" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
+
         <li><label>货号：</label>
             <form:input path="articleno" htmlEscape="false" maxlength="200" class="input-medium"/>
         </li>
@@ -367,6 +368,9 @@
         </li>
         <li><label>收件人：</label>
             <form:input path="consignee" htmlEscape="false" maxlength="32" class="input-medium"/>
+        </li>
+        <li><label>手机：</label>
+            <form:input path="phone" htmlEscape="false" maxlength="32" class="input-medium"/>
         </li>
         <li><label>仓库：</label>
             <form:input path="three" htmlEscape="false" maxlength="32" class="input-medium"/>
@@ -578,8 +582,8 @@
                     <a href="${ctx}/simpleorder/simpleOrder/three?id=${simpleOrder.id}"
                        onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">仓库信息</a>
 
-                    <a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}"
-                       onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>
+                   <%-- <a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}"
+                       onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>--%>
                 </td>
             </shiro:hasPermission>
         </tr>
