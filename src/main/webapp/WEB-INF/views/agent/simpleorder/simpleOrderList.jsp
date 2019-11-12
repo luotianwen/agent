@@ -14,6 +14,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
             var clipboard = new ClipboardJS('.copy');
 
             clipboard.on('success', function (e) {
@@ -304,7 +305,10 @@
             $("#searchForm").submit();
             $("#searchForm").attr("action", oldAction);
         }
-
+function opentm(articleno,addr) {
+    window.open("http://www.tianmasport.com/ms/order/quickOrder.shtml?articleno="+encodeURIComponent(articleno)+"&address="+encodeURIComponent(addr),'tmopen');
+    //window.opener.document.getElementById("basicInfo").value=addr;
+}
 
     </script>
 </head>
@@ -404,7 +408,7 @@
     <thead>
     <tr>
         <th><input type=checkbox name="checkId" id="checkId"></th>
-        <th>仓库信息</th>
+       <%-- <th>仓库信息</th>--%>
         <th>订单号/交易号</th>
         <th>客户名称</th>
         <th>货号</th>
@@ -431,7 +435,7 @@
     </thead>
     <tbody>
     <tr>
-        <td></td>
+        <%--<td></td>--%>
         <td></td>
         <td>
         </td>
@@ -486,27 +490,27 @@
     <c:forEach items="${page.list}" var="simpleOrder" varStatus="status">
         <tr>
             <td><input type="checkbox" name="orderIds" value="${simpleOrder.id}"/>${simpleOrder.no}</td>
-            <td>
+           <%-- <td  >
                     ${simpleOrder.warehouse},${simpleOrder.tmarticleno},${simpleOrder.tmspec},${fns:getDictLabel(simpleOrder.tmstate, 'yes_no', '')}
-            </td>
+            </td>--%>
             <td class="copy" data-clipboard-text="${simpleOrder.orderId}"
                 title="点击复制">${simpleOrder.orderId}/${simpleOrder.tradeId}</td>
 
-            <td>
+            <td  >
                     ${simpleOrder.agentName}
             </td>
-            <td>
+            <td  >
                     ${simpleOrder.articleno}
 
             </td>
-            <td>
+            <td  >
 
                 <c:if test="${not empty simpleOrder.colour}">
                     ${simpleOrder.colour}<span style="color: red">|</span>
                 </c:if>
                     ${simpleOrder.spec}
             </td>
-            <td>
+            <td  >
                     ${simpleOrder.num}
             </td>
             <td>
@@ -564,6 +568,8 @@
             <shiro:hasPermission name="simpleorder:simpleOrder:edit">
                 <td>
                     <c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
+                        <a  style="cursor: pointer" onclick="opentm('${simpleOrder.articleno}','${simpleOrder.consignee}，${simpleOrder.phone}，，${simpleOrder.address}，')">下单</a>
+
                         <a href="${ctx}/simpleorder/simpleOrder/fast?id=${simpleOrder.id}"
                            onclick="return promptxcourier('填写${simpleOrder.consignee}的${simpleOrder.articleno}快递信息',   this.href)">快发</a>
 
