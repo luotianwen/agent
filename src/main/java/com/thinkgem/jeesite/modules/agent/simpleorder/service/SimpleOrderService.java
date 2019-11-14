@@ -345,4 +345,8 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     public void three(SimpleOrder simpleOrder) {
         dao.three(simpleOrder);
     }
+    @Transactional(readOnly = false)
+    public void updateSupplier(SimpleOrder simpleOrder) {
+        dao.updateSupplier(simpleOrder);
+    }
 }

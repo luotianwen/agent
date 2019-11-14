@@ -79,5 +79,10 @@ public class OrderController extends BaseController {
 		addMessage(redirectAttributes, "删除代理订单成功");
 		return "redirect:"+Global.getAdminPath()+"/order/order/?repage";
 	}
+	@RequiresPermissions("order:order:edit")
+	@RequestMapping(value = "print")
+	public String print(Order order, RedirectAttributes redirectAttributes) {
 
+		return "redirect:"+Global.getAdminPath()+"/order/order/?repage";
+	}
 }

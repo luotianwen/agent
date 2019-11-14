@@ -389,7 +389,6 @@ public class Page<T> {
 	 * 是否为最后一页
 	 * @return
 	 */
-	@JsonIgnore
 	public boolean isLastPage() {
 		return lastPage;
 	}

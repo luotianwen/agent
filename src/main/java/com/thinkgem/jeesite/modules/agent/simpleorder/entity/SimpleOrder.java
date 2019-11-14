@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.modules.agent.simpleorder.entity;
 
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
+import com.thinkgem.jeesite.modules.agent.agent.entity.Supplier;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
@@ -20,9 +21,15 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private static final long serialVersionUID = 1L;
 	private String agentid;		// 代理
 	private String agentName;		// 代理
+	private Supplier supplier;
 
+	public Supplier getSupplier() {
+		return supplier;
+	}
 
-
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 
 	public String getAgentName() {
 		return agentName;

@@ -309,7 +309,44 @@ function opentm(articleno,addr) {
     window.open("http://www.tianmasport.com/ms/order/quickOrder.shtml?articleno="+encodeURIComponent(articleno)+"&address="+encodeURIComponent(addr),'tmopen');
     //window.opener.document.getElementById("basicInfo").value=addr;
 }
+var fid;
+        function tfh(id) {
+            fid = id;
+            $('#tmyModal').modal();
+        }
+        function tcheckDeliver() {
+            var remarks = $("#supplier\\.remarks").val();
+            if (remarks == '') {
+                top.$.jBox.alert("请选择供应商");
+                return;
+            }
+            $.ajax({
+                type : "post",
+                async : false,
+                url : '${ctx}/simpleorder/simpleOrder/updateSupplier?id='+fid+'&supplier.id='+remarks,
+                success : function(msg) {
+                    if(msg=='ok')
+                    {
+                        top.$.jBox.tip(" 成功。", 'success');
+                        $("#searchForm").submit();
+                        return true;
+                    }
+                    else{
+                        top.$.jBox.tip(" 失败。", 'error');
 
+                        return false;
+                    }
+                },
+                error : function(json) {
+                    top.$.jBox.tip("网络异常。", 'error');
+                    return false;
+                }
+            });
+
+
+
+
+        }
     </script>
 </head>
 <body>
@@ -381,14 +418,17 @@ function opentm(articleno,addr) {
         </li>
         <li><label>代理商：</label>
             <sys:treeselect id="remarks" name="remarks" value="${simpleOrder.remarks}" labelName="simpleOrder.agentName" labelValue="${simpleOrder.agentName}"
-                            title="用户" url="/sys/office/treeData?type=3" cssClass="input-medium" allowClear="true" notAllowSelectParent="true"/>
+                            title="用户" url="/sys/office/treeData?type=3" cssClass="input-mini" allowClear="true" notAllowSelectParent="true"/>
+        </li>
+        <li><label>供应商：</label>
+            <form:select path="supplier.id" class="input-mini ">
+                <form:option value="" label="无"/>
+                <form:options items="${suppliers}" itemLabel="company" itemValue="id" htmlEscape="false"/>
+            </form:select>
         </li>
 
-            <%--	<li><label>快递信息：</label>
-                    <form:input path="deliverinfo" htmlEscape="false" maxlength="32" class="input-medium"/>
-                </li>--%>
         <li><label>是否对账：</label>
-            <form:select path="isaccount" class="input-medium">
+            <form:select path="isaccount" class="input-mini">
                 <form:option value="" label="全部"/>
                 <form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value"
                               htmlEscape="false"/>
@@ -402,6 +442,42 @@ function opentm(articleno,addr) {
         </li>
         <li class="clearfix"></li>
     </ul>
+
+    <div class="modal fade" id="tmyModal" tabindex="-1" role="dialog" aria-labelledby="tmyModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="tmyModalLabel">
+                        供应商
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <label class="span1 control-label">供应商：</label>
+                    <div class="span2 ">
+                        <form:select path="supplier.remarks" class="input-mini ">
+                            <form:option value="" label="无"/>
+                            <form:options items="${suppliers}" itemLabel="company" itemValue="id" htmlEscape="false"/>
+                        </form:select>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="tcheckDeliver()" data-dismiss="modal">
+                        确认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form:form>
 <sys:message content="${message}"/>
 <table id="contentTable" class="table  table-bordered table-striped  table-condensed table-hover">
@@ -409,24 +485,25 @@ function opentm(articleno,addr) {
     <tr>
         <th><input type=checkbox name="checkId" id="checkId"></th>
        <%-- <th>仓库信息</th>--%>
-        <th>订单号/交易号</th>
-        <th>客户名称</th>
+        <th>订单号</th>
+        <th>客户</th>
         <th>货号</th>
         <th>颜色|尺码</th>
         <th>数量</th>
         <th>状态</th>
-        <th>售后状态</th>
+        <th>售后</th>
         <th>类别</th>
         <th>售价</th>
-        <th>快递费用</th>
+        <th>快递费</th>
         <th>总计</th>
         <th>快递</th>
         <th>收件信息</th>
         <%--<th>快递信息</th>--%>
-        <th>是否对账</th>
-        <th>创建时间</th>
-        <th>发货时间</th>
-        <th>备注信息</th>
+        <th>对账</th>
+        <th>下单</th>
+        <th>发货</th>
+        <th>备注</th>
+        <th>供应商</th>
         <th>仓库</th>
         <shiro:hasPermission name="simpleorder:simpleOrder:edit">
             <th>操作</th>
@@ -484,6 +561,8 @@ function opentm(articleno,addr) {
         </td>
         <td>
         </td>
+            <td>
+            </td>
         <td>
         </td>
     </tr>
@@ -563,6 +642,9 @@ function opentm(articleno,addr) {
                     ${simpleOrder.remarks}
             </td>
             <td>
+                    ${simpleOrder.supplier.company}
+            </td>
+            <td>
                     ${simpleOrder.three}
             </td>
             <shiro:hasPermission name="simpleorder:simpleOrder:edit">
@@ -585,8 +667,12 @@ function opentm(articleno,addr) {
                     <c:if test="${simpleOrder.afterstate==4||simpleOrder.afterstate==5||simpleOrder.afterstate==7}">
                         <a href="${ctx}/simpleorder/simpleOrderAfter?orderId=${simpleOrder.orderId}">售后信息</a>
                     </c:if>
+                    <c:if test="${empty simpleOrder.supplier.id}">
+                    <a  style="cursor: pointer"
+                       onclick="tfh('${simpleOrder.id}')">供应商</a>
+                    </c:if>
                     <a href="${ctx}/simpleorder/simpleOrder/three?id=${simpleOrder.id}"
-                       onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">仓库信息</a>
+                       onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">说明</a>
 
                    <%-- <a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}"
                        onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>--%>

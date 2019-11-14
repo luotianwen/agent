@@ -37,11 +37,14 @@
 		a.type as "type",
 		a.three as "three",
 		a.tmstate AS "tmstate",
-		a.update_by AS "updateBy.id"
+		a.update_by AS "updateBy.id",
+		a.supplier AS "supplier.id",
+		s.company AS "supplier.company"
 	</sql>
 	
 	<sql id="simpleOrderJoins">
 		LEFT join a_agent g on g.id=a.agentid
+		LEFT join a_supplier s on s.id=a.supplier
 	</sql>
     
 	<select id="get" resultType="SimpleOrder">
@@ -68,6 +71,9 @@
 			</if>
 			<if test="afterstate != null and afterstate != ''">
 				AND a.afterstate = #{afterstate}
+			</if>
+			<if test="supplier != null and supplier != id and supplier.id != ''">
+				AND a.supplier = #{supplier.id}
 			</if>
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
@@ -136,6 +142,9 @@
 			<if test="type != null and type != ''">
 				AND a.type = #{type}
 			</if>
+			<if test="supplier != null and supplier != id and supplier.id != ''">
+				AND a.supplier = #{supplier.id}
+			</if>
 			<if test="phone != null and phone != ''">
 				AND a.phone = #{phone}
 			</if>
@@ -199,7 +208,9 @@
 			<if test="agentid != null and agentid != ''">
 				AND a.agentid = #{agentid}
 			</if>
-
+			<if test="supplier != null and supplier != id and supplier.id != ''">
+				AND a.supplier = #{supplier.id}
+			</if>
 			<if test="type != null and type != ''">
 				AND a.type = #{type}
 			</if>
@@ -430,6 +441,11 @@
 			     </foreach>
 		and isaccount = '0'
 		and state=3
+	</update>
+	<update id="updateSupplier">
+		UPDATE a_simple_order SET
+		supplier = #{supplier.id}
+		WHERE id = #{id}
 	</update>
 	<select id="tmOrder" resultType="SimpleOrder">
 		SELECT

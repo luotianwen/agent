@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.modules.agent.agent.entity.Agent;
+import com.thinkgem.jeesite.modules.agent.agent.entity.Supplier;
 import com.thinkgem.jeesite.modules.agent.agent.service.AgentService;
+import com.thinkgem.jeesite.modules.agent.agent.service.SupplierService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -42,7 +44,8 @@ public class SimpleOrderController extends BaseController {
 
 	@Autowired
 	private SimpleOrderService simpleOrderService;
-	
+	@Autowired
+	private SupplierService supplierService;
 	@ModelAttribute
 	public SimpleOrder get(@RequestParam(required=false) String id) {
 		SimpleOrder entity = null;
@@ -72,7 +75,8 @@ public class SimpleOrderController extends BaseController {
 		model.addAttribute("simpleOrder2", simpleOrderService.sum(simpleOrder));
 		Page<SimpleOrder> page = simpleOrderService.findPage(new Page<SimpleOrder>(request, response), simpleOrder); 
 		model.addAttribute("page", page);
-
+		List<Supplier> suppliers=supplierService.findList(new Supplier());
+		model.addAttribute("suppliers", suppliers);
 		return "agent/simpleorder/simpleOrderList";
 	}
 
@@ -136,6 +140,19 @@ public class SimpleOrderController extends BaseController {
 			return "error";
 		}
 		simpleOrderService.three(simpleOrder);
+
+		return "ok";
+		//addMessage(redirectAttributes, "保存下单管理成功");
+		//return "redirect:"+Global.getAdminPath()+"/simpleorder/simpleOrder/?repage";
+	}
+	@RequiresPermissions("simpleorder:simpleOrder:edit")
+	@RequestMapping(value = "updateSupplier")
+	@ResponseBody
+	public String updateSupplier(SimpleOrder simpleOrder, Model model, RedirectAttributes redirectAttributes) throws Exception {
+		if (!beanValidator(model, simpleOrder)){
+			return "error";
+		}
+		simpleOrderService.updateSupplier(simpleOrder);
 
 		return "ok";
 		//addMessage(redirectAttributes, "保存下单管理成功");

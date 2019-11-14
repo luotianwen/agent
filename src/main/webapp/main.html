@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<span id='account' class=" mui-pull-left mui-btn-link"></span>
+			<h1 class="mui-title">订单管理</h1>
+			<button id='setting' class=" mui-pull-right mui-btn-link">退出</button>
+		</header>
+		<div id="vues" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+
+
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					<li class="mui-table-view-cell" v-for="(product,index) in goods" :key="index">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-10">
+								<h4 class="mui-ellipsis">货号:{{product.articleno}} {{product.spec}} {{product.colour}} 数量:{{product.num}}</h4>
+								<p class="mui-h6 mui-ellipsis">订单号:{{product.orderId}} {{product.createDate}}</p>
+								<h5>{{product.consignee}},{{product.phone}},{{product.address}}</h5>
+								<p class="mui-h6 mui-ellipsis">{{product.courier}} {{product.delivernumber}}</p>
+							</div>
+							<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+								<span class="mui-h5">
+									<button v-if="product.state==1" @tap="doit(product)"  class="mui-btn mui-btn-primary mui-btn-outlined" >发货</button> 
+								    <button v-if="product.state==1" @tap="no(product)"   class="mui-btn mui-btn-danger  ">缺货</button>
+									<button v-if="product.state==3" @tap="doit(product)"  class="mui-btn mui-btn-primary mui-btn-outlined" >重发</button> 
+								 </span>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#vues',
+					down: {
+						style: 'circle',
+						callback: pulldownRefresh
+					},
+					up: {
+						auto: true,
+						contentrefresh: '正在加载...',
+						callback: pullupfresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+				}
+			});
+			var news = new Vue({
+				el: '#vues',
+				data: {
+					pageNo: 1,
+					goods: [],
+					token: ''
+				}
+			});
+			mui.ready(function() {
+				var account = document.getElementById('account');
+				var state = app.getState();
+				news.token = state.token;
+				account.innerText = state.account + ' 您好!';
+				//设置
+				var settingButton = document.getElementById('setting');
+				settingButton.addEventListener('tap', function(event) {
+					mui.confirm('确定要退出吗?', '退出登录', ['取消', '确认'], function(e) {
+						if (e.index == 1) {
+							app.setState({});
+							$.openWindow({
+								url: 'login.html',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}
+
+					}, 'div')
+
+				});
+
+			});
+
+			function pullupfresh() {
+				setTimeout(function() {
+					news.pageNo++;
+					data();
+					//mui('#vues').pullRefresh().endPullupToRefresh(true);
+					mui.toast("加载数据了");
+				}, 1500);
+			}
+
+			function pulldownRefresh() {
+				setTimeout(function() {
+					news.pageNo = 1;
+					news.goods = [];
+					data();
+					mui('#vues').pullRefresh().endPulldownToRefresh();
+					mui.toast("刷新数据了");
+				}, 1500);
+			}
+
+			function data() {
+				mui.post(app.queryOrder, {
+					token: news.token,
+					pageNo: news.pageNo
+				}, function(newhouse) {
+					if (newhouse.code == 1 && newhouse.data.list.length > 0) {
+						news.goods = news.goods.concat(newhouse.data.list);
+					}
+					  if(newhouse.data.lastPage){
+						mui('#vues').pullRefresh().endPullupToRefresh(true);
+					}  
+				}, 'json');
+			}
+			function doit(product){
+				var btnArray = ['取消', '确定'];
+				mui.prompt('比如中通,73122784790599,15', '中通,73122784790599,15', '请输入'+product.articleno+'发货信息中间用","隔开', btnArray, function(e) {
+					if (e.index == 1) {
+						 
+					} else {
+						 
+					}
+				})
+			}
+			function no(product){
+				mui.confirm('真的缺货?',product.articleno+'缺货',['取消','确认'],function (e) {
+					if(e.index==1){
+						}
+				},'div')
+			}
+		</script>
+	</body>
+
+</html>
