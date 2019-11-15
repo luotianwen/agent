@@ -347,6 +347,12 @@
 
 	</select>
 
+	<update id="nofast">
+		UPDATE a_simple_order SET
+		state = '6'
+		update_date = now()
+		WHERE id = #{id}
+	</update>
 	<update id="fast">
 		UPDATE a_simple_order SET
 		state = '3',
@@ -356,7 +362,7 @@
 		totalmoney = #{totalmoney},
 		update_date = #{updateDate}
 		WHERE id = #{id}
-		and state='1'
+		/*and state='1'*/
 	</update>
 
 	<update id="three">

@@ -45,4 +45,6 @@ public interface SimpleOrderDao extends CrudDao<SimpleOrder> {
     void three(SimpleOrder simpleOrder);
 
     void updateSupplier(SimpleOrder simpleOrder);
+
+    void nofast(SimpleOrder simpleOrder);
 }

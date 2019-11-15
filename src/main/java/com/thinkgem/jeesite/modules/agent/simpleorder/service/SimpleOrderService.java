@@ -349,4 +349,8 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     public void updateSupplier(SimpleOrder simpleOrder) {
         dao.updateSupplier(simpleOrder);
     }
+    @Transactional(readOnly = false)
+    public void nofast(SimpleOrder simpleOrder) {
+        dao.nofast(simpleOrder);
+    }
 }

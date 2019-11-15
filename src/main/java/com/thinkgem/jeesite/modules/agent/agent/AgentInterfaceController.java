@@ -156,11 +156,15 @@ public class AgentInterfaceController extends BaseController {
 
     @RequestMapping(value = "queryOrder")
     @ResponseBody
-    public ResponseData queryOrder(String token, int pageNo) {
+    public ResponseData queryOrder(String token, int pageNo,String articleno,String consignee ,String phone,String delivernumber ) {
         Page page1 = new Page<SimpleOrder>();
         ResponseData<Page> d = new ResponseData();
         SimpleOrder hotelLog = new SimpleOrder();
         hotelLog.setSupplier(new Supplier(token));
+        hotelLog.setArticleno(articleno);
+        hotelLog.setConsignee(consignee);
+        hotelLog.setPhone(phone);
+        hotelLog.setDelivernumber(delivernumber);
         page1.setPageNo(pageNo);
         page1.setPageSize(15);
         page1.setOrderBy("a.state asc ");
@@ -171,11 +175,30 @@ public class AgentInterfaceController extends BaseController {
 
     @RequestMapping(value = "fast")
     @ResponseBody
-    public String fast(SimpleOrder simpleOrder) throws Exception {
+    public String fast( HttpServletResponse response,SimpleOrder simpleOrder) throws Exception {
+        Map map = new HashMap();
+        map.put("status", 0);
         if (StringUtils.isEmpty(simpleOrder.getCourier()) || StringUtils.isEmpty(simpleOrder.getDelivernumber())) {
-            return "no";
+            map.put("status", 1);
+            return renderString(response, map);
         }
-        simpleOrderService.fast(simpleOrder);
-        return "ok";
+        SimpleOrder entity = simpleOrderService.get(simpleOrder.getId());
+        entity.setCourier(simpleOrder.getCourier());
+        entity.setDelivernumber(simpleOrder.getDelivernumber());
+        entity.setDelivermoney(simpleOrder.getDelivermoney());
+        simpleOrderService.fast(entity);
+        return renderString(response, map);
+    }
+    @RequestMapping(value = "nofast")
+    @ResponseBody
+    public String nofast( HttpServletResponse response,SimpleOrder simpleOrder) throws Exception {
+        Map map = new HashMap();
+        map.put("status", 0);
+        if (StringUtils.isEmpty(simpleOrder.getCourier()) || StringUtils.isEmpty(simpleOrder.getDelivernumber())) {
+            map.put("status", 1);
+            return renderString(response, map);
+        }
+        simpleOrderService.nofast(simpleOrder);
+        return renderString(response, map);
     }
 }

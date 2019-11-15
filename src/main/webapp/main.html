@@ -24,10 +24,38 @@
 			<h1 class="mui-title">订单管理</h1>
 			<button id='setting' class=" mui-pull-right mui-btn-link">退出</button>
 		</header>
+		
 		<div id="vues" class="mui-content mui-scroll-wrapper">
+			
+			 <ul class="mui-table-view"> 
+			        <li class="mui-table-view-cell mui-collapse">
+			            <a class="mui-navigate-right" href="#">查询</a>
+			            <div class="mui-collapse-content">
+			               <form class="mui-input-group">
+			               	 
+			               	<div class="mui-input-row">
+			               	 
+			               		<input type="text" v-model="articleno" class="mui-input-clear" placeholder="货号">
+			               	 	</div>
+			               		<div class="mui-input-row">
+			               	<input type="text" v-model="consignee" class="mui-input-clear" placeholder="收件人">
+			                </div>
+			                <div class="mui-input-row">	 
+			               	<input type="text" v-model="phone" class="mui-input-clear" placeholder="电话">
+			                </div>
+			                <div class="mui-input-row">
+			               	<input type="text" v-model="delivernumber" class="mui-input-clear" placeholder="快递单号">
+			               </div>
+			               	<div class="mui-button-row">
+			               		<button type="button" class="mui-btn mui-btn-primary" @tap="pulldownRefresh()" >查询</button> 
+			               	</div>
+			               </form>
+			               
+			            </div>
+			        </li>
+			    </ul>
+			
 			<div class="mui-scroll">
-
-
 				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
 					<li class="mui-table-view-cell" v-for="(product,index) in goods" :key="index">
 						<div class="mui-table">
@@ -39,16 +67,17 @@
 							</div>
 							<div class="mui-table-cell mui-col-xs-2 mui-text-right">
 								<span class="mui-h5">
-									<button v-if="product.state==1" @tap="doit(product)"  class="mui-btn mui-btn-primary mui-btn-outlined" >发货</button> 
-								    <button v-if="product.state==1" @tap="no(product)"   class="mui-btn mui-btn-danger  ">缺货</button>
-									<button v-if="product.state==3" @tap="doit(product)"  class="mui-btn mui-btn-primary mui-btn-outlined" >重发</button> 
-								 </span>
+									<button v-if="product.state==1" @tap="doit(product)" class="mui-btn mui-btn-primary mui-btn-outlined">发货</button>
+									<button v-if="product.state==1" @tap="no(product)" class="mui-btn mui-btn-danger  ">缺货</button>
+									<button v-if="product.state==3" @tap="doit(product)" class="mui-btn mui-btn-primary mui-btn-outlined">重发</button>
+								</span>
 							</div>
 						</div>
 					</li>
 
 				</ul>
 			</div>
+			
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
@@ -71,6 +100,10 @@
 			var news = new Vue({
 				el: '#vues',
 				data: {
+					articleno:'',
+					consignee:'',
+					phone:'',
+					delivernumber:'',
 					pageNo: 1,
 					goods: [],
 					token: ''
@@ -122,35 +155,75 @@
 					mui.toast("刷新数据了");
 				}, 1500);
 			}
-
+             
 			function data() {
 				mui.post(app.queryOrder, {
 					token: news.token,
-					pageNo: news.pageNo
+					pageNo: news.pageNo,
+					articleno:news.articleno,
+					consignee:news.consignee,
+					phone:news.phone,
+					delivernumber:news.delivernumber
 				}, function(newhouse) {
 					if (newhouse.code == 1 && newhouse.data.list.length > 0) {
 						news.goods = news.goods.concat(newhouse.data.list);
 					}
-					  if(newhouse.data.lastPage){
+					if (newhouse.data.lastPage) {
 						mui('#vues').pullRefresh().endPullupToRefresh(true);
-					}  
+					}else{
+						mui('#vues').pullRefresh().endPullupToRefresh(false);
+					}
 				}, 'json');
 			}
-			function doit(product){
+
+			function doit(product) {
 				var btnArray = ['取消', '确定'];
-				mui.prompt('比如中通,73122784790599,15', '中通,73122784790599,15', '请输入'+product.articleno+'发货信息中间用","隔开', btnArray, function(e) {
-					if (e.index == 1) {
-						 
-					} else {
-						 
-					}
-				})
-			}
-			function no(product){
-				mui.confirm('真的缺货?',product.articleno+'缺货',['取消','确认'],function (e) {
-					if(e.index==1){
+				mui.prompt('比如中通,73122784790599,15', '中通,73122784790599,15', '请输入' + product.articleno + '发货信息中间用","隔开', btnArray,
+					function(e) {
+						
+						if (e.index == 1) {
+							var a = e.value;
+							var vs = a.split(",");
+							if (vs.length != 3) {
+								mui.alert('比如中通,73122784790599,15', '物流信息格式不对');
+								return false;
+							}
+							mui.post(app.fast, {
+								id: product.id,
+								courier: vs[0],
+								delivernumber: vs[1],
+								delivermoney: vs[2]
+							}, function(data) {
+								console.log(JSON.stringify(data));
+								if (data.status==0) {
+									product.state = 3;
+									mui.toast('填写物流信息成功');
+								} else {
+									mui.toast('填写物流信息失败');
+								}
+
+							}, 'json');
 						}
-				},'div')
+					})
+			}
+
+			function no(product) {
+				mui.confirm('真的缺货?', product.articleno + '缺货', ['取消', '确认'], function(e) {
+					if (e.index == 1) {
+						mui.post(app.nofast, {
+							id: product.id 
+						}, function(msg) {
+							console.log(JSON.stringify(msg));
+							if (msg.status==0) {
+								product.state = 6;
+								mui.toast('信息更新成功');
+							} else {
+								mui.toast('信息更新失败');
+							}
+
+						}, 'json');
+					}
+				}, 'div')
 			}
 		</script>
 	</body>
