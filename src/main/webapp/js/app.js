@@ -4,7 +4,8 @@
  * 请注意将相关方法调整成 “基于服务端Service” 的实现。
  **/
 (function($, owner) {
-	var app_http="http://agent.yoyound.com/agent/";
+	//var app_http="http://agent.yoyound.com/agent/";
+    var app_http="http://127.0.0.1:8080/agent/";
 	var loginurl=app_http+"login";
 	 
 	owner.queryOrder=app_http+"queryOrder";

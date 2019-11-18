@@ -49,26 +49,26 @@
 			               	<div class="mui-button-row">
 			               		<button type="button" class="mui-btn mui-btn-primary" @tap="pulldownRefresh()" >查询</button> 
 			               	</div>
+							 
 			               </form>
 			               
 			            </div>
 			        </li>
 			    </ul>
 			
-			<div class="mui-scroll">
+			<div class="mui-scroll" style="padding-bottom: 5rem;">
 				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
 					<li class="mui-table-view-cell" v-for="(product,index) in goods" :key="index">
 						<div class="mui-table">
 							<div class="mui-table-cell mui-col-xs-10">
 								<h4 class="mui-ellipsis">货号:{{product.articleno}} {{product.spec}} {{product.colour}} 数量:{{product.num}}</h4>
 								<p class="mui-h6 mui-ellipsis">订单号:{{product.orderId}} {{product.createDate}}</p>
-								<h5>{{product.consignee}},{{product.phone}},{{product.address}}</h5>
+								<h5 class="copy" :data-clipboard-text="[product.consignee+','+product.phone+','+product.address]">{{product.consignee}},{{product.phone}},{{product.address}}</h5>
 								<p class="mui-h6 mui-ellipsis">{{product.courier}} {{product.delivernumber}}</p>
 							</div>
 							<div class="mui-table-cell mui-col-xs-2 mui-text-right">
 								<span class="mui-h5">
 									<button v-if="product.state==1" @tap="doit(product)" class="mui-btn mui-btn-primary mui-btn-outlined">发货</button>
-									<button v-if="product.state==1" @tap="no(product)" class="mui-btn mui-btn-danger  ">缺货</button>
 									<button v-if="product.state==3" @tap="doit(product)" class="mui-btn mui-btn-primary mui-btn-outlined">重发</button>
 								</span>
 							</div>
@@ -81,6 +81,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/clipboard.min.js"></script>
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init({
@@ -120,7 +121,7 @@
 					mui.confirm('确定要退出吗?', '退出登录', ['取消', '确认'], function(e) {
 						if (e.index == 1) {
 							app.setState({});
-							$.openWindow({
+							mui.openWindow({
 								url: 'login.html',
 								show: {
 									aniShow: 'pop-in'
@@ -134,7 +135,13 @@
 					}, 'div')
 
 				});
-
+			var clipboard = new ClipboardJS('.copy');
+			 clipboard.on('success', function(e) {
+			        mui.toast('复制地址成功');
+			    });
+			    clipboard.on('error', function(e) {
+			         mui.toast('复制地址失败');
+			    });
 			});
 
 			function pullupfresh() {
