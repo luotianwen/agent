@@ -672,7 +672,7 @@ var fid;
                        onclick="tfh('${simpleOrder.id}')">供应商</a>
                     </c:if>
                     <a href="${ctx}/simpleorder/simpleOrder/three?id=${simpleOrder.id}"
-                       onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">说明</a>
+                       onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">仓库</a>
 
                    <%-- <a href="${ctx}/simpleorder/simpleOrder/delete?id=${simpleOrder.id}"
                        onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>--%>
