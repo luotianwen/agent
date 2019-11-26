@@ -460,7 +460,7 @@ var fid;
 
                     <label class="span1 control-label">供应商：</label>
                     <div class="span2 ">
-                        <form:select path="supplier.remarks" class="input-mini ">
+                        <form:select path="supplier.remarks" class="input-medium ">
                             <form:option value="" label="无"/>
                             <form:options items="${suppliers}" itemLabel="company" itemValue="id" htmlEscape="false"/>
                         </form:select>
