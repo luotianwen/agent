@@ -37,6 +37,7 @@
            class="breadcrumb form-search">
     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+    <sys:tableSort id="orderBy" name="orderBy" value="${page.orderBy}" callback="page();"/>
     <ul class="ul-form">
         <li><label>订单号：</label>
             <form:input path="orderId" htmlEscape="false" maxlength="32" class="input-medium"/>
@@ -96,7 +97,14 @@
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
         </li>
 
-
+        <li><label>发货时间：</label>
+            <input name="beginUpdateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+                   value="<fmt:formatDate value="${simpleOrder.beginUpdateDate}" pattern="yyyy-MM-dd"/>"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> -
+            <input name="endUpdateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+                   value="<fmt:formatDate value="${simpleOrder.endUpdateDate}" pattern="yyyy-MM-dd"/>"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+        </li>
         <li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
             <input id="btnExport" class="btn btn-primary" type="button" value="导出"/></li>
         <li class="clearfix"></li>
@@ -121,7 +129,7 @@
         <%--<th>快递信息</th>--%>
         <th>是否对账</th>
         <th>创建时间</th>
-        <th>发货时间</th>
+        <th class="sort-column a.update_date">发货时间</th>
         <th>备注信息</th>
         <th>操作</th>
     </tr>

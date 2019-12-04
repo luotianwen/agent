@@ -89,6 +89,28 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	@ExcelField(title="类别", align=1, sort=140, dictType="a_simple_order_type")
 	protected String type;	// 类别
 
+	private Date beginUpdateDate;		// 开始 创建时间
+	private Date endUpdateDate;		// 结束 创建时间
+
+	public void setBeginUpdateDate(Date beginUpdateDate) {
+		this.beginUpdateDate = beginUpdateDate;
+	}
+
+	public void setEndUpdateDate(Date endUpdateDate) {
+		this.endUpdateDate = endUpdateDate;
+	}
+
+	public Date getBeginUpdateDate() {
+		return beginUpdateDate;
+	}
+
+
+
+	public Date getEndUpdateDate() {
+		return endUpdateDate;
+	}
+
+
 
 	public String getNo() {
 		return no;

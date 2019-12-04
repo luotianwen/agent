@@ -360,6 +360,7 @@ var fid;
            class="breadcrumb form-search">
     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+    <sys:tableSort id="orderBy" name="orderBy" value="${page.orderBy}" callback="page();"/>
     <ul class="ul-form">
         <li><label>订单号：</label>
             <form:input path="orderId" htmlEscape="false" maxlength="32" class="input-medium"/>
@@ -434,6 +435,14 @@ var fid;
                               htmlEscape="false"/>
             </form:select>
         </li>
+        <li><label>发货时间：</label>
+            <input name="beginUpdateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+                   value="<fmt:formatDate value="${simpleOrder.beginUpdateDate}" pattern="yyyy-MM-dd"/>"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> -
+            <input name="endUpdateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+                   value="<fmt:formatDate value="${simpleOrder.endUpdateDate}" pattern="yyyy-MM-dd"/>"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+        </li>
         <li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
             <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
             <a href="#" onclick="checkdel()" class="btn btn-primary">批量对账</a>
@@ -486,8 +495,8 @@ var fid;
         <th><input type=checkbox name="checkId" id="checkId"></th>
        <%-- <th>仓库信息</th>--%>
         <th>订单号</th>
-        <th>客户</th>
-        <th>货号</th>
+        <th >客户</th>
+        <th class="sort-column a.articleno">货号</th>
         <th>颜色|尺码</th>
         <th>数量</th>
         <th>状态</th>
@@ -500,11 +509,11 @@ var fid;
         <th>收件信息</th>
         <%--<th>快递信息</th>--%>
         <th>对账</th>
-        <th>下单</th>
-        <th>发货</th>
+        <th class="sort-column a.create_date">下单</th>
+        <th class="sort-column a.update_date">发货</th>
         <th>备注</th>
-        <th>供应商</th>
-        <th>仓库</th>
+        <th class="sort-column a.supplier">供应商</th>
+        <th class="sort-column a.three">仓库</th>
         <shiro:hasPermission name="simpleorder:simpleOrder:edit">
             <th>操作</th>
         </shiro:hasPermission>
