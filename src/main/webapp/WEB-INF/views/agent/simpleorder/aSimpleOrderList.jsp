@@ -210,7 +210,7 @@
                     <%--<a href="${ctx}/msimpleorder/delete?id=${simpleOrder.id}"
                        onclick="return confirmx('确认要删除该下单管理吗？', this.href)">删除</a>--%>
                 </c:if>
-                <c:if test="${simpleOrder.state==3}">
+                <c:if test="${simpleOrder.state==3 && empty simpleOrder.afterstate}">
                     <a href="${ctx}/msimpleorder/after?id=${simpleOrder.id}"
                        onclick="return confirmx('确认要售后吗？', this.href)">售后</a>
                 </c:if>
