@@ -80,6 +80,16 @@
         }
 
         $(document).ready(function () {
+            var clipboard = new ClipboardJS('.copy');
+
+            clipboard.on('success', function (e) {
+                //console.info('Action:', e.action);
+                //console.info('Text:', e.text);
+                //console.info('Trigger:', e.trigger);
+                top.$.jBox.tip("复制" + e.text + "成功");
+                e.clearSelection();
+            });
+
             $("#btnExport").click(function () {
                 top.$.jBox.confirm("确认要导出数据吗？", "系统提示", function (v, h, f) {
                     if (v == "ok") {
@@ -173,9 +183,9 @@
         <th>序号</th>
         <th>订单号</th>
         <th>货号</th>
-        <th>地址</th>
+
         <th>收件人</th>
-        <th>手机</th>
+
         <th>售后原因</th>
         <th>售后方式</th>
         <th>退货地址</th>
@@ -195,21 +205,23 @@
             <td>
                     ${simpleOrderAfter.no}
             </td>
-            <td><a href="${ctx}/simpleorder/simpleOrderAfter/form?id=${simpleOrderAfter.id}">
+            <td><a href="${ctx}/simpleorder/simpleOrder/list?orderId=${simpleOrderAfter.orderId}" target="_blank">
                     ${simpleOrderAfter.orderId}
             </a></td>
             <td>
                     ${simpleOrderAfter.articleno}
             </td>
-            <td>
-                    ${simpleOrderAfter.address}
+
+
+            <td class="copy" data-clipboard-text="${simpleOrderAfter.consignee}，${simpleOrderAfter.phone}，，${simpleOrderAfter.address}，"
+                title="点击复制">
+                    <%-- 张三 ，13888888888 ，0518-88888888，江苏省 连云港市 新浦区 朝阳中路77号二楼 ，222000--%>
+
+                    ${simpleOrderAfter.consignee}，${simpleOrderAfter.phone}，，${simpleOrderAfter.address}，
+
             </td>
-            <td>
-                    ${simpleOrderAfter.consignee}
-            </td>
-            <td>
-                    ${simpleOrderAfter.phone}
-            </td>
+
+
             <td>
                     ${simpleOrderAfter.remarks}
             </td>
@@ -223,7 +235,7 @@
                     ${simpleOrderAfter.backcourier},${simpleOrderAfter.backnumber} ,
                     ${simpleOrderAfter.backmoney}
                 <c:if test="${not empty simpleOrderAfter.backnumber}">
-                    <a target="_blank" href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.backcourier} ${simpleOrderAfter.backnumber}">查看</a>
+                    <a target="_blank" href="http://www.kuaidi100.com/chaxun?nu=${simpleOrderAfter.backnumber}">查看</a>
                 </c:if>
             </td>
             <td>
@@ -231,7 +243,7 @@
                     ${simpleOrderAfter.delivernumber}
                 <c:if test="${not empty simpleOrderAfter.delivernumber}">
                     <a target="_blank"
-                       href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.courier} ${simpleOrderAfter.delivernumber}">查看</a>
+                       href="http://www.kuaidi100.com/chaxun?nu=${simpleOrderAfter.delivernumber}">查看</a>
                 </c:if>
 
             </td>

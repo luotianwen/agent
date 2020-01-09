@@ -624,7 +624,7 @@ var fid;
                     ${simpleOrder.delivernumber}
                 <c:if test="${not empty simpleOrder.delivernumber}">
                     <a target="_blank"
-                       href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrder.courier} ${simpleOrder.delivernumber}">查看</a>
+                       href="http://www.kuaidi100.com/chaxun?nu=${simpleOrder.delivernumber}">查看</a>
                 </c:if>
 
             </td>

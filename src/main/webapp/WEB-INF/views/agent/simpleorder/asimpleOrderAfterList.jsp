@@ -143,8 +143,10 @@
             <td>
                     ${simpleOrderAfter.no}
             </td>
-            <td> ${simpleOrderAfter.orderId}
-            </td>
+            <td><a href="${ctx}/simpleorder/msimpleorder?orderId=${simpleOrderAfter.orderId}" target="_blank">
+                    ${simpleOrderAfter.orderId}
+            </a></td>
+
             <td>
                     ${simpleOrderAfter.articleno}
             </td>
@@ -170,7 +172,7 @@
                     ${simpleOrderAfter.backcourier},${simpleOrderAfter.backnumber} ,
                     ${simpleOrderAfter.backmoney}
                 <c:if test="${not empty simpleOrderAfter.backnumber}">
-                    <a target="_blank" href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.backcourier} ${simpleOrderAfter.backnumber}">查看</a>
+                    <a target="_blank" href="http://www.kuaidi100.com/chaxun?nu=${simpleOrderAfter.backnumber}">查看</a>
                 </c:if>
             </td>
             <td>
@@ -179,7 +181,7 @@
                 <c:if test="${not empty simpleOrderAfter.delivernumber}">
 
                     <a target="_blank"
-                       href="https://www.baidu.com/s?ie=UTF-8&wd=${simpleOrderAfter.courier} ${simpleOrderAfter.delivernumber}">查看</a>
+                       href="http://www.kuaidi100.com/chaxun?nu=${simpleOrderAfter.delivernumber}">查看</a>
                 </c:if>
             </td>
             <td>
