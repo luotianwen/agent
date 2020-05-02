@@ -157,7 +157,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">总价：</label>
+			<label class="control-label">开票金额：</label>
 			<div class="controls">
 				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge "/>
 			</div>

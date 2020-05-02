@@ -97,7 +97,7 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     @Transactional(readOnly = false)
     public void fast(SimpleOrder simpleOrder) throws Exception {
         double totlamoney=simpleOrder.getNum()*simpleOrder.getMoney();
-        totlamoney=totlamoney+simpleOrder.getDelivermoney();
+        totlamoney=totlamoney-simpleOrder.getDelivermoney();
         simpleOrder.setTotalmoney(totlamoney);
         simpleOrder.preUpdate();
         dao.fast(simpleOrder);

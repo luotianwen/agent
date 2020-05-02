@@ -21,7 +21,7 @@
                     var money=parseFloat($("#money").val());
                     var delivermoney=parseFloat($("#delivermoney").val());
                     var totalmoney=parseFloat($("#totalmoney").val()).toFixed(2);
-                    var a=parseFloat(money*num+delivermoney).toFixed(2);
+                    var a=parseFloat(money*num-delivermoney).toFixed(2);
                     var address =$("#address").val().split(",");
                     if(address.length!=4){
                         top.$.jBox.alert("地址信息请填详细 注意逗号是英文输入法下的");
@@ -167,7 +167,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">总价：</label>
+			<label class="control-label">开票金额：</label>
 			<div class="controls">
 				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge required"  />
 			</div>
