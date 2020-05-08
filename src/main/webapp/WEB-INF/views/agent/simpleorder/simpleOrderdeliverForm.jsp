@@ -21,13 +21,18 @@
                     var money=parseFloat($("#money").val());
                     var delivermoney=parseFloat($("#delivermoney").val());
                     var totalmoney=parseFloat($("#totalmoney").val()).toFixed(2);
-                    var a=parseFloat(money*num-delivermoney).toFixed(2);
+                    var kpje=parseFloat($("#kpje").val()).toFixed(2);
+                    var a=parseFloat(money*num).toFixed(2);
                     var address =$("#address").val().split(",");
                     if(address.length!=4){
                         top.$.jBox.alert("地址信息请填详细 注意逗号是英文输入法下的");
                         return false;
                     }
 
+                    if((a-delivermoney)!=kpje){
+                        top.$.jBox.alert((a)+"开票金额输入有误，请先更正。");
+                        return false;
+                    }
                     if(a!=totalmoney){
                         top.$.jBox.alert((a)+"总价输入有误，请先更正。");
                         return false;
@@ -167,9 +172,15 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">总金额：</label>
+			<div class="controls">
+				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">开票金额：</label>
 			<div class="controls">
-				<form:input path="totalmoney" htmlEscape="false" class="input-xlarge required"  />
+				<form:input path="kpje" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
 

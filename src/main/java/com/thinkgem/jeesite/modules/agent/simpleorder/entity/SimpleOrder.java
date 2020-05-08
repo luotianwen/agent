@@ -61,6 +61,17 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private Double delivermoney;		// 快递费
 	@ExcelField(title="总价", align=1, sort=66)
 	private Double totalmoney;		// 总价
+	@ExcelField(title="开票金额", align=1, sort=66)
+	private Double kpje;		// 开票金额
+
+	public Double getKpje() {
+		return kpje;
+	}
+
+	public void setKpje(Double kpje) {
+		this.kpje = kpje;
+	}
+
 	@ExcelField(title="是否对账", align=1, sort=90, dictType="yes_no")
 	private String isaccount;		// 是否对账
 	@ExcelField(title="收件人", align=1, sort=69)

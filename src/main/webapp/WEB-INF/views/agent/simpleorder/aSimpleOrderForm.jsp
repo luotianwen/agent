@@ -99,9 +99,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">地址:(北京 北京市 通州区 光大新北京中心8B2302室)</label>
+			<label class="control-label">地址:中间用空格(北京 北京市 通州区 光大新北京中心8B2302室)</label>
 			<div class="controls">
-				<form:textarea path="address" htmlEscape="false"    maxlength="200" class="input-xlarge required"/>
+				<form:textarea path="address" htmlEscape="false"     maxlength="200" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

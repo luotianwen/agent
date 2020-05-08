@@ -10,6 +10,7 @@
 		a.agentid AS "agentid",
 		a.articleno AS "articleno",
 		a.num AS "num",
+		a.kpje AS "kpje",
 		a.money AS "money",
 		a.price AS "price",
 		a.afterstate AS "afterstate",
@@ -58,7 +59,8 @@
 		SELECT
 		sum(a.delivermoney) as delivermoney,
 		sum(a.totalmoney) as totalmoney,
-		sum(a.money*a.num) as money
+		sum(a.money*a.num) as money,
+		sum(a.kpje) as kpje
 		from a_simple_order a
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
@@ -283,6 +285,7 @@
 			orderId,
 			type,
 			three
+
 		) VALUES (
 			#{id},
 			#{agentid},
@@ -337,7 +340,8 @@
 			tradeId=#{tradeId},
 			remarks = #{remarks},
 			three=#{three},
-			type=#{type}
+			type=#{type},
+			kpje=#{kpje}
 		WHERE id = #{id}
 	</update>
 	<select id="getOrderIdDeliver" resultType="SimpleOrder">
@@ -376,6 +380,7 @@
 		delivernumber = #{delivernumber},
 		delivermoney = #{delivermoney},
 		totalmoney = #{totalmoney},
+		kpje= #{kpje},
 		update_date = #{updateDate}
 		WHERE id = #{id}
 		/*and state='1'*/
@@ -400,6 +405,7 @@
 		delivermoney = #{delivermoney},
 		totalmoney = #{totalmoney},
 		tradeId=#{tradeId},
+		kpje= #{kpje},
 		update_by = #{updateBy.id},
 		update_date = #{updateDate}
 		WHERE id = #{id}

@@ -123,6 +123,7 @@
         <th>类别</th>
         <th>售价</th>
         <th>快递费用</th>
+        <th>总金额</th>
         <th>开票金额</th>
         <th>快递</th>
         <th>收件信息</th>
@@ -170,8 +171,12 @@
             <td>
                     ${simpleOrder.delivermoney}
             </td>
+
             <td>
                     ${simpleOrder.totalmoney}
+            </td>
+            <td>
+                    ${simpleOrder.kpje}
             </td>
             <td>
                     ${simpleOrder.courier}
