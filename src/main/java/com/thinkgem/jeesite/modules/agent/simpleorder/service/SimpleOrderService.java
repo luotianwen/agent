@@ -354,4 +354,8 @@ public class SimpleOrderService extends CrudService<SimpleOrderDao, SimpleOrder>
     public void nofast(SimpleOrder simpleOrder) {
         dao.nofast(simpleOrder);
     }
+
+    public SimpleOrder getOrderId(SimpleOrder simpleOrder) {
+        return dao.getOrderId(simpleOrder);
+    }
 }

@@ -21,6 +21,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.*;
 
 public class Cont {
@@ -36,6 +38,10 @@ public class Cont {
     //下单
     public static String ORDER="http://open.xingyunyezi.com/api/openapi/setOrderInfos.do";
 
+    public static final String submit= "api/order/submit.php";
+    public static final String orderTrack= "api/order/orderTrack.php";
+    public static final String afterSalesubmit= "api/afterSale/v2/submit.php";
+    public static final String afterSaledetail= "api/afterSale/v2/detail.php";
     public static int SECONDS=500;
     public static void ThreadSleep(){
         try {
@@ -46,6 +52,21 @@ public class Cont {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public static String md5(String plainText){
+        byte[] secretBytes = null;
+        try {
+            secretBytes = MessageDigest.getInstance("md5").digest(
+                    plainText.getBytes("UTF-8"));
+        } catch (Exception e) {
+            throw new RuntimeException("没有这个md5算法！");
+        }
+        String md5code = new BigInteger(1, secretBytes).toString(16);
+        for (int i = 0; i < 32 - md5code.length(); i++) {
+            md5code = "0" + md5code;
+        }
+
+        return md5code;
     }
     /**
      * 发送 post请求访问本地应用并根据传递参数不同返回不同结果

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.agent.yzh.dao.YzhOrderDao">
+    
+	<sql id="yzhOrderColumns">
+		a.receivername AS "receivername",
+		a.productid AS "productid",
+		a.thirdorder AS "thirdorder",
+		a.id AS "id",
+		a.order_product_price AS "orderProductPrice",
+		a.order_key AS "orderKey",
+		a.order_shipment_fee AS "orderShipmentFee",
+		a.order_total_price AS "orderTotalPrice",
+		a.isaccount AS "isaccount",
+		a.remarks AS "remarks",
+		a.pid_nums AS "pidNums",
+		a.province AS "province",
+		a.city AS "city",
+		a.county AS "county",
+		a.town AS "town",
+		a.address AS "address",
+		a.mobile AS "mobile",
+		a.remark AS "remark",
+		a.amount AS "amount",
+		a.reason AS "reason",
+		a.userremark AS "userremark",
+		a.service_order AS "serviceOrder",
+		a.status AS "status",
+		a.type AS "type",
+		a.shipment_name AS  shipmentName,
+		a.shipment_order AS shipmentOrder,
+		a.returned_address  AS  returnedAddress,
+		a.receiver_name AS  receiverName2,
+		a.receiver_mobile AS  receiverMobile,
+		a.new_order AS  newOrder,
+		a.receiver_status  AS  receiverStatus
+	</sql>
+	
+	<sql id="yzhOrderJoins">
+	</sql>
+    
+	<select id="get" resultType="YzhOrder">
+		SELECT 
+			<include refid="yzhOrderColumns"/>
+		FROM a_yzh_order a
+		<include refid="yzhOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="YzhOrder">
+		SELECT 
+			<include refid="yzhOrderColumns"/>
+		FROM a_yzh_order a
+		<include refid="yzhOrderJoins"/>
+		<where>
+			
+			<if test="receivername != null and receivername != ''">
+				AND a.receivername = #{receivername}
+			</if>
+			<if test="productid != null and productid != ''">
+				AND a.productid = #{productid}
+			</if>
+			<if test="thirdorder != null and thirdorder != ''">
+				AND a.thirdorder = #{thirdorder}
+			</if>
+			<if test="orderKey != null and orderKey != ''">
+				AND a.order_key = #{orderKey}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND a.mobile = #{mobile}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="YzhOrder">
+		SELECT 
+			<include refid="yzhOrderColumns"/>
+		FROM a_yzh_order a
+		<include refid="yzhOrderJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_yzh_order(
+			receivername,
+			productid,
+			thirdorder,
+			id,
+			order_product_price,
+			order_key,
+			order_shipment_fee,
+			order_total_price,
+			isaccount,
+			remarks,
+			pid_nums,
+			province,
+			city,
+			county,
+			town,
+			address,
+			mobile,
+			remark,
+			amount,
+			reason,
+			userremark,
+			service_order,
+			status,
+			type
+		) VALUES (
+			#{receivername},
+			#{productid},
+			#{thirdorder},
+			#{id},
+			#{orderProductPrice},
+			#{orderKey},
+			#{orderShipmentFee},
+			#{orderTotalPrice},
+			#{isaccount},
+			#{remarks},
+			#{pidNums},
+			#{province},
+			#{city},
+			#{county},
+			#{town},
+			#{address},
+			#{mobile},
+			#{remark},
+			#{amount},
+			#{reason},
+			#{userremark},
+			#{serviceOrder},
+			#{status},
+			#{type}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE a_yzh_order SET 	
+			receivername = #{receivername},
+			productid = #{productid},
+			thirdorder = #{thirdorder},
+			order_product_price = #{orderProductPrice},
+			order_key = #{orderKey},
+			order_shipment_fee = #{orderShipmentFee},
+			order_total_price = #{orderTotalPrice},
+			isaccount = #{isaccount},
+			remarks = #{remarks},
+			pid_nums = #{pidNums},
+			province = #{province},
+			city = #{city},
+			county = #{county},
+			town = #{town},
+			address = #{address},
+			mobile = #{mobile},
+			remark = #{remark},
+			amount = #{amount},
+			reason = #{reason},
+			userremark = #{userremark},
+
+			status = #{status},
+			type = #{type}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateafter">
+		UPDATE a_yzh_order SET
+			service_order = #{serviceOrder}
+		WHERE id = #{id}
+	</update>
+	<update id="updatekt">
+		UPDATE a_yzh_order SET
+			shipment_name = #{shipmentName},
+			shipment_order = #{shipmentOrder}
+		WHERE thirdorder = #{thirdorder}
+	</update>
+	<update id="returnedAddress">
+		UPDATE a_yzh_order SET
+			returned_address= #{returnedAddress},
+			receiver_name= #{receiverName2},
+			receiver_mobile= #{receiverMobile},
+			new_order= #{newOrder},
+			receiver_status= #{receiverStatus}
+		WHERE thirdorder = #{thirdorder}
+	</update>
+
+
+	<update id="delete">
+		DELETE FROM a_yzh_order
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

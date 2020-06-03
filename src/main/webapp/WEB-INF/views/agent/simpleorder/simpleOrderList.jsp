@@ -677,6 +677,8 @@ var fid;
                     <c:if test="${simpleOrder.state==1||simpleOrder.state==2}">
                         <a href="${ctx}/simpleorder/simpleOrder/deliverform?id=${simpleOrder.id}">发货</a>
                     </c:if>
+
+
                     <a href="${ctx}/simpleorder/simpleOrder/form?id=${simpleOrder.id}">修改</a>
                     <c:if test="${(empty simpleOrder.isaccount||simpleOrder.isaccount==0) && simpleOrder.state==3}">
                         <a href="${ctx}/simpleorder/simpleOrder/isaccount?id=${simpleOrder.id}"
@@ -689,6 +691,11 @@ var fid;
                     <a  style="cursor: pointer"
                        onclick="tfh('${simpleOrder.id}')">供应商</a>
                     </c:if>
+
+                    <c:if test="${simpleOrder.supplier.id=='fe33f56858f6426e9ae88853ddf345fd'}">
+                        <a href="${ctx}/yzh/yzhOrder/yunOrder?id=${simpleOrder.id}">云订单</a>
+                    </c:if>
+
                     <a href="${ctx}/simpleorder/simpleOrder/three?id=${simpleOrder.id}"
                        onclick="return promptxthree('填写${simpleOrder.consignee}的${simpleOrder.articleno}仓库信息',   this.href)">仓库</a>
 

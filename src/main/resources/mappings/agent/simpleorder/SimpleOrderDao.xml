@@ -366,7 +366,14 @@
 
 
 	</select>
+	<select id="getOrderId" resultType="SimpleOrder">
 
+		SELECT
+		<include refid="simpleOrderColumns"/>
+		from a_simple_order a
+		<include refid="simpleOrderJoins"/>
+		where a.orderId=#{orderId}
+	</select>
 	<update id="nofast">
 		UPDATE a_simple_order SET
 		state = '6'
