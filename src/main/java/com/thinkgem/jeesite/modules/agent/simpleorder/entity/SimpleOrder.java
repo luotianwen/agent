@@ -141,6 +141,7 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	private String tmarticleno;//货号
 	private String tmspec;//规格
 	private String tmstate;//状态
+	@ExcelField(title="售后状态", align=1, sort=240, dictType="a_simple_order_afterstate")
 	private String afterstate;
 
 	public String getThree() {

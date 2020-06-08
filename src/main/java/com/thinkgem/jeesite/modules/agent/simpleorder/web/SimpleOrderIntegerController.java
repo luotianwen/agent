@@ -196,6 +196,9 @@ public class SimpleOrderIntegerController extends BaseController {
 			}
 			aSimpleOrder.setAgentid(agent.getId());
             List<SimpleOrder> list=aSimpleOrderService.findList(aSimpleOrder);
+            for(SimpleOrder s:list){
+				s.setAfterstate("");
+			}
 			new ExportExcel("订单数据", SimpleOrder.class).setDataList(list).write(response, fileName).dispose();
 			return null;
 		} catch (Exception e) {
