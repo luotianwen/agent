@@ -55,7 +55,7 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	@ExcelField(title="快递单号", align=1, sort=68)
 
 	private String delivernumber;		// 快递单号
-	@ExcelField(title="快递信息", align=1, sort=165)
+
 	private String deliverinfo;		// 快递信息
 	@ExcelField(title="快递费", align=1, sort=65)
 	private Double delivermoney;		// 快递费
