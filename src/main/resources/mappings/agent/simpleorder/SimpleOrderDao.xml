@@ -40,7 +40,8 @@
 		a.tmstate AS "tmstate",
 		a.update_by AS "updateBy.id",
 		a.supplier AS "supplier.id",
-		s.company AS "supplier.company"
+		s.company AS "supplier.company",
+		a.classs
 	</sql>
 	
 	<sql id="simpleOrderJoins">
@@ -284,6 +285,7 @@
 			del_flag,
 			orderId,
 			type,
+			classs,
 			three
 
 		) VALUES (
@@ -312,6 +314,7 @@
 			#{delFlag},
 			#{orderId},
 			#{type},
+			#{classs},
 			#{three}
 		)
 	</insert>
@@ -341,6 +344,7 @@
 			remarks = #{remarks},
 			three=#{three},
 			type=#{type},
+			classs=#{classs},
 			kpje=#{kpje}
 		WHERE id = #{id}
 	</update>

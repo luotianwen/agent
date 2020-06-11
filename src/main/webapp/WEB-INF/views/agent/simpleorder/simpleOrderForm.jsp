@@ -80,6 +80,52 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+	<div class="control-group">
+		<label class="control-label">分类：</label>
+		<div class="controls">
+		<select id="classs" name="classs" class="input-xlarge required">
+			<option value="">-请选择-</option>
+			<option value="跑步鞋">跑步鞋</option>
+			<option value="篮球鞋">篮球鞋</option>
+			<option value="足球鞋">足球鞋</option>
+			<option value="网球鞋">网球鞋</option>
+			<option value="户外鞋">户外鞋</option>
+			<option value="拖鞋">拖鞋</option>
+			<option value="凉鞋">凉鞋</option>
+			<option value="羽毛球鞋 ">羽毛球鞋 </option>
+			<option value="多用途训练鞋">多用途训练鞋</option>
+			<option value="运动包">运动包</option>
+			<option value="户外包">户外包</option>
+			<option value="T恤">T恤</option>
+			<option value="PO">POLO </option>
+			<option value="背心">背心</option>
+			<option value="衬衫">衬衫</option>
+			<option value="短裤">短裤</option>
+			<option value="中长裤">中长裤</option>
+			<option value="长裤">长裤</option>
+			<option value="短裙">短裙</option>
+			<option value="内衣">内衣</option>
+			<option value="羽绒服">羽绒服</option>
+			<option value="卫衣">卫衣</option>
+			<option value="外套">外套</option>
+			<option value="篮球">篮球</option>
+			<option value="足球">足球</option>
+			<option value="羽毛">羽毛球</option>
+			<option value="护具">护具</option>
+			<option value="帽子">帽子</option>
+			<option value="袜子">袜子</option>
+			<option value="网球">网球</option>
+			<option value="器材">器材</option>
+			<option value="厨房用具">厨房用具</option>
+			<option value="家纺">家纺</option>
+			<option value="家居用品">家居用品</option>
+			<option value="商旅用品">商旅用品</option>
+			<option value="生活家电">生活家电</option>
+			<option value="健康膳食">健康膳食</option>
+
+		</select>
+		</div>
+	</div>
 		<div class="control-group">
 			<label class="control-label">售后状态：</label>
 			<div class="controls">

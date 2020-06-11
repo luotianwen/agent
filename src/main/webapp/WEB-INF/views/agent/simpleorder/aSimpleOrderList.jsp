@@ -121,6 +121,7 @@
         <th>状态</th>
         <th>售后状态</th>
         <th>类别</th>
+        <th>分类</th>
         <th>售价</th>
         <th>快递费用</th>
         <th>总金额</th>
@@ -162,8 +163,12 @@
             <td>
                     ${fns:getDictLabel(simpleOrder.afterstate, 'a_simple_order_afterstate', '')}
             </td>
+
             <td>
                     ${fns:getDictLabel(simpleOrder.type, 'a_simple_order_type', '')}
+            </td>
+            <td>
+                    ${simpleOrder.classs}
             </td>
             <td>
                     ${simpleOrder.money}

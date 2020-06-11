@@ -100,6 +100,17 @@ public class SimpleOrder extends DataEntity<SimpleOrder> {
 	@ExcelField(title="类别", align=1, sort=140, dictType="a_simple_order_type")
 	protected String type;	// 类别
 
+	@ExcelField(title="分类", align=1, sort=150)
+	protected String classs;	// 类别
+
+	public String getClasss() {
+		return classs;
+	}
+
+	public void setClasss(String classs) {
+		this.classs = classs;
+	}
+
 	private Date beginUpdateDate;		// 开始 创建时间
 	private Date endUpdateDate;		// 结束 创建时间
 
