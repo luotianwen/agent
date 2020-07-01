@@ -55,7 +55,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<downloadSources>true</downloadSources>
 		<!-- 计划任务 -->
-		<quartz.version>2.2.1</quartz.version>
+		<quartz.version>2.3.2</quartz.version>
 		<!-- fastjson -->
 		<fastjson-lib.version>1.2.70</fastjson-lib.version>
 	</properties>
