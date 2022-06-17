@@ -57,7 +57,7 @@
 		<!-- 计划任务 -->
 		<quartz.version>2.2.1</quartz.version>
 		<!-- fastjson -->
-		<fastjson-lib.version>1.2.70</fastjson-lib.version>
+		<fastjson-lib.version>1.2.83</fastjson-lib.version>
 	</properties>
 	
 	<!-- 设定主仓库，按设定顺序进行查找。 -->
